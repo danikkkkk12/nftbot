@@ -27,6 +27,8 @@ const changeBet = function (field, fixedBtns, changeBtns) {
       field.textContent = currentValue;
     });
   });
+
+  return currentValue;
 };
 
 const firstFixedHalf = Array.from(fixedBetBtns).slice(0, 5);
