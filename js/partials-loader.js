@@ -1,40 +1,50 @@
-// function loadPartial(id, url) {
-//   fetch(url)
-//     .then((response) => response.text())
+// const templates = document.querySelectorAll("template[load]");
+// const fetches = [];
+
+// templates.forEach((el) => {
+//   const url = el.getAttribute("load");
+//   const fetchPromise = fetch(url)
+//     .then((res) => res.text())
 //     .then((html) => {
-//       document.getElementById(id).innerHTML = html;
-//     })
-//     .catch((error) => {
-//       console.error(`Ошибка загрузки ${url}:`, error);
+//       el.innerHTML = html;
+//       const clone = el.content.cloneNode(true);
+//       document.body.appendChild(clone);
 //     });
-// }
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   loadPartial("main-content", "partials/main.html");
-//   loadPartial("balance-inventory-content", "partials/down-main.html");
-//   // loadPartial('balance-content', 'partials/balance.html');
-//   loadPartial("buy-gift-content", "partials/buy-gift.html");
-//   // loadPartial('inventory-content', 'partials/inventory.html');
+//   fetches.push(fetchPromise);
 // });
-// // app.use(express.static("public"))
 
-const templates = document.querySelectorAll("template[load]");
-const fetches = [];
+// Promise.all(fetches).then(() => {
+//   const scripts = [
+//     "js/main.js",
+//     "js/balance.js",
+//     "js/inventory.js",
+//     "js/down-main.js",
+//     "js/buy-gift.js",
+//     "js/crash-game.js",
+//     "js/nav-bar.js",
+//   ];
 
-templates.forEach((el) => {
-  const url = el.getAttribute("load");
-  const fetchPromise = fetch(url)
-    .then((res) => res.text())
-    .then((html) => {
-      el.innerHTML = html;
-      const clone = el.content.cloneNode(true);
-      document.body.appendChild(clone);
-    });
+//   scripts.forEach((src) => {
+//     const script = document.createElement("script");
+//     script.src = src;
+//     document.body.appendChild(script);
+//   });
+// });
+(async () => {
+  const templates = document.querySelectorAll("template[load]");
 
-  fetches.push(fetchPromise);
-});
+  // Завантажуємо шаблони послідовно
+  for (const el of templates) {
+    const url = el.getAttribute("load");
+    const res = await fetch(url);
+    const html = await res.text();
+    el.innerHTML = html;
+    const clone = el.content.cloneNode(true);
+    document.body.appendChild(clone);
+  }
 
-Promise.all(fetches).then(() => {
+  // Завантажуємо скрипти послідовно
   const scripts = [
     "js/main.js",
     "js/balance.js",
@@ -45,9 +55,14 @@ Promise.all(fetches).then(() => {
     "js/nav-bar.js",
   ];
 
-  scripts.forEach((src) => {
-    const script = document.createElement("script");
-    script.src = src;
-    document.body.appendChild(script);
-  });
-});
+  for (const src of scripts) {
+    await new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = false;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.appendChild(script);
+    });
+  }
+})();
