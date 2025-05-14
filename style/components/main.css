@@ -1,3 +1,13 @@
+.main-wrapper {
+  margin: 0 auto;             
+  max-width: 1440px;          
+  padding: 0;                 
+  background-color: #0E0B1F; 
+  overflow: hidden;           
+  box-sizing: border-box;     
+}
+
+
 .main-rocket {
   background-color: rgba(21, 15, 39, 1);
   padding: 11px 13px;
@@ -72,7 +82,7 @@
   font-weight: 600;
   font-size: 17px;
   color: rgba(136, 69, 245, 1);
-  margin-left: 93px;
+  margin-left: 84px;
 }
 
 .main-network__status {
@@ -96,7 +106,7 @@
   gap: 6px;
 }
 .main-coefficients__coefficient {
-  width: 55px;
+  width: 48px;
   height: 28px;
   background: linear-gradient(98.63deg, rgba(136, 69, 245, 0.5) 50.34%, rgba(79, 40, 143, 0.5) 84.99%);
   border: none;
