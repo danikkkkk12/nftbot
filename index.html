@@ -18,6 +18,10 @@
     />
     <link
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      rel="stylesheet"
       href="style/components/down-main/balance-inventory.css"
     />
     <link rel="stylesheet" href="style/components/down-main/buy-gift.css" />
@@ -28,17 +32,21 @@
   <body>
     <div class="main-wrapper">
       <main>
-      <template id="main-content" load="partials/main.html"></template>
-      <template
-        id="balance-inventory-content"
-        load="partials/down-main.html"
-      ></template>
-      <template id="buy-gift-content" load="partials/buy-gift.html"></template>
-      <template id="nav-bar-content" load="partials/nav-bar.html"></template>
-    </main>
+        <template id="main-content" load="partials/main.html"></template>
+        <template
+          id="balance-inventory-content"
+          load="partials/down-main.html"
+        ></template>
+        <template
+          id="buy-gift-content"
+          load="partials/buy-gift.html"
+        ></template>
+        <template id="nav-bar-content" load="partials/nav-bar.html"></template>
+      </main>
     </div>
 
     <script src="js/partials-loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <!-- <script src="js/main.js"></script>
     <script src="js/balance.js"></script>
     <script src="js/buy-gift.js"></script>
