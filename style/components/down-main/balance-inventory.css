@@ -92,7 +92,7 @@
     rgba(97, 0, 255, 0.8) -9.64%,
     rgba(179, 132, 255, 0.8) 72.06%
   );
-  transition: background .7s ease;
+  transition: background 0.7s ease;
 }
 
 .inventory-skins__title {
@@ -284,7 +284,7 @@
 
   width: 50%;
 
-width: 197px;
+  width: 197px;
 
   border-radius: 10px;
   padding: 9px 50px;
@@ -439,6 +439,15 @@ width: 197px;
   line-height: 1.37;
   text-align: right;
   color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.bet-count-list__diamond {
+  width: 20px;
+  height: 20px;
 }
 .bet-count-list__avatar {
   width: 35px;
