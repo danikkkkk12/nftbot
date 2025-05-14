@@ -1,15 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-
 .down-main {
   margin: 0 auto;
-  background-color: #150f27;
+  background-color: #231c46;
+  padding: 11px 13px;
+  border-radius: 20px;
+  width: 409px;
 }
 .wrapper {
   width: 444px;
 }
-.container {
-  padding: 10px 10px 10px 15px;
-}
+
 .inventory {
   border-radius: 20px;
   background: #231c46;
@@ -39,7 +38,7 @@
   background: #231c46;
   color: #fff;
   text-align: center;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -66,9 +65,9 @@
   align-items: center;
   border-radius: 10px;
   background: #231c46;
+  font-family: "Montserrat", sans-serif;
   color: #fff;
   text-align: center;
-  font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -98,7 +97,7 @@
 
 .inventory-skins__title {
   color: #fff;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -135,7 +134,7 @@
   background: linear-gradient(180deg, #383838 0%, #585858 100%);
   color: #fff;
   text-align: center;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -161,7 +160,7 @@
 .inventory-skins-items-card__title {
   color: #fff;
   text-align: center;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -197,7 +196,7 @@
 .inventory-skins-items-added-card__title {
   color: #bcbcbc;
   text-align: center;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 600;
@@ -208,7 +207,7 @@
 
 .inventory-bid__title {
   color: #bcbcbc;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 13px;
   font-style: normal;
   font-weight: 600;
@@ -226,7 +225,7 @@
 
 .inventory-bid-cardsBided-card__title {
   color: #fff;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -236,7 +235,7 @@
 .inventory-bid-cardsBided-card__current {
   color: #fff;
   text-align: right;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -256,16 +255,13 @@
   left: 130%;
 }
 
-.down-main {
-  background-color: #231c46;
-  padding: 11px 13px;
-  border-radius: 20px;
-}
+/* balance */
 
 .bet {
   margin-bottom: 8px;
 }
 .bet__title {
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-size: 13px;
   line-height: 1.69;
@@ -290,15 +286,18 @@ width: 197px;
   border-radius: 10px;
   padding: 9px 50px;
   background-color: #262352;
+
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-size: 16px;
   line-height: 1.37;
   text-align: center;
   color: #dfdfdf;
+  transition: color 250ms ease-in-out;
 }
 .bal-inv__btn.active {
   color: #fff;
-  background-image: linear-gradient(
+  background: linear-gradient(
     25deg,
     rgba(97, 0, 255, 0.8) 0%,
     rgba(179, 132, 255, 0.8) 100%
@@ -331,6 +330,7 @@ width: 197px;
   );
   padding: 28px 46px;
   border-radius: 20px;
+  font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 16px;
   line-height: 1.37;
@@ -355,6 +355,7 @@ width: 197px;
   border-radius: 10px;
   background-color: #241e44;
   padding: 9px;
+  font-family: "Montserrat", sans-serif;
   color: #fff;
   font-size: 25px;
 
@@ -363,6 +364,7 @@ width: 197px;
   justify-content: center;
 }
 .select-bet-count__number {
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-size: 24px;
   line-height: 0.92;
@@ -385,6 +387,7 @@ width: 197px;
 .select-bet-change__btn {
   border-radius: 5px;
   background-color: #241e44;
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-size: 14px;
   line-height: 1.57;
@@ -394,6 +397,7 @@ width: 197px;
 }
 
 .bet-count__title {
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-size: 13px;
   line-height: 1.69;
@@ -420,12 +424,14 @@ width: 197px;
   gap: 16px;
 }
 .bet-count-list__username {
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-size: 16px;
   line-height: 1.37;
   color: #fff;
 }
 .bet-count-list__number {
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-size: 16px;
   line-height: 1.37;
@@ -437,12 +443,9 @@ width: 197px;
   height: 35px;
   border-radius: 50%;
 }
-
-.swiper {
-  height: 300px;
-}
 .bet-count__swiper {
-  height: 300px;
+  height: auto;
+  max-height: 210px;
   overflow: hidden;
 }
 
