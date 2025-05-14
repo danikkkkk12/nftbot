@@ -1,0 +1,219 @@
+#openModalBtn {
+  padding: 12px 24px;
+  font-size: 16px;
+  background: #7e21de;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.modal {
+  background: #2d0057;
+  color: white;
+  padding: 16px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.modal-title {
+  text-align: center;
+  margin: 0;
+  margin-top: -4px;
+  font-size: 22px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 18px;
+  cursor: pointer;
+}
+.custom-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: #1b1636;
+  padding: 6px 8px;
+  border-radius: 12px;
+  margin-top: 16px;
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.filter-bar input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  outline: none;
+}
+
+.max-price-label {
+  font-size: 14px;
+  white-space: nowrap;
+  background: #000000;
+  border-radius: 8px;
+  padding: 5px 7px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  border: 2px solid transparent;
+}
+
+.gear-icon {
+  font-size: 18px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  background: #1b1636;
+  border-radius: 8px;
+  padding: 5px 7px 5px 8px;
+  text-align: center;
+  transition: 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  border: 2px solid transparent;
+  color: white;
+}
+
+.search-input {
+  flex: 1;
+  background: #1b1636;
+  color: white;
+  border: 1px solid #1b1636;
+  outline: none;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-family: "Manrope", sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.price-options {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  width: 427px;
+  margin-left: 6px;
+  padding: 0 2px;
+  background-color: #1b1636;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.price-options button {
+  flex: 1;
+  background: #1b1636;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  padding: 6px 0;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  font-family: "Manrope", sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.card {
+  background: linear-gradient(#6100ff80, #b384ff80);
+  border-radius: 20px;
+  padding: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  border: 2px solid #000;
+}
+
+.center-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  background: #1b1636;
+  padding: 6px 10px;
+  border: 1px solid #1b1636;
+  border-radius: 10px;
+  white-space: nowrap;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.card.selected {
+  border-color: white;
+  background: #7e21de;
+}
+.gem-icon {
+  position: relative;
+  top: 1.5px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+}
+
+.potion {
+  width: 80px;
+}
+
+.card-price {
+  font-size: 14px;
+  margin-right: 40px;
+  background: linear-gradient(#383838, #585858);
+  width: 50px;
+  border-radius: 20px;
+}
+
+.card-label {
+  font-size: 14px;
+}
+
+.card-info {
+  font-size: 12px;
+  margin-top: 4px;
+  background: #2a1c46;
+  border-radius: 6px;
+  padding: 2px 6px;
+  display: inline-block;
+}
+
+.buy-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: white;
+  color: #7e21de;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
