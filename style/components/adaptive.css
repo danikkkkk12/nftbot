@@ -1,0 +1,191 @@
+@media (min-width: 320px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .main-rocket {
+        width: 320px;
+}
+/* .main-wrapper__balance {
+}
+.flex {
+}
+.main-wrapper-balance__logo {
+} */
+.main-balance {
+    margin-left: 15px;
+    font-size: 15px;
+    width: 89px;  
+}
+.main-balance__token {
+    width: 17px;
+    height: 27px;
+}
+.main-connect-wallet {
+    width: 145px;
+    font-size: 14px;
+    margin-right: -27px;
+}
+.main-line {
+    width: 320px;
+}
+.main-rocket__container {
+    width: 320px;
+}
+.main-news {
+    width: 251px;
+}
+.main-news__title {
+    width: 200px;
+}
+.main-news__button {
+    margin-right: 5px;
+    margin-left: 0px;
+}
+/* .main-network__status {
+}
+.main-network-status__icon {
+}
+.main-network-status__span {
+} */
+/* .main-coefficients {
+} */
+.main-coefficients__coefficient {
+    position: relative;
+    right: -15px;
+}
+
+.main-line-down {
+    width: 320px;
+}
+.main-block-rocket {
+    width: 320px;
+}
+.main-block-rocket__icon {
+    margin-left: 135px;
+}
+/* .main-block-rocket__text {
+}
+.main-block-rocket-text__span {
+}
+.progress-container {
+}
+.progress-bar {
+} */
+
+.down-main {
+    width: 320px;
+    margin-left: 344px;
+}
+/* .bet-Toggle {
+}
+.bet__title {
+}
+.bal-inv {
+} */
+.bal-inv__btn {
+    width: 300px;
+}
+.bal-inv__btn--balance {
+    width: 150px;
+}
+/* .active {
+} */
+.bal-inv__icon {
+    margin-left: -32px;
+}
+.bal-inv__btn--inventory {
+    width: 150px;
+}
+/* .bet-switcher {
+}
+.bet-switcher__balance {
+}
+.sw {
+}
+.container {
+}
+.select-bet {
+} */
+.select-bet__btn {
+    width: 100px;    
+    padding-left: 10px;
+}
+.select-bet__field {
+    width: 300px;
+
+}
+/* .select-bet__pages {
+}
+.select-bet-count {
+}
+.select-bet-count__btn {
+
+}
+.select-bet-count__icon {
+}
+.select-bet-count__icon--plus {
+}
+.select-bet-count__number {
+}
+.select-bet-count__icon--minus {
+}
+.select-bet-change {
+}
+.select-bet-change__btn {
+}
+.select-bet__btn {
+}
+.bet-switcher__inventory {
+}
+.inventory-skins {
+}
+.inventory-skins__title {
+}
+.inventory-skins-items {
+} */
+.inventory-skins-items-card {
+    width: 94px;
+}
+.inventory-skins-items-card__current {
+    width: 45px;
+}
+/* .inventory-skins-items-card__img {
+}
+.inventory-skins-items-card__title {
+}
+.inventory-skins-items-added {
+}
+.inventory-skins-items-added-card {
+}
+.inventory-skins-items-added-card__img {
+}
+.inventory-skins-items-added-card__title {
+}
+.bet-count {
+}
+.bet-count__title {
+}
+.swiper {
+}
+.bet-count__swiper {
+}
+.swiper-wrapper {
+}
+.bet-count-list {
+}
+.swiper-slide {
+}
+.bet-count-list__item {
+}
+.bet-count-list__profile {
+}
+.bet-count-list__avatar {
+}
+.bet-count-list__username {
+}
+.bet-count-list__number {
+}
+.bet-count-list__diamond {
+} */
+}

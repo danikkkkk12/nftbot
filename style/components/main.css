@@ -161,6 +161,11 @@
     background: linear-gradient(90deg, rgba(136, 69, 245, 1), rgba(79, 40, 143, 1));
     animation: fillProgress 4s linear forwards;
 }
+
+
+
+
+
 @keyframes fillProgress {
         from { width: 0%; }
         to { width: 100%; }
