@@ -1,4 +1,4 @@
-const fixedBetBtns = document.querySelectorAll("balance-inventory-content .select-bet-change__btn");
+const fixedBetBtns = document.querySelectorAll(".select-bet-change__btn");
 const changeBetBtns = document.querySelectorAll(".select-bet-count__btn");
 const fieldBet = document.querySelectorAll(".select-bet-count__number");
 
