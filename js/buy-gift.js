@@ -1,83 +1,93 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const modal = document.getElementById("modalOverlay");
-  const openBtn = document.getElementById("openModalBtn");
-  const closeBtn = document.getElementById("closeModalBtn");
-  const grid = document.getElementById("gridContainer");
-  const searchInput = document.getElementById("searchInput");
-  const buyBtn = document.getElementById("buyBtn");
-  const priceButtons = document.querySelectorAll(".price-options button");
+const modal = document.getElementById("modalOverlay");
+const closeBtn = document.getElementById("closeModalBtn");
+const grid = document.querySelector(".grid__wrapper");
+const searchInput = document.getElementById("searchInput");
+const buyBtn = document.getElementById("buyBtn");
+const priceButtons = document.querySelectorAll(".price-options button");
+const openBtns = document.querySelectorAll(".inventory-skins-items-added-card");
+const modalOverlay = document.querySelector(".modal-overlay");
 
-  let maxPrice = parseInt(
-    document.querySelector(".price-options .active")?.dataset.price || "25"
-  );
-  const selected = new Set();
+let maxPrice = parseInt(
+  document.querySelector(".price-options .active")?.dataset.price || "25"
+);
+const selected = new Set();
 
-  const items = Array.from({ length: 12 }, (_, i) => ({
-    id: i + 1,
-    name: "Potion",
-    price: 25,
-    image: "potion.png",
-  }));
+const items = Array.from({ length: 12 }, (_, i) => ({
+  id: i + 1,
+  name: "Potion",
+  price: 25,
+  image: "potion-skin.svg",
+}));
 
-  maxPrice.className = "potion";
+function createCard(item) {
+  const card = document.createElement("div");
+  card.className = "card" + (selected.has(item.id) ? " selected" : "");
+  card.classList.add("swiper-slide");
+  card.innerHTML = `
+  <div class="card-price">
+    ${item.price} <img src="web/images/inventory/ton.svg" class="gem-icon">
+  </div>
+  <img src="web/images/inventory/${item.image}" alt="${item.name}">
+  <div class="card-label">${item.name}</div>
+  <div class="card-info">Information</div>
+`;
 
-  function renderGrid() {
-    grid.innerHTML = "";
-    const search = searchInput.value.toLowerCase();
+  // card.onclick = () => {
+  //   selected.has(item.id) ? selected.delete(item.id) : selected.add(item.id);
 
-    items.forEach((item) => {
-      if (item.price > maxPrice) return;
-      if (search && !item.name.toLowerCase().includes(search)) return;
+  //   renderGrid();
+  // };
 
-      const card = document.createElement("div");
-      card.className = "card" + (selected.has(item.id) ? " selected" : "");
+  return card;
+}
 
-      const price = document.createElement("div");
-      price.className = "card-price";
-      price.innerHTML = `${item.price} <img src="/ton.svg" class="gem-icon">`;
+function renderGrid() {
+  grid.innerHTML = "";
+  const search = searchInput.value.toLowerCase();
 
-      const img = document.createElement("img");
-      img.src = item.image;
+  items.forEach((item) => {
+    const matchesSearch = !search || item.name.toLowerCase().includes(search);
+    const withinPrice = item.price <= maxPrice;
 
-      const label = document.createElement("div");
-      label.className = "card-label";
-      label.textContent = item.name;
-
-      const info = document.createElement("div");
-      info.className = "card-info";
-      info.textContent = "Information";
-
-      card.onclick = () => {
-        if (selected.has(item.id)) {
-          selected.delete(item.id);
-        } else {
-          selected.add(item.id);
-        }
-        renderGrid();
-      };
-
-      card.append(price, img, label, info);
+    if (matchesSearch && withinPrice) {
+      const card = createCard(item);
       grid.appendChild(card);
-    });
-  }
-
-  priceButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      priceButtons.forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      maxPrice = parseInt(btn.dataset.price);
-      renderGrid();
-    });
+    }
   });
+}
 
-  searchInput.addEventListener("input", renderGrid);
-
-  openBtn.onclick = () => (modal.style.display = "flex");
-  closeBtn.onclick = () => (modal.style.display = "none");
-
-  buyBtn.onclick = () => {
-    alert(`Обрано ${selected.size} подарунків.`);
-  };
-
+function setActivePrice(button) {
+  priceButtons.forEach((btn) => btn.classList.remove("active"));
+  button.classList.add("active");
+  maxPrice = parseInt(button.dataset.price);
   renderGrid();
+}
+
+priceButtons.forEach((btn) =>
+  btn.addEventListener("click", () => setActivePrice(btn))
+);
+
+searchInput.addEventListener("input", renderGrid);
+openBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    modalOverlay.classList.remove("is-hidden");
+  });
+});
+
+closeBtn.addEventListener("click", () => {
+  modalOverlay.classList.add("is-hidden");
+});
+
+renderGrid();
+
+new Swiper(".grid", {
+  direction: "vertical",
+  slidesPerView: 3,
+  slidesPerGroup: 3,
+  grid: {
+    rows: 3,
+    fill: "row",
+  },
+  spaceBetween: 7,
+  mousewheel: true,
 });
