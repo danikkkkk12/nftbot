@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Магазин подарунків</title>
+  <link rel="stylesheet" href="gifts.css">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <button id="openModalBtn">Відкрити магазин</button>
+
+  <div class="modal-overlay" id="modalOverlay" style="display: none;">
+    <div class="modal">
+      <div class="close-btn" id="closeModalBtn">✖</div>
+      <h2 class="modal-title">Купить подарок</h2>
+
+      <div class="filter-bar">
+        <input type="text" style="background-color: black;" id="searchInput" placeholder="🔍 Назва" />
+        <span class="max-price-label">Макс. цена TON</span>
+        <span class="gear-icon">⚙️</span>
+      </div>
+
+      <div class="price-options">
+        <button data-price="5">5</button>
+        <button data-price="10">10</button>
+        <button data-price="15">15</button>
+        <button data-price="20">20</button>
+        <button data-price="25"class="active">25</button>
+      </div>
+
+      <div class="grid" id="gridContainer"></div>
+
+      <button class="buy-btn" id="buyBtn">BUY ITEMS</button>
+    </div>
+  </div>
+
+  <script src="gifts.js"></script>
+</body>
+</html>
