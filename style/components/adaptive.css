@@ -23,7 +23,7 @@ background: #150F27;
 }
     .main-rocket {
         width: 100%;
-        padding-left: 3px;
+        padding-left: 0;
 }
 .main-block-rocket{
     width: calc(100% - 10px);
