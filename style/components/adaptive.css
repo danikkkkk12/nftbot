@@ -1,4 +1,4 @@
-@media (max-width: 315px) {
+@media (min-width: 315px) {
     #openModalBtn {
         margin-left: 17px;
     }
@@ -22,7 +22,7 @@ background: #150F27;
     margin: 0 auto;
 }
     .main-rocket {
-        width: 320px;
+        width: 315px;
         padding-left: 6px;
 }
 /* .main-wrapper__balance {
