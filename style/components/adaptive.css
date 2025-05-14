@@ -19,15 +19,14 @@ background: #150F27;
 .main {
     width: 100%;
     max-width: 100%;
+
     margin: 0 auto;
 }
     .main-rocket {
         width: 100%;
-        padding-left: 0;
+        padding-left: 0;    
 }
-.main-block-rocket{
-    width: calc(100% - 10px);
-}
+
 /* .main-wrapper__balance {
 }
 .flex {
@@ -84,10 +83,10 @@ background: #150F27;
     width: 305px;
 }
 .main-block-rocket {
-    width: 306px;
+    width: 87%;
 }
 .main-block-rocket__icon {
-    margin-left: 128px;
+    margin-left: 41%;
 }
 /* .main-block-rocket__text {
 }
