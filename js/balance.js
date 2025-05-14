@@ -44,3 +44,13 @@ fieldBet.forEach((field, index) => {
     changeBet(field, secondFixedHalf, secondChangedHalf);
   }
 });
+
+// slider
+
+new Swiper(".bet-count__swiper", {
+  direction: "vertical",
+  slidesPerView: "auto",
+  freeMode: true,
+
+  mousewheel: true,
+});
