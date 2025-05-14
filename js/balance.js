@@ -19,7 +19,7 @@ const changeBet = function (field, fixedBtns, changeBtns) {
         currentValue += Number(el.textContent);
       } else if (
         currentOperation === "minus" &&
-        currentValue > Number(el.textContent)
+        currentValue >= Number(el.textContent)
       ) {
         currentValue -= Number(el.textContent);
       }
