@@ -18,12 +18,15 @@ background: #150F27;
 
 .main {
     width: 100%;
-    max-width: 320px;
+    max-width: 100%;
     margin: 0 auto;
 }
     .main-rocket {
-        width: 300px;
+        width: 100%;
         padding-left: 3px;
+}
+.main-block-rocket{
+    width: calc(100% - 10px);
 }
 /* .main-wrapper__balance {
 }
