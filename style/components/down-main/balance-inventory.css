@@ -128,24 +128,24 @@
   height: 137px; */
 }
 .inventory-skins-items-card__current {
-      display: flex;
-    height: 24px;
-    width: 46px;
-    padding: 4px 7px 4px 5px;
-    align-self: start;
-    gap: 1px;
-    flex-shrink: 0;
-    border-radius: 20px;
-    background: linear-gradient(180deg, #383838 0%, #585858 100%);
-    color: #fff;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    position: relative;
-    padding-top: 2.5px;
+  display: flex;
+  height: 24px;
+  width: 46px;
+  padding: 4px 7px 4px 5px;
+  align-self: start;
+  gap: 1px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #383838 0%, #585858 100%);
+  color: #fff;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  position: relative;
+  padding-top: 2.5px;
 }
 .inventory-skins-items-card__current::after {
   content: "";

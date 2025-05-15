@@ -239,7 +239,7 @@
 .buy-btn {
   padding: 17px 82px;
   max-width: 409px;
-  width: 100%;
+  width: 80%;
   background: white;
   font-family: "Montserrat", sans-serif;
   border: none;
@@ -256,6 +256,11 @@
   z-index: 22;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   background-image: linear-gradient(90deg, #fff 0%, #fff 100%);
+}
+@media (min-width: 410px) {
+  .buy-btn {
+    width: 100%;
+  }
 }
 .grid {
   height: 550px;
