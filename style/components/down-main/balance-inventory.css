@@ -51,7 +51,7 @@
 .inventory-buttons__balance::before {
   content: "";
   position: absolute;
-  background: url(../../../images/inventory/balance.svg) no-repeat center/cover;
+  background: url('web/images/inventory/balance.svg') no-repeat center/cover;
   width: 20px;
   height: 20px;
   left: 22%;
@@ -80,7 +80,7 @@
 .inventory-buttons__inventory::before {
   content: "";
   position: absolute;
-  background: url(web/images/inventory/gift.svg) no-repeat center/cover;
+  background: url('web/images/inventory/gift.svg') no-repeat center/cover;
   width: 20px;
   height: 20px;
   left: 15%;
@@ -150,7 +150,7 @@
 .inventory-skins-items-card__current::after {
   content: "";
   position: absolute;
-  background: url(web/images/inventory/ton.svg) no-repeat center/cover;
+  background: url('web/images/inventory/ton.svg') no-repeat center/cover;
   width: 16px;
   height: 16px;
   top: 18%;
