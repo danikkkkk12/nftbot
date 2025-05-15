@@ -84,6 +84,7 @@
   .main-news {
     padding-left: 15px;
   }
+
 }
 
 .main-line {
@@ -91,6 +92,30 @@
   border: 1px solid rgba(136, 69, 245, 0.2);
   margin-top: 18px;
 }
+
+  #ton-connect {
+    opacity: 0;
+    position: absolute;
+  }
+  
+  .main-wallet {
+    position: relative;
+  }
+
+  .ton-connect {
+      margin-left: 8px;
+  max-width: 162px;
+  width: 100%;
+  height: 44px;
+  top: 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(136, 69, 245, 0.5);
+  background-color: rgba(21, 15, 39, 1);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: rgba(255, 255, 255, 1);
+  }
 
 .main-news__button {
   border: none;
