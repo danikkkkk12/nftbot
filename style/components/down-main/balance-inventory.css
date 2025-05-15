@@ -128,8 +128,7 @@
   height: 137px; */
 }
 .inventory-skins-items-card__current {
-      display: flex
-;
+      display: flex;
     height: 24px;
     width: 46px;
     padding: 4px 7px 4px 5px;
