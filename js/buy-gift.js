@@ -11,6 +11,7 @@ let maxPrice = parseInt(
   document.querySelector(".price-options .active")?.dataset.price || "25"
 );
 const selected = new Set();
+let swiperInstance = null;
 
 const items = Array.from({ length: 12 }, (_, i) => ({
   id: i + 1,
@@ -24,25 +25,55 @@ function createCard(item) {
   card.className = "card" + (selected.has(item.id) ? " selected" : "");
   card.classList.add("swiper-slide");
   card.innerHTML = `
-  <div class="card-price">
-    ${item.price} <img src="web/images/inventory/ton.svg" class="gem-icon">
-  </div>
-  <img src="web/images/inventory/${item.image}" alt="${item.name}">
-  <div class="card-label">${item.name}</div>
-  <div class="card-info">Information</div>
-`;
-
-  // card.onclick = () => {
-  //   selected.has(item.id) ? selected.delete(item.id) : selected.add(item.id);
-
-  //   renderGrid();
-  // };
-
+    <div class="card-price">
+      ${item.price} <img src="web/images/inventory/ton.svg" class="gem-icon">
+    </div>
+    <img src="web/images/inventory/${item.image}" alt="${item.name}">
+    <div class="card-label">${item.name}</div>
+    <div class="card-info">Information</div>
+  `;
   return card;
 }
 
+function initSwiper() {
+  if (swiperInstance) {
+    swiperInstance.destroy(true, true);
+  }
+
+  swiperInstance = new Swiper(".grid", {
+    direction: "vertical",
+    slidesPerView: 3,
+    slidesPerGroup: 3,
+    grid: {
+      rows: 3,
+      fill: "row",
+    },
+    spaceBetween: 7,
+    mousewheel: true,
+
+    breakpoints: {
+      0: {
+        slidesPerView: 3,
+        slidesPerGroup: 2,
+        grid: {
+          rows: 2,
+        },
+      },
+      411: {
+        slidesPerView: 3,
+        slidesPerGroup: 3,
+        grid: {
+          rows: 3,
+        },
+      },
+    },
+  });
+}
+
 function renderGrid() {
+  grid.style.visibility = "hidden";
   grid.innerHTML = "";
+
   const search = searchInput.value.toLowerCase();
 
   items.forEach((item) => {
@@ -53,6 +84,11 @@ function renderGrid() {
       const card = createCard(item);
       grid.appendChild(card);
     }
+  });
+
+  requestAnimationFrame(() => {
+    initSwiper();
+    grid.style.visibility = "visible";
   });
 }
 
@@ -68,53 +104,19 @@ priceButtons.forEach((btn) =>
 );
 
 searchInput.addEventListener("input", renderGrid);
+
 openBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     modalOverlay.classList.remove("is-hidden");
-    if (document.body.style.overflow === "hidden") {
-      document.body.style.overflow = "visible";
-    } else {
-      document.body.style.overflow = "hidden";
-    }
+    document.body.style.overflow =
+      document.body.style.overflow === "hidden" ? "visible" : "hidden";
   });
 });
 
 closeBtn.addEventListener("click", () => {
   modalOverlay.classList.add("is-hidden");
-  if (document.body.style.overflow === "hidden") {
-    document.body.style.overflow = "visible";
-  } else {
-    document.body.style.overflow = "hidden";
-  }
+  document.body.style.overflow =
+    document.body.style.overflow === "hidden" ? "visible" : "hidden";
 });
 
 renderGrid();
-
-new Swiper(".grid", {
-  direction: "vertical",
-  slidesPerView: 3,
-  slidesPerGroup: 3,
-  grid: {
-    rows: 3,
-    fill: "row",
-  },
-  spaceBetween: 7,
-  mousewheel: true,
-
-  breakpoints: {
-    0: {
-      slidesPerView: 3,
-      slidesPerGroup: 2,
-      grid: {
-        rows: 2,
-      },
-    },
-    411: {
-      slidesPerView: 3,
-      slidesPerGroup: 3,
-      grid: {
-        rows: 3,
-      },
-    },
-  },
-});
