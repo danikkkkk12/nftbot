@@ -71,11 +71,21 @@ searchInput.addEventListener("input", renderGrid);
 openBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     modalOverlay.classList.remove("is-hidden");
+    if (document.body.style.overflow === "hidden") {
+      document.body.style.overflow = "visible";
+    } else {
+      document.body.style.overflow = "hidden";
+    }
   });
 });
 
 closeBtn.addEventListener("click", () => {
   modalOverlay.classList.add("is-hidden");
+  if (document.body.style.overflow === "hidden") {
+    document.body.style.overflow = "visible";
+  } else {
+    document.body.style.overflow = "hidden";
+  }
 });
 
 renderGrid();
@@ -90,4 +100,21 @@ new Swiper(".grid", {
   },
   spaceBetween: 7,
   mousewheel: true,
+
+  breakpoints: {
+    0: {
+      slidesPerView: 3,
+      slidesPerGroup: 2,
+      grid: {
+        rows: 2,
+      },
+    },
+    411: {
+      slidesPerView: 3,
+      slidesPerGroup: 3,
+      grid: {
+        rows: 3,
+      },
+    },
+  },
 });
