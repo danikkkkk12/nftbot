@@ -8,7 +8,8 @@ const frogGif = document.querySelector(".main-frog-wrapper-container__icon");
 const LINE_WIDTH = 380;
 const FROG_Y_OFFSET = 0;
 const MAX_LIFT_HEIGHT = 120;
-const GAME_SPEED = 120;
+const GAME_SPEED = 200;
+const OFFSET_FROG = 18;
 
 // Инициализация
 coefficientDisplay.style.opacity = "0";
@@ -71,17 +72,21 @@ function updateGameState() {
     frogGif.style.opacity = "1";
     frogGif.style.transform = "scale(0.7)";
   } else if (currentCoefficient > 1.4) {
-    const liftProgress = Math.min((currentCoefficient - 1.4) / 0.25, 1);
-    const currentLiftHeight = liftProgress * MAX_LIFT_HEIGHT;
+  const liftProgress = Math.min((currentCoefficient - 1.4) / 0.25, 1);
+  const currentLiftHeight = liftProgress * MAX_LIFT_HEIGHT;
 
-    progressLine.style.width = "100%";
-    progressLine.style.transform = `rotate(-${liftProgress * 15}deg)`;
+  progressLine.style.width = "100%";
+  progressLine.style.transform = `rotate(-${liftProgress * 15}deg)`;
 
-    frogGif.style.left = `${LINE_WIDTH}px`;
-    frogGif.style.bottom = `${FROG_Y_OFFSET + currentLiftHeight}px`;
-    frogGif.style.transform = `scale(${0.7 - liftProgress * 0.1})`;
-    frogGif.style.opacity = "1";
-  }
+  frogGif.style.left = `${LINE_WIDTH}px`;
+
+  // Смещаем жабу ниже линии
+  const newBottom = progressLine.offsetTop + currentLiftHeight - OFFSET_FROG;
+  frogGif.style.bottom = `${Math.min(newBottom, progressLine.offsetTop + MAX_LIFT_HEIGHT - OFFSET_FROG)}px`;
+
+  frogGif.style.transform = `scale(${0.7 - liftProgress * 0.1})`;
+  frogGif.style.opacity = "1";
+}
 
   if (currentCoefficient > 1.5 && Math.random() < 0.05) {
     stopGame();
