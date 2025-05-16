@@ -5,10 +5,13 @@
   gap: 32px;
   margin-top: 20px;
 }
-.main-frog{
-  margin-left: 10px;
-  margin-top: 210px;
+
+
+.main-frog__wrapper {
+  margin: 210px auto;
+  max-width: 440px;
 }
+
 .bar {
   width: 380px;
   height: 5px;
