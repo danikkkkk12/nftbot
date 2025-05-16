@@ -20,6 +20,7 @@
   background-color: rgba(35, 28, 70, 1);
   border-radius: 10px;
   margin-left: -20px;
+   padding-top: 20px;
 }
 
 .giveaway-wrapper-block__icon {
@@ -28,6 +29,7 @@
   margin-left: 17px;
   border-radius: 20px;
   background: linear-gradient(213.72deg, rgba(97, 0, 255, 0.5) 20.44%, rgba(179, 132, 255, 0.5) 96.63%);
+  
 }
 
 #bottle-giveaway {
