@@ -55,6 +55,7 @@
     "js/nav-bar.js",
     "js/profile.js",
     "js/frog-game.js",
+    "js/friends.js",
   ];
 
   for (const src of scripts) {
