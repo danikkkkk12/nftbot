@@ -1,3 +1,41 @@
+const lockIcon = document.querySelector(".user-page-inv__icon--lock");
+const iconInv = document.querySelector(".user-page-inv__icon--inv");
+const userInv = document.querySelector(".user-page-inv");
+// modal
+const promoBtnOpen = document.querySelector(".user-page-inv__btn--promo");
+const promobackdrop = document.querySelector(".promo-backdrop");
+const promoBtnClose = document.querySelector(".promo-modal__btn-close");
+const promoInput = document.querySelector(".promo-modal__input");
+const promoBtnSearchPromocode = document.getElementById(
+  "promoModalSearchPromocode"
+);
+const promocodes = {
+  lelelele52: "Вы получили 2 кг мефедрона",
+  ez100ton: "Вы получили 100 ton на баланс",
+  idiNaxui: "Иди нахуй",
+};
+
+lockIcon.addEventListener("click", () => {
+  userInv.classList.add("open");
+});
+promoBtnOpen.addEventListener("click", () => {
+  promobackdrop.classList.remove("is-hidden");
+});
+promoBtnClose.addEventListener("click", () => {
+  promobackdrop.classList.add("is-hidden");
+});
+promoBtnSearchPromocode.addEventListener("click", () => {
+  const inputValue = promoInput.value.trim();
+
+  if (promocodes[inputValue]) {
+    alert(promocodes[inputValue]);
+  } else {
+    alert("Промокод не действителен харе вводить на рандом");
+  }
+
+  promoInput.value = "";
+});
+
 new Swiper(".user-page-game-history__swiper", {
   direction: "vertical",
   slidesPerView: "auto",
