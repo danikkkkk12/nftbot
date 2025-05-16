@@ -23,6 +23,7 @@
     "js/nav-bar.js",
     "js/profile.js",
     "js/frog-game.js",
+    "js/giveaway.js",
   ];
 
   for (const src of scripts) {

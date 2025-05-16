@@ -26,8 +26,10 @@ navItems.forEach((item) => {
     } else if (targetId === "rocket") {
       document.querySelector(".main-rocket").style.display = "block";
       document.querySelector(".down-main").style.display = "block";
+    }if (targetId === "gifts") {
+      document.querySelector(".giveaway").style.display = "block";
     }
-
+    
     setActiveItem(this);
   });
 });
