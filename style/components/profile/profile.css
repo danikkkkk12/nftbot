@@ -37,6 +37,28 @@
 .user-page-inv {
   margin-bottom: 16px;
 }
+.user-page-inv.open {
+  background-color: #231c46;
+  border-radius: 10px;
+}
+
+/* btns */
+.user-page-inv.open .user-page-inv__btn--inv {
+  border-radius: 10px 10px 0 0;
+  border-bottom: 1px solid #372d6b;
+}
+.user-page-inv.open .user-page-inv__btn--promo {
+  display: flex;
+  border-radius: 0 0 10px 10px;
+}
+
+/* icons */
+.user-page-inv.open .user-page-inv__icon--lock {
+  display: none;
+}
+.user-page-inv.open .user-page-inv__icon--inv {
+  display: block;
+}
 .user-page-inv__btn {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
@@ -54,9 +76,15 @@
   justify-content: flex-start;
   gap: 16px;
 }
+.user-page-inv__btn--promo {
+  display: none;
+}
 .user-page-inv__icon {
   width: 20px;
   height: 20px;
+}
+.user-page-inv__icon--inv {
+  display: none;
 }
 
 .user-page-change-language {
