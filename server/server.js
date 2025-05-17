@@ -2,13 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('../db/db');
 const Order = require('./api/order');
+const path = require('path');
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('../web')); // Для обслуживания статических файлов
+app.use(express.static(path.join(__dirname, '..')));
 
 // Подключение к БД
 connectDB();
