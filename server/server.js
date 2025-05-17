@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, '..')));
 connectDB();
 
 // Маршруты
-app.post('/models/order', async (req, res) => {
+app.post('/api/orders', async (req, res) => {
   try {
     const order = new Order(req.body);
     await order.save();
@@ -25,7 +25,7 @@ app.post('/models/order', async (req, res) => {
   }
 });
 
-app.get('/models/order', async (req, res) => {
+app.get('/api/orders', async (req, res) => {
   try {
     const orders = await Order.find().sort({ createdAt: -1 });
     res.json(orders);
