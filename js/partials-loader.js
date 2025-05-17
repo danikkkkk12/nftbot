@@ -53,6 +53,10 @@
     "js/buy-gift.js",
     "js/crash-game.js",
     "js/nav-bar.js",
+    "js/profile.js",
+    "js/frog-game.js",
+    "js/giveaway.js",
+    "server/test-post.js",
   ];
 
   for (const src of scripts) {
