@@ -33,6 +33,7 @@
       const script = document.createElement("script");
       script.src = src;
       script.async = false;
+      script.type = "module"
       script.onload = resolve;
       script.onerror = reject;
       document.body.appendChild(script);
