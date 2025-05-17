@@ -2,19 +2,20 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('../db/db');
 const Order = require('./api/order');
+const path = require('path');
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('../web')); // Для обслуживания статических файлов
+app.use(express.static(path.join(__dirname, '..')));
 
 // Подключение к БД
 connectDB();
 
 // Маршруты
-app.post('/models/order', async (req, res) => {
+app.post('/api/orders', async (req, res) => {
   try {
     const order = new Order(req.body);
     await order.save();
@@ -24,7 +25,7 @@ app.post('/models/order', async (req, res) => {
   }
 });
 
-app.get('/models/order', async (req, res) => {
+app.get('/api/orders', async (req, res) => {
   try {
     const orders = await Order.find().sort({ createdAt: -1 });
     res.json(orders);
