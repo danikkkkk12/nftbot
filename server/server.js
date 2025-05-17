@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('../db/db');
-const Order = require('./api/order');
+const User = require('./api/user');
 const path = require('path');
 
 const app = express();
@@ -15,20 +15,20 @@ app.use(express.static(path.join(__dirname, '..')));
 connectDB();
 
 // Маршруты
-app.post('/api/orders', async (req, res) => {
+app.post('/api/users', async (req, res) => {
   try {
-    const order = new Order(req.body);
-    await order.save();
-    res.status(201).json(order);
+    const user = new User(req.body);
+    await user.save();
+    res.status(201).json(user);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-app.get('/api/orders', async (req, res) => {
+app.get('/api/users', async (req, res) => {
   try {
-    const orders = await Order.find().sort({ createdAt: -1 });
-    res.json(orders);
+    const users = await User.find().sort({ createdAt: -1 });
+    res.json(users);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

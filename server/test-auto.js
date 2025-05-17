@@ -8,12 +8,12 @@ const sendRequest = async () => {
       comment: `Авто-запрос в ${new Date().toLocaleTimeString()}`
     };
 
-    const response = await axios.post('http://localhost:3000/api/orders', testData);
+    const response = await axios.post('http://localhost:3000/api/users', testData);
     console.log(`✅ [${new Date().toISOString()}] Запрос успешен:`, response.data._id);
     
     // Получаем список всех заказов
-    const orders = await axios.get('http://localhost:3000/api/orders');
-    console.log(`📦 Всего заказов: ${orders.data.length}`);
+    const user = await axios.get('http://localhost:3000/api/users');
+    console.log(`📦 Всего заказов: ${user.data.length}`);
   } catch (error) {
     console.error('❌ Ошибка:', error.message);
   }
