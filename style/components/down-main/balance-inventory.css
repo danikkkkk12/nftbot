@@ -51,7 +51,7 @@
 .inventory-buttons__balance::before {
   content: "";
   position: absolute;
-  background: url(../../../images/inventory/balance.svg) no-repeat center/cover;
+  background: url('web/images/inventory/balance.svg') no-repeat center/cover;
   width: 20px;
   height: 20px;
   left: 22%;
@@ -80,7 +80,7 @@
 .inventory-buttons__inventory::before {
   content: "";
   position: absolute;
-  background: url(../../../images/inventory/gift.svg) no-repeat center/cover;
+  background: url('web/images/inventory/gift.svg') no-repeat center/cover;
   width: 20px;
   height: 20px;
   left: 15%;
@@ -128,33 +128,43 @@
   height: 137px; */
 }
 .inventory-skins-items-card__current {
-  display: inline-flex;
-  height: 24px;
-  width: 32px;
-  padding: 4px 7px 4px 5px;
-  align-self: start;
-  gap: 1px;
-  flex-shrink: 0;
-  border-radius: 20px;
-  background: linear-gradient(180deg, #383838 0%, #585858 100%);
-  color: #fff;
+color: #fff;
   text-align: center;
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  position: relative;
 }
-.inventory-skins-items-card__current::after {
+.current {
+  margin-left: -61px;
+   display: flex;
+  height: 24px;
+  width: 46px;
+  padding: 4px 7px 4px 5px;
+  align-self: start;
+  gap: 1px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #383838 0%, #585858 100%);
+  padding-top: 2.5px;
+  margin-left: 4px;
+}
+
+.current img {
+    margin-left: 12%;
+    margin-top: -3%;
+}
+
+/* .inventory-skins-items-card__current::after {
   content: "";
   position: absolute;
-  background: url(/web/images/inventory/ton.svg) no-repeat center/cover;
+  background: url('web/images/inventory/ton.svg') no-repeat center/cover;
   width: 16px;
   height: 16px;
   top: 18%;
   left: 54%;
-}
+} */
 
 .inventory-skins-items-card__img {
   max-width: 87px;
@@ -273,6 +283,7 @@
   aspect-ratio: 1/1;
   left: 130%;
 }
+
 
 /* balance */
 

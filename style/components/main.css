@@ -1,3 +1,18 @@
+.header {
+  margin: 0 auto;
+  max-width: 440px;
+  padding-top: 20px;
+
+  display: grid;
+  place-items: center;
+}
+.header::after {
+  content: "";
+  border: 1px solid rgba(136, 69, 245, 0.2);
+  height: 1px;
+  width: 400px;
+  margin-top: 18px;
+}
 .main-wrapper {
   margin: 0 auto;
   max-width: 1440px;
@@ -9,7 +24,7 @@
 
 .main-rocket {
   background-color: rgba(21, 15, 39, 1);
-  padding: 11px 13px;
+  padding: 0 13px 11px;
   border-radius: 10px 20px 0px 0px;
   margin: 0 auto;
   max-width: 440px;
@@ -25,12 +40,12 @@
 }
 
 .main-balance {
-  max-width: 130px;
-
+  max-width: 100px;
+  justify-content: space-between;
   width: 100%;
   height: 44px;
   top: 20px;
-  margin-left: 20px;
+  margin-left: 10px;
   border: 1px solid rgba(136, 69, 245, 0.5);
   border-radius: 10px;
   font-family: "Montserrat", sans-serif;
@@ -39,14 +54,16 @@
   color: rgba(255, 255, 255, 1);
   padding-left: 5px;
 }
-@media (min-width: 340px) {
+@media (min-width: 390px) {
   .main-balance {
-    max-width: 100px;
-    margin-left: 77px;
+    margin-left: 55px;
     padding-left: 10px;
   }
 }
+.main-wrapper-balance__logo{
+  margin-left: -20px;
 
+}
 .main-connect-wallet {
   margin-left: 8px;
   max-width: 162px;
@@ -86,12 +103,33 @@
   }
 }
 
-.main-line {
-  width: 400px;
-  border: 1px solid rgba(136, 69, 245, 0.2);
-  margin-top: 18px;
+#ton-connect {
+  opacity: 0;
+  position: absolute;
 }
 
+.main-wallet {
+  position: relative;
+}
+
+.ton-connect {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  z-index: 5;
+  max-width: 162px;
+  width: 100%;
+  height: 46px;
+  border-radius: 10px;
+  border: 1px solid rgba(136, 69, 245, 0.5);
+  background-color: rgba(21, 15, 39, 1);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: rgba(255, 255, 255, 1);
+  cursor: pointer;
+  padding-bottom: 2px;
+}
 .main-news__button {
   border: none;
   max-width: 91px;
@@ -102,6 +140,7 @@
   font-weight: 600;
   font-size: 17px;
   color: rgba(136, 69, 245, 1);
+  background-color: #fff;
   /* margin-left: 84px; */
 }
 @media (min-width: 340px) {
