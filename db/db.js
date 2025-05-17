@@ -1,11 +1,18 @@
-import mongoose from "mongoose";
+// db/db.js
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-const mongoURI = "mongodb+srv://danikkkk12:68429852DanikBaze@cluster0.afahx5g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; 
+dotenv.config(); // загружаем .env
 
-mongoose.connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => console.log("✅ База подключена"))
-  .catch(err => console.error("Ошибка подключения:", err));
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.mongoURI);
+    console.log('✅ MongoDB connected');
+  } catch (error) {
+    console.error('❌ DB error:', error);
+    process.exit(1);
+  }
+};
 
-export default mongoose;
+module.exports = connectDB;
+
