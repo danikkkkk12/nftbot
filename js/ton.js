@@ -35,6 +35,18 @@ async function updateBalance() {
   }
 }
 
+mainConnectWallet.addEventListener("click", async () => {
+  try {
+    await tonConnect.connect();
+    if (tonConnect.wallet && tonConnect.wallet.account) {
+      mainConnectWallet.textContent = "Connected✅";
+      await updateBalance();
+    }
+  } catch (err) {
+    console.error("Ошибка подключения:", err);
+  }
+});
+
 mainBalance.addEventListener("click", async () => {
   try {
     const res = await fetch("/create-invoice");
