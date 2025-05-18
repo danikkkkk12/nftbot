@@ -25,7 +25,6 @@ async function updateBalance() {
       const address = tonConnect.wallet.account.address;
       const balanceNano = await getBalance(address);
       const balanceTon = (balanceNano / 1e9).toFixed(2);
-
       mainBalance.innerHTML = `
         ${balanceTon} <img src="web/images/main/ton-icon.svg" alt="Token" class="main-balance__token">
       `;
@@ -35,16 +34,17 @@ async function updateBalance() {
   }
 }
 
-mainConnectWallet.addEventListener("click", async () => {
-  try {
-    await tonConnect.connect();
-    if (tonConnect.wallet && tonConnect.wallet.account) {
-      mainConnectWallet.textContent = "Connected✅";
-      await updateBalance();
-    }
-  } catch (err) {
-    console.error("Ошибка подключения:", err);
+const observer = new MutationObserver(() => {
+  const button = document.querySelector('#ton-connect');
+  if (button) {
+    button.textContent = 'Connected✅'; 
+    observer.disconnect(); 
   }
+});
+
+observer.observe(document.getElementById('ton-connect'), {
+  childList: true,
+  subtree: true
 });
 
 mainBalance.addEventListener("click", async () => {
