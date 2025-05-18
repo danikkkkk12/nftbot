@@ -34,18 +34,7 @@ async function updateBalance() {
   }
 }
 
-const observer = new MutationObserver(() => {
-  const button = document.querySelector('#ton-connect');
-  if (button) {
-    button.textContent = 'Connected✅'; 
-    observer.disconnect(); 
-  }
-});
 
-observer.observe(document.getElementById('ton-connect'), {
-  childList: true,
-  subtree: true
-});
 
 mainBalance.addEventListener("click", async () => {
   try {
