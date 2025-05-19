@@ -1,6 +1,6 @@
-const connectDB = require("../db/db");
-const { Telegraf } = require("telegraf");
-const User = require("../server/api/user");
+// const connectDB = require("../db/db");
+// const { Telegraf } = require("telegraf");
+// const User = require("../server/api/user");
 
 const lockIcon = document.querySelector(".user-page-inv__icon--lock");
 const iconInv = document.querySelector(".user-page-inv__icon--inv");
@@ -10,16 +10,19 @@ const userName = document.querySelector(".user-page-profile__name");
 const userId = document.querySelector(".user-page-profile__id");
 const userAvatar = document.querySelector(".user-page-profile__avatar");
 
-connectDB();
+function getTelegramId() {
+  return window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+}
 
-async function connectProfile(ctx) {
+async function connectProfile(telegramId) {
   try {
-    const telegramId = ctx.from.id;
+    const response = await fetch("https://nftbotserver.onrender.com/api/users");
+    const users = await response.json();
 
-    const user = await User.findOne({ telegramId });
+    const user = users.find((user) => user.telegramId == telegramId);
 
     if (!user) {
-      console.log("Користувача не знайдено");
+      console.log("Користувача з таким Telegram ID не знайдено");
       return null;
     }
 
@@ -27,13 +30,25 @@ async function connectProfile(ctx) {
     const avatar = user.avatar || "default-avatar-url.jpg";
 
     userName.textContent = username;
-    userId.textContent = `User ID: ${telegramId}`;
+    userId.textContent = `User ID: ${user.telegramId}`;
     userAvatar.setAttribute("src", avatar);
   } catch (error) {
     console.error("Помилка при отриманні профілю:", error);
     return null;
   }
 }
+
+function waitForTelegramIdAndConnect() {
+  const interval = setInterval(() => {
+    const telegramId = getTelegramId();
+    if (telegramId) {
+      clearInterval(interval);
+      connectProfile(telegramId);
+    }
+  }, 500); 
+}
+
+waitForTelegramIdAndConnect();
 // modal
 const promoBtnOpen = document.querySelector(".user-page-inv__btn--promo");
 const promobackdrop = document.querySelector(".promo-backdrop");
