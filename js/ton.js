@@ -36,14 +36,14 @@ async function updateBalance() {
 
 
 
-mainBalance.addEventListener("click", async () => {
-  try {
-    const res = await fetch("/create-invoice");
-    const data = await res.json();
-    window.open(data.invoice_url, "_blank");
+mainBalance.addEventListener("click", () => {  
+  // const amountTon = 1; 
+  // const wallet = "adress"; 
 
-    setTimeout(updateBalance, 5000);
-  } catch (err) {
-    console.error("Ошибка создания инвойса:", err);
-  }
+  // const amountNanoTon = amountTon * 1e9;
+
+  // const url = `https://tonhub.com/transfer/${wallet}?amount=${amountNanoTon}`;
+  // window.open(url, "_blank");
+
+  
 });

@@ -29,7 +29,7 @@ const changeBet = function (field, fixedBtns, changeBtns, selectBtn) {
     });
   });
 
-  selectBtn.addEventListener("click", () => {
+  selectBtn.addEventListener("click", () => { 
     if (currentValue === 0) {
       alert("Сделайте ставку");
     } else if (currentValue <= balance) {
@@ -59,7 +59,7 @@ fieldBet.forEach((field, index) => {
 });
 
 
-export { changeBet };
+module.exports = { changeBet }; 
 // slider
 
 new Swiper(".bet-count__swiper", {

@@ -1,3 +1,4 @@
+const { changeBet } = require('./balance');
 const toggleButtons = document.querySelectorAll(".bal-inv__btn");
 const betToggle = document.querySelector(".bet-Toggle");
 const giftCard = document.querySelectorAll('.select-bet-change__btn')
@@ -36,35 +37,6 @@ if (betToggle) {
   });
 } else {
   console.warn("Элемент .bet-toggle не найден");
-}
-
-const changeBet = function (field, fixedBtns, changeBtns) {
-  let currentValue = Number(field.textContent) || 0;
-  let currentOperation = "";
-
-  changeBtns.forEach((el) => {
-    el.addEventListener("click", () => {
-      currentOperation = el.id;
-      console.log(currentOperation);
-    });
-  });
-
-  fixedBtns.forEach((el) => {
-    el.addEventListener("click", () => {
-      if (currentOperation === "plus") {
-        currentValue += Number(el.textContent);
-      } else if (
-        currentOperation === "minus" &&
-        currentValue >= Number(el.textContent)
-      ) {
-        currentValue -= Number(el.textContent);
-      }
-
-      field.textContent = currentValue;
-    });
-  });
-
-  return currentValue;
 }
 
 betBtn.forEach((btn, index) => {

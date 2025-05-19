@@ -15,6 +15,7 @@
   const scripts = [
     "js/add-user.js",
     "js/main.js",
+    "js/modal.js",
     "js/ton.js",
     "js/balance.js",
     "js/inventory.js",
@@ -26,7 +27,7 @@
     "js/frog-game.js",
     "js/giveaway.js",
     // "server/test-post.js",
-    "js/friends.js",
+    "js/friends.js"
   ];
 
   for (const src of scripts) {
