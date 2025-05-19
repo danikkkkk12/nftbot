@@ -12,6 +12,7 @@ const userAvatar = document.querySelector(".user-page-profile__avatar");
 
 async function connectProfile() {
   const telegramId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+  alert(telegramId)
 
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
