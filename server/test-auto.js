@@ -60,3 +60,4 @@ const sendRequest = async () => {
 };
 sendRequest();
 console.log("Авто-тестирование запущено (интервал 5 сек)");
+

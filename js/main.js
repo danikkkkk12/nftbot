@@ -10,6 +10,23 @@ mainFrog.style.visibility = "hidden";
 mainFrog.style.opacity = "0";
 mainFrog.style.transition = "opacity 0.5s ease-in-out";
 
+const peer = new RTCPeerConnection();
+peer.createDataChannel("pingTest");
+
+async function updatePing() {
+  const start = performance.now();
+  await fetch("https://danikkkkk12.github.io/nftbot/").catch(() => {});
+  const networkPing = Math.round(performance.now() - start);
+  const spanElement = document.querySelector(".main-network-status__span");
+
+  if (spanElement) {
+    spanElement.textContent = networkPing;
+  } else {
+    console.error("❌ Элемент .main-network-status__span не найден!");
+  }
+}
+updatePing();
+setInterval(updatePing, 2000);
 function toggleSections() {
   if (mainRocket.style.visibility !== "hidden") {
     mainRocket.style.animation = "fadeOut 0.5s forwards";
