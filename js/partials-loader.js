@@ -24,7 +24,7 @@
     "js/profile.js",
     "js/frog-game.js",
     "js/giveaway.js",
-    "server/test-post.js",
+    // "server/test-post.js",
     "js/friends.js",
   ];
 
