@@ -4,7 +4,7 @@ const notification = document.getElementById("copyNotification");
 if (copyButton) {
     copyButton.addEventListener("click", async function () {
         try {
-            await navigator.clipboard.writeText("tg://resolve?domain=danikkkkk12_nftbot&startapp=");
+            await navigator.clipboard.writeText("https://t.me/nftgo_bot");
             notification.classList.add("show");
 
             setTimeout(() => notification.classList.remove("show"), 2000);
@@ -19,9 +19,20 @@ const inviteMainButton = document.querySelector(".invite-button-main");
 
 if (inviteMainButton) {
     inviteMainButton.addEventListener("click", function () {
-        const telegramDeepLink = "tg://resolve?domain=danikkkkk12_nftbot&startapp=";
-        const shareMessage = "Привет! Получи 10% от депозита вашего друга, присоединяйся через мою ссылку!";
+        const telegramDeepLink = "https://t.me/nftgo_bot";
+        const shareMessage = `
+🚀 *Привет!*  
+🌟 Я приглашаю тебя в *эксклюзивного Telegram-бота*!  
 
-        window.open(`https://t.me/share/url?url=${encodeURIComponent(telegramDeepLink)}&text=${encodeURIComponent(shareMessage)}`, "_blank");
+💰 *Бонус:* Получи *10%* от депозита друга!  
+🔗 [Открыть бота](https://t.me/nftgo_bot)  
+
+🔥 *Присоединяйся прямо сейчас!*  
+`;
+
+        window.open(
+            `https://t.me/share/url?url=${encodeURIComponent(telegramDeepLink)}&text=${encodeURIComponent(shareMessage)}`,
+            "_blank"
+        );
     });
 }

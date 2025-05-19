@@ -1,11 +1,12 @@
 <section class="down-main">
   <div class="bet-Toggle">
-    <h3 class="bet__title">Выбрать тип ставки</h3>
+    <h3 class="bet__title" data-lang-key="betTitle">Выбрать тип ставки</h3>
     <div class="bal-inv">
       <button
         class="bal-inv__btn bal-inv__btn--balance active"
         type="button"
         data-target="balance"
+        data-lang-key="betTypeBalance"
       >
         <img
           src="web/images/balance/balance-icon.svg"
@@ -18,6 +19,7 @@
         class="bal-inv__btn bal-inv__btn--inventory"
         type="button"
         data-target="inventory"
+        data-lang-key="betTypeInventory"
       >
         <img
           src="web/images/inventory/gift.svg"
@@ -62,14 +64,14 @@
                 </button>
               </div>
             </div>
-            <button class="select-bet__btn">Ставить</button>
+            <button class="select-bet__btn" data-lang-key="placeBetButton">Ставить</button>
           </div>
         </div>
         <div class="select-bet">
           <div class="select-bet__field">
             <div class="select-bet__pages">
               <div class="select-bet-count">
-                <button class="select-bet-count__btn" type="button" id="plus">
+                <button class="select-bet-count__btn" type="button" id="plus-alt"> 
                   <img
                     src="web/images/balance/balance-plus-icon.svg"
                     alt="plus-icon"
@@ -77,7 +79,7 @@
                   />
                 </button>
                 <div class="select-bet-count__number">0</div>
-                <button class="select-bet-count__btn" type="button" id="minus">
+                <button class="select-bet-count__btn" type="button" id="minus-alt"> 
                   <img
                     src="web/images/balance/balance-minus-icon.svg"
                     alt="minuse-icon"
@@ -95,16 +97,15 @@
                 </button>
               </div>
             </div>
-            <button class="select-bet__btn">Ставить</button>
+            <button class="select-bet__btn" data-lang-key="placeBetButton">Ставить</button>
           </div>
-          <!-- <hr style="height: 40px; background: #150F27; border: none;"> -->
         </div>
       </div>
     </div>
 
     <div class="bet-switcher__inventory sw">
       <div class="inventory-skins">
-        <h2 class="inventory-skins__title">Выбрать скины</h2>
+        <h2 class="inventory-skins__title" data-lang-key="inventorySkinsTitle">Выбрать скины</h2>
 
         <div class="inventory-skins-items">
           <div class="inventory-skins-items-card">
@@ -142,7 +143,7 @@
               alt=""
               class="inventory-skins-items-added-card__img"
             />
-            <h3 class="inventory-skins-items-added-card__title">
+            <h3 class="inventory-skins-items-added-card__title" data-lang-key="inventoryBuyGift">
               купить подарок
             </h3>
           </div>
@@ -152,7 +153,7 @@
               alt=""
               class="inventory-skins-items-added-card__img"
             />
-            <h3 class="inventory-skins-items-added-card__title">
+            <h3 class="inventory-skins-items-added-card__title" data-lang-key="inventoryBuyGift">
               купить подарок
             </h3>
           </div>
@@ -162,7 +163,7 @@
               alt=""
               class="inventory-skins-items-added-card__img"
             />
-            <h3 class="inventory-skins-items-added-card__title">
+            <h3 class="inventory-skins-items-added-card__title" data-lang-key="inventoryBuyGift">
               купить подарок
             </h3>
           </div>
@@ -170,7 +171,7 @@
       </div>
     </div>
     <div class="bet-count">
-      <h3 class="bet-count__title">Всего ставок: <span id="total">0</span></h3>
+      <h3 class="bet-count__title" data-lang-key="totalBetsPrefix">Всего ставок: <span id="total">0</span></h3>
       <div class="swiper bet-count__swiper">
         <ul class="swiper-wrapper bet-count-list">
 

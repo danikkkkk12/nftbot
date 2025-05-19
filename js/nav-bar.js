@@ -1,16 +1,20 @@
 const navItems = document.querySelectorAll(".icon-navigation-bar .nav-item");
+const iconNavigationBar = document.querySelector(".icon-navigation-bar");
+const sections = document.querySelectorAll("section");
 
 function setActiveItem(clickedItem) {
   navItems.forEach((item) => {
-    if (item !== clickedItem) {
-      item.classList.remove("active-item");
-    }
+    item.classList.remove("active-item");
   });
 
   clickedItem.classList.add("active-item");
-}
 
-const sections = document.querySelectorAll("section");
+  if (clickedItem.id === "frog") {
+    iconNavigationBar.classList.remove("purple-theme");
+  } else {
+    iconNavigationBar.classList.add("purple-theme");
+  }
+}
 
 navItems.forEach((item) => {
   item.addEventListener("click", function (event) {
@@ -23,7 +27,7 @@ navItems.forEach((item) => {
 
     if (targetId === "profile") {
       document.querySelector(".user-page").style.display = "block";
-    } else if (targetId === "rocket") {
+    } else if (targetId === "frog") {
       document.querySelector(".main-rocket").style.display = "block";
       document.querySelector(".down-main").style.display = "block";
     } else if (targetId === "gifts") {
@@ -34,4 +38,17 @@ navItems.forEach((item) => {
 
     setActiveItem(this);
   });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const initiallyActiveItem = document.querySelector(".icon-navigation-bar .nav-item.active-item");
+    if (initiallyActiveItem) {
+        if (initiallyActiveItem.id === "frog") {
+            iconNavigationBar.classList.remove("purple-theme");
+        } else {
+            iconNavigationBar.classList.add("purple-theme");
+        }
+    } else {
+        iconNavigationBar.classList.remove("purple-theme");
+    }
 });
