@@ -6,7 +6,6 @@ if (copyButton) {
     try {
       await navigator.clipboard.writeText("https://t.me/nftgo_bot");
       notification.classList.add("show");
-
       setTimeout(() => notification.classList.remove("show"), 2000);
     } catch (err) {
       console.error("Failed to copy: ", err);
@@ -19,21 +18,16 @@ const inviteMainButton = document.querySelector(".invite-button-main");
 
 if (inviteMainButton) {
   inviteMainButton.addEventListener("click", function () {
-    const telegramDeepLink = "https://t.me/nftgo_bot";
     const shareMessage = `
 🚀 *Привет!*  
 🌟 Я приглашаю тебя в *эксклюзивного Telegram-бота*!  
-
 💰 *Бонус:* Получи *10%* от депозита друга!  
-🔗 [Открыть бота](https://t.me/nftgo_bot)  
-
+🔗 Открыть бота https://t.me/nftgo_bot  
 🔥 *Присоединяйся прямо сейчас!*  
 `;
 
     window.open(
-      `https://t.me/share/url?url=${encodeURIComponent(
-        telegramDeepLink
-      )}&text=${encodeURIComponent(shareMessage)}`,
+      `https://t.me/share/url?text=${encodeURIComponent(shareMessage)}`,
       "_blank"
     );
   });
