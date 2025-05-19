@@ -3,9 +3,9 @@
   margin: 0 auto;
   max-width: 409px;
   width: 100%;
+  display: none;
 }
 .user-page-profile {
-  display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 24px;
