@@ -1,5 +1,5 @@
 // const connectDB = require("../db/db");
-const { Telegraf } = require("telegraf");
+// const { Telegraf } = require("telegraf");
 // const User = require("../server/api/user");
 
 const lockIcon = document.querySelector(".user-page-inv__icon--lock");
@@ -11,8 +11,7 @@ const userId = document.querySelector(".user-page-profile__id");
 const userAvatar = document.querySelector(".user-page-profile__avatar");
 
 async function connectProfile() {
-  const telegramId =
-    window.Telegram?.WebApp?.initDataUnsafe?.user?.id || "5384952149";
+  const telegramId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
 
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
