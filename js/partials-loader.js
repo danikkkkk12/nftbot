@@ -13,7 +13,6 @@
 
   // Завантажуємо скрипти послідовно
   const scripts = [
-    "js/add-user.js",
     "js/main.js",
     "js/ton.js",
     "js/balance.js",
@@ -25,7 +24,6 @@
     "js/profile.js",
     "js/frog-game.js",
     "js/giveaway.js",
-    // "server/test-post.js",
     "js/friends.js",
   ];
 
