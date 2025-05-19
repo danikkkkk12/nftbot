@@ -29,6 +29,7 @@ if (inviteMainButton) {
 
 🔥 *Присоединяйся прямо сейчас!*  
 `;
+
     window.open(
       `https://t.me/share/url?url=${encodeURIComponent(
         telegramDeepLink
