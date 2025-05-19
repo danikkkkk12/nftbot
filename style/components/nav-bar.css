@@ -10,7 +10,7 @@
   );
   padding: 8px 36px;
   gap: 22px;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease; 
   border-radius: 20px;
   max-width: 409px;
   width: 100%;
@@ -24,9 +24,13 @@
   transform: translate(-50%, -50%);
 }
 
+
+.icon-navigation-bar.purple-theme {
+  background: linear-gradient(169deg, #8845f5 19.53%, #4f288f 100%);
+}
+
 .icon-navigation-bar:hover {
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  background: linear-gradient(169deg, #8845f5 19.53%, #4f288f 100%);
 }
 
 .nav-item {
@@ -37,6 +41,10 @@
   color: white;
   text-align: center;
   position: relative;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
 }
 
 .nav-icon {
@@ -47,13 +55,11 @@
   background-color: transparent;
   border-radius: 0%;
   padding-bottom: 2px;
-
   transform: translateY(0);
   box-shadow: none;
   position: relative;
   z-index: 1;
   box-sizing: border-box;
-
   transition: background-color 0.3s ease, width 0.3s ease, height 0.3s ease,
     transform 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease,
     padding 0.3s ease;

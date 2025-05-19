@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Магазин подарунків</title>
+  <title data-lang-key="pageTitleGifts">Магазин подарунків</title>
   <link rel="stylesheet" href="gifts.css">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <button id="openModalBtn">Відкрити магазин</button>
+  <button id="openModalBtn" data-lang-key="giftsOpenShopButton">Відкрити магазин</button>
 
   <div class="modal-overlay" id="modalOverlay" style="display: none;">
     <div class="modal">
       <div class="close-btn" id="closeModalBtn">✖</div>
-      <h2 class="modal-title">Купить подарок</h2>
+      <h2 class="modal-title" data-lang-key="modalTitleBuyGift">Купить подарок</h2>
 
       <div class="filter-bar">
-        <input type="text" style="background-color: black;" id="searchInput" placeholder="🔍 Назва" />
-        <span class="max-price-label">Макс. цена TON</span>
+        <input type="text" style="background-color: black;" id="searchInput" data-lang-placeholder-key="modalSearchPlaceholder" placeholder="🔍 Назва" />
+        <span class="max-price-label" data-lang-key="modalMaxPriceLabel">Макс. цена TON</span>
         <span class="gear-icon">⚙️</span>
       </div>
 
@@ -32,7 +32,7 @@
 
       <div class="grid" id="gridContainer"></div>
 
-      <button class="buy-btn" id="buyBtn">BUY ITEMS</button>
+      <button class="buy-btn" id="buyBtn" data-lang-key="modalBuyButton">BUY ITEMS</button>
     </div>
   </div>
 

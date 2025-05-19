@@ -25,6 +25,7 @@
     "js/frog-game.js",
     "js/giveaway.js",
     "js/friends.js",
+    "js/translation.js"
   ];
 
   for (const src of scripts) {
