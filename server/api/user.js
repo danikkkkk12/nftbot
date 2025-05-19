@@ -23,9 +23,10 @@ const userSchema = new Schema(
     balance: { type: Number, default: 0, min: 0 },
     gameHistory: [
       {
-        gameId: { type: Schema.Types.ObjectId, ref: "Game" },
         date: { type: Date, default: Date.now },
-        result: { type: String, enum: ["win", "lose", "draw"] },
+        betAmount: { type: Number, required: true, min: 0 },
+        coefficient: { type: Number, required: true, min: 1 },
+        result: { type: String, enum: ["win", "lose"], required: true },
       },
     ],
 

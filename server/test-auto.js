@@ -14,11 +14,15 @@ const sendRequest = async () => {
         {
           gameId: "60f5c2c4b5f1e12b34567890",
           date: new Date("2025-05-15T14:30:00Z"),
+          betAmount: 50,
+          coefficient: 2.0,
           result: "win",
         },
         {
           gameId: "60f5c2c4b5f1e12b34567891",
           date: new Date("2025-05-16T10:00:00Z"),
+          betAmount: 30,
+          coefficient: 1.5,
           result: "lose",
         },
       ],
@@ -47,8 +51,9 @@ const sendRequest = async () => {
     );
 
     // Получаем список всех заказов
-    const user = await axios.get("http://localhost:3000/api/users");
-    console.log(`📦 Всего заказов: ${user.data.length}`);
+    const users = await axios.get("http://localhost:3000/api/users");
+    console.log(users);
+    console.log(`📦 Всего заказов: ${users.data.length}`);
   } catch (error) {
     console.error("❌ Ошибка:", error.message);
   }
