@@ -1,6 +1,39 @@
+const connectDB = require("../db/db");
+const { Telegraf } = require("telegraf");
+const User = require("../server/api/user");
+
 const lockIcon = document.querySelector(".user-page-inv__icon--lock");
 const iconInv = document.querySelector(".user-page-inv__icon--inv");
 const userInv = document.querySelector(".user-page-inv");
+// profile
+const userName = document.querySelector(".user-page-profile__name");
+const userId = document.querySelector(".user-page-profile__id");
+const userAvatar = document.querySelector(".user-page-profile__avatar");
+
+connectDB();
+
+async function connectProfile(ctx) {
+  try {
+    const telegramId = ctx.from.id;
+
+    const user = await User.findOne({ telegramId });
+
+    if (!user) {
+      console.log("Користувача не знайдено");
+      return null;
+    }
+
+    const username = user.username || "Без імені";
+    const avatar = user.avatar || "default-avatar-url.jpg";
+
+    userName.textContent = username;
+    userId.textContent = `User ID: ${telegramId}`;
+    userAvatar.setAttribute("src", avatar);
+  } catch (error) {
+    console.error("Помилка при отриманні профілю:", error);
+    return null;
+  }
+}
 // modal
 const promoBtnOpen = document.querySelector(".user-page-inv__btn--promo");
 const promobackdrop = document.querySelector(".promo-backdrop");
@@ -43,3 +76,5 @@ new Swiper(".user-page-game-history__swiper", {
 
   mousewheel: true,
 });
+
+connectProfile();
