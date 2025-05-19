@@ -13,6 +13,26 @@
         class="main-balance__token"
       />
     </div>
+ <div class="modal" id="modal">
+    <div class="modal__content">
+       <h2 class="modal__title">Пополнение кошелька</h2>
+      <span class="modal__close" id="closeModalBtn">&times;</span>
+
+      <form action="" class="modal-form">
+      <label for="wayWallet">Выберите способ оплаты</label>
+      <select name="wayWallet" id="select" required>         
+        <option value="value2" selected>-- Выберите --</option>
+         <option value="value1">TON</option>
+
+      </select>
+
+      <label for="sumPay">Выберите сумму оплаты</label>
+      <input type="number" name="sumPay" id="sumPay" min="0" required>
+
+      <button class="btn" type="submit">Оплатить</button>
+    </form>
+    </div>
+  </div>
     <div class="main-wallet">
       <div id="ton-connect" class="ton-connect"></div>
       <button class="main-connect-wallet" data-lang-key="connectWallet">Connect Wallet</button>

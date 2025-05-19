@@ -1,5 +1,11 @@
-const mainBalance = document.querySelector(".main-balance");
+const mainBalance = document.querySelector(".main-wrapper__balance");
 const mainConnectWallet = document.querySelector(".main-connect-wallet");
+const modal = document.getElementById("modal");
+const openBtn = document.getElementById("openModalBtn");
+const closeBtn = document.getElementById("closeModalBtn");
+const modalForm = document.querySelector('.modal-form')
+const sumPay = document.getElementById('sumPay')
+
 
 const tonConnect = new TON_CONNECT_UI.TonConnectUI({
   manifestUrl: "https://danikkkkk12.github.io/nftbot/tonconnect-manifest.json",
@@ -36,14 +42,25 @@ async function updateBalance() {
 
 
 
-mainBalance.addEventListener("click", () => {  
-  // const amountTon = 1; 
-  // const wallet = "adress"; 
+mainBalance.style = "cursor: pointer;"
 
-  // const amountNanoTon = amountTon * 1e9;
+mainBalance.addEventListener("click", () => {
+  modal.style.display = "block";
+});
 
-  // const url = `https://tonhub.com/transfer/${wallet}?amount=${amountNanoTon}`;
-  // window.open(url, "_blank");
+closeBtn.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+
+modalForm.addEventListener("submit", () => {  
+  const amountTon = sumPay.value; 
+  const wallet = "UQBoyxLiYbqM7jGeuUj53myaWbjs8Wvs4dBaU2k0RpfMxq0z"; 
+
+  const amountNanoTon = amountTon * 1e9;
+
+  const url = `https://tonhub.com/transfer/${wallet}?amount=${amountNanoTon}`;
+  window.open(url, "_blank");
 
   
 });

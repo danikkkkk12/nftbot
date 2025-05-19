@@ -14,7 +14,6 @@
   // Завантажуємо скрипти послідовно
   const scripts = [
     "js/main.js",
-    "js/modal.js",
     "js/ton.js",
     "js/balance.js",
     "js/inventory.js",
