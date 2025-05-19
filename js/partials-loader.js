@@ -27,6 +27,7 @@
     "js/giveaway.js",
     // "server/test-post.js",
     "js/friends.js",
+    "js/translation.js"
   ];
 
   for (const src of scripts) {
