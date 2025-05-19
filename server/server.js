@@ -39,6 +39,6 @@ app.listen(PORT, () => {
   console.log(`🚀 Server started on http://localhost:${PORT}`);
 });
 
-if (process.env.NODE_ENV === 'development') {
-  require('./test-auto'); 
-}
+// if (process.env.NODE_ENV === 'development') {
+//   require('./test-auto'); 
+// }
