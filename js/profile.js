@@ -1,6 +1,6 @@
-const connectDB = require("../db/db");
+// const connectDB = require("../db/db");
 const { Telegraf } = require("telegraf");
-const User = require("../server/api/user");
+// const User = require("../server/api/user");
 
 const lockIcon = document.querySelector(".user-page-inv__icon--lock");
 const iconInv = document.querySelector(".user-page-inv__icon--inv");
@@ -10,16 +10,18 @@ const userName = document.querySelector(".user-page-profile__name");
 const userId = document.querySelector(".user-page-profile__id");
 const userAvatar = document.querySelector(".user-page-profile__avatar");
 
-connectDB();
+async function connectProfile() {
+  const telegramId =
+    window.Telegram?.WebApp?.initDataUnsafe?.user?.id || "5384952149";
 
-async function connectProfile(ctx) {
   try {
-    const telegramId = ctx.from.id;
+    const response = await fetch("https://nftbotserver.onrender.com/api/users");
+    const users = await response.json();
 
-    const user = await User.findOne({ telegramId });
+    const user = users.find((user) => user.telegramId == telegramId);
 
     if (!user) {
-      console.log("Користувача не знайдено");
+      console.log("Користувача з таким Telegram ID не знайдено");
       return null;
     }
 
@@ -27,13 +29,14 @@ async function connectProfile(ctx) {
     const avatar = user.avatar || "default-avatar-url.jpg";
 
     userName.textContent = username;
-    userId.textContent = `User ID: ${telegramId}`;
+    userId.textContent = `User ID: ${user.telegramId}`;
     userAvatar.setAttribute("src", avatar);
   } catch (error) {
     console.error("Помилка при отриманні профілю:", error);
     return null;
   }
 }
+
 // modal
 const promoBtnOpen = document.querySelector(".user-page-inv__btn--promo");
 const promobackdrop = document.querySelector(".promo-backdrop");
