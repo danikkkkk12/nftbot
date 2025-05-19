@@ -1,7 +1,3 @@
-// const connectDB = require("../db/db");
-// const { Telegraf } = require("telegraf");
-// const User = require("../server/api/user");
-
 const lockIcon = document.querySelector(".user-page-inv__icon--lock");
 const iconInv = document.querySelector(".user-page-inv__icon--inv");
 const userInv = document.querySelector(".user-page-inv");
@@ -39,16 +35,29 @@ async function connectProfile(telegramId) {
 }
 
 function waitForTelegramIdAndConnect() {
+  const maxWaitTime = 10000; // 10 секунд таймаут
+  const intervalTime = 500; // інтервал 500мс
+
+  let elapsedTime = 0;
+
   const interval = setInterval(() => {
     const telegramId = getTelegramId();
+
     if (telegramId) {
       clearInterval(interval);
       connectProfile(telegramId);
+    } else {
+      elapsedTime += intervalTime;
+      if (elapsedTime >= maxWaitTime) {
+        clearInterval(interval);
+        console.warn("Telegram ID не отримано за 10 секунд, припиняю чекати.");
+      }
     }
-  }, 500); 
+  }, intervalTime);
 }
 
 waitForTelegramIdAndConnect();
+
 // modal
 const promoBtnOpen = document.querySelector(".user-page-inv__btn--promo");
 const promobackdrop = document.querySelector(".promo-backdrop");
@@ -57,6 +66,7 @@ const promoInput = document.querySelector(".promo-modal__input");
 const promoBtnSearchPromocode = document.getElementById(
   "promoModalSearchPromocode"
 );
+
 const promocodes = {
   lelelele52: "Вы получили 2 кг мефедрона",
   ez100ton: "Вы получили 100 ton на баланс",
@@ -88,8 +98,5 @@ new Swiper(".user-page-game-history__swiper", {
   direction: "vertical",
   slidesPerView: "auto",
   freeMode: true,
-
   mousewheel: true,
 });
-
-connectProfile();
