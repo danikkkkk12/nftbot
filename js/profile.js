@@ -10,10 +10,11 @@ const userName = document.querySelector(".user-page-profile__name");
 const userId = document.querySelector(".user-page-profile__id");
 const userAvatar = document.querySelector(".user-page-profile__avatar");
 
-async function connectProfile() {
-  const telegramId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
-  alert(telegramId)
+function getTelegramId() {
+  return window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+}
 
+async function connectProfile(telegramId) {
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
     const users = await response.json();
@@ -37,6 +38,17 @@ async function connectProfile() {
   }
 }
 
+function waitForTelegramIdAndConnect() {
+  const interval = setInterval(() => {
+    const telegramId = getTelegramId();
+    if (telegramId) {
+      clearInterval(interval);
+      connectProfile(telegramId);
+    }
+  }, 500); 
+}
+
+waitForTelegramIdAndConnect();
 // modal
 const promoBtnOpen = document.querySelector(".user-page-inv__btn--promo");
 const promobackdrop = document.querySelector(".promo-backdrop");
