@@ -4,9 +4,6 @@ const iconInv = document.querySelector(".user-page-inv__icon--inv");
 const userInv = document.querySelector(".user-page-inv");
 // profile
 
-const languageButtons = document.querySelectorAll(
-  ".user-page-change-language__btn"
-);
 const userName = document.querySelector(".user-page-profile__name");
 const userId = document.querySelector(".user-page-profile__id");
 const userAvatar = document.querySelector(".user-page-profile__avatar");
@@ -54,41 +51,6 @@ async function connectProfile(telegramId) {
   }
 }
 
-languageButtons.forEach((btn) => {
-  btn.addEventListener("click", async () => {
-    const selectedLang = btn.getAttribute("data-lang");
-
-    languageButtons.forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    const telegramId = getTelegramId();
-
-    if (!telegramId) {
-      console.log("Telegram ID не найден");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `https://nftbotserver.onrender.com/api/users/${telegramId}/language`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ language: selectedLang }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Ошибка при обновлении языка");
-      }
-
-    } catch (error) {
-      console.error(error);
-    }
-  });
-});
-// Обробка подій для модального вікна
 const promoBtnOpen = document.querySelector(".user-page-inv__btn--promo");
 const promobackdrop = document.querySelector(".promo-backdrop");
 const promoBtnClose = document.querySelector(".promo-modal__btn-close");
