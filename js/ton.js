@@ -1,4 +1,4 @@
-const mainBalance = document.querySelector(".main-wrapper__balance");
+const mainBalance = document.querySelector(".main-balance");
 const mainConnectWallet = document.querySelector(".main-connect-wallet");
 const modal = document.getElementById("modal");
 const openBtn = document.getElementById("openModalBtn");
@@ -45,7 +45,7 @@ function toggleActive(change) {
 
 mainBalance.addEventListener("click", toggleActive)
 
-closeBtn.addEventListener("click", () => toggleActive)
+closeBtn.addEventListener("click", toggleActive)
 
 modalForm.addEventListener("submit", () => {
   const amountTon = sumPay.value;
