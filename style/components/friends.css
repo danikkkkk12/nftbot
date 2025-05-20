@@ -132,7 +132,6 @@
 }
 
 .balance-details .amount .diamond-icon {
-  /* vertical-align: middle; Already handled by flex align-items on parent */
 }
 
 .withdraw-button {
@@ -228,6 +227,9 @@
   font-size: 15px;
   text-align: center;
   color: #fff;
+  display: flex; /* For vertical centering if needed */
+  align-items: center; /* For vertical centering */
+  justify-content: center; /* For horizontal centering */
 }
 
 .task-item .reward {
@@ -241,7 +243,6 @@
 }
 
 .task-item .reward .diamond-icon {
-  /* vertical-align: middle; Already handled by flex align-items on parent */
 }
 
 .invited-list-section {
@@ -271,14 +272,36 @@
   font-size: 15px;
   line-height: 147%;
   color: #929292;
-  padding: 22px 10px;
+  padding: 10px 10px; /* Adjusted padding from 22px to 10px */
 }
 
-.invited-body p {
+.invited-body p[data-lang-key="friendsNoInvitedYet"] {
   text-align: center;
   padding: 20px 0;
   color: #929292;
   font-size: 15px;
   font-weight: 500;
   line-height: 147%;
+}
+
+.invited-friend-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  /* border-bottom: 1px solid #3a305a; */ /* Optional: if you want separators */
+}
+
+/* .invited-friend-item:last-child {
+  border-bottom: none;
+} */
+
+.invited-friend-profit-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  margin-left: 4px;
 }
