@@ -1,10 +1,12 @@
-.main-frog{
-  position: relative;
+.main-frog {
   z-index: 1;
   height: 2px;
+  margin: 0px auto;
+  max-width: 440px;
+  width: 100%;
 }
+
 .main-frog-wrapper__container {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -13,7 +15,6 @@
 }
 
 .main-frog__wrapper {
-  margin: 210px auto;
   max-width: 440px;
   display: flex;
   gap: 15px;
@@ -22,7 +23,6 @@
 }
 
 .bar {
-  position: relative;
   width: 375px;
   height: 4px;
   background-color: rgb(150, 149, 149);
@@ -74,9 +74,10 @@
   z-index: 2;
   transform-origin: center bottom;
   display: none;
-  
+
   margin-left: -150px;
 }
+
 .crash-glow {
   color: #ff0000;
   text-shadow:
