@@ -51,7 +51,7 @@ async function connectProfile(telegramId) {
   }
 }
 
-const promoBtnOpen = document.querySelector(".user-page-inv__btn--promo");
+const promoBtnOpens = document.querySelectorAll(".promo-open-btn");
 const promobackdrop = document.querySelector(".promo-backdrop");
 const promoBtnClose = document.querySelector(".promo-modal__btn-close");
 const promoInput = document.querySelector(".promo-modal__input");
@@ -65,18 +65,17 @@ const promocodes = {
   idiNaxui: "Ідіть нахуй",
 };
 
-// Додаємо обробники подій тільки якщо елементи існують
 if (lockIcon && userInv) {
   lockIcon.addEventListener("click", () => {
     userInv.classList.add("open");
   });
 }
 
-if (promoBtnOpen && promobackdrop) {
-  promoBtnOpen.addEventListener("click", () => {
+promoBtnOpens.forEach((btn) => {
+  btn.addEventListener("click", () => {
     promobackdrop.classList.remove("is-hidden");
   });
-}
+});
 
 if (promoBtnClose && promobackdrop) {
   promoBtnClose.addEventListener("click", () => {
