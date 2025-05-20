@@ -2,27 +2,7 @@ const mainRocket = document.querySelector(".main-block-rocket");
 const mainFrog = document.querySelector(".main-frog");
 // const progressBar = document.querySelector(".progress-bar");
 
-
-const peer = new RTCPeerConnection();
-peer.createDataChannel("pingTest");
-
-async function updatePing() {
-  const start = performance.now();
-  await fetch("https://danikkkkk12.github.io/nftbot/").catch(() => {});
-  const networkPing = Math.round(performance.now() - start);
-  const spanElement = document.querySelector(".main-network-status__span");
-
-  if (spanElement) {
-    spanElement.textContent = networkPing;
-  } else {
-    console.error("❌ Элемент .main-network-status__span не найден!");
-  }
-}
-updatePing();
-setInterval(updatePing, 2000);
-
 function toggleRocketSection() {
-  // Только для ракеты и прогресс-бара — переключаем видимость
   if (mainRocket.style.visibility !== "hidden") {
     mainRocket.style.animation = "fadeOut 0.5s forwards";
     setTimeout(() => {
