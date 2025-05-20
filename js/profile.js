@@ -33,6 +33,8 @@ async function connectProfile(telegramId) {
 
     const users = await response.json();
     const user = users.find((user) => user.telegramId == telegramId);
+    console.log(user);
+    
 
     if (!user) {
       console.log("Користувача з таким Telegram ID не знайдено");

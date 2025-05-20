@@ -1,4 +1,4 @@
-const modalBtn = document.getElementById('modaBtn')
+const modalBtn = document.querySelector('.modaBtn')
 const mainBalance = document.querySelector(".main-balance");
 const modal = document.getElementById('modalContent')
 
