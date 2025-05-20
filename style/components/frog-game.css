@@ -1,7 +1,7 @@
 .main-frog{
   position: relative;
   z-index: 1;
-  height: 1px;
+  height: 2px;
 }
 .main-frog-wrapper__container {
   position: relative;
