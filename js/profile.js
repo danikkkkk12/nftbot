@@ -1,3 +1,4 @@
+// Отримання елементів DOM
 const lockIcon = document.querySelector(".user-page-inv__icon--lock");
 const iconInv = document.querySelector(".user-page-inv__icon--inv");
 const userInv = document.querySelector(".user-page-inv");
@@ -7,14 +8,38 @@ const userId = document.querySelector(".user-page-profile__id");
 const userAvatar = document.querySelector(".user-page-profile__avatar");
 
 function getTelegramId() {
-  return window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+  // Спроба отримати з WebApp (якщо відкрито в Telegram)
+  if (window.Telegram?.WebApp?.initDataUnsafe?.user?.id) {
+    return window.Telegram.WebApp.initDataUnsafe.user.id;
+  }
+
+  // Спроба отримати з URL (якщо передано ботом)
+  const urlParams = new URLSearchParams(window.location.search);
+  const initData = urlParams.get("tgInitData");
+
+  if (initData) {
+    try {
+      const params = new URLSearchParams(initData);
+      return params.get("user[id]");
+    } catch (e) {
+      console.error("Помилка парсингу initData:", e);
+    }
+  }
+
+  return null;
 }
 
 async function connectProfile(telegramId) {
+  if (!telegramId) {
+    console.log("Telegram ID не знайдено");
+    return null;
+  }
+
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
-    const users = await response.json();
+    if (!response.ok) throw new Error("Помилка мережі");
 
+    const users = await response.json();
     const user = users.find((user) => user.telegramId == telegramId);
 
     if (!user) {
@@ -22,43 +47,20 @@ async function connectProfile(telegramId) {
       return null;
     }
 
-    const username = user.username || "Без імені";
-    const avatar = user.avatar || "default-avatar-url.jpg";
+    // Оновлення UI тільки якщо елементи існують
+    if (userName) userName.textContent = user.username || "Без імені";
+    if (userId) userId.textContent = `User ID: ${user.telegramId}`;
+    if (userAvatar)
+      userAvatar.setAttribute("src", user.avatar || "default-avatar-url.jpg");
 
-    userName.textContent = username;
-    userId.textContent = `User ID: ${user.telegramId}`;
-    userAvatar.setAttribute("src", avatar);
+    return user;
   } catch (error) {
     console.error("Помилка при отриманні профілю:", error);
     return null;
   }
 }
 
-function waitForTelegramIdAndConnect() {
-  const maxWaitTime = 10000; // 10 секунд таймаут
-  const intervalTime = 500; // інтервал 500мс
-
-  let elapsedTime = 0;
-
-  const interval = setInterval(() => {
-    const telegramId = getTelegramId();
-
-    if (telegramId) {
-      clearInterval(interval);
-      connectProfile(telegramId);
-    } else {
-      elapsedTime += intervalTime;
-      if (elapsedTime >= maxWaitTime) {
-        clearInterval(interval);
-        console.warn("Telegram ID не отримано за 10 секунд, припиняю чекати.");
-      }
-    }
-  }, intervalTime);
-}
-
-waitForTelegramIdAndConnect();
-
-// modal
+// Обробка подій для модального вікна
 const promoBtnOpen = document.querySelector(".user-page-inv__btn--promo");
 const promobackdrop = document.querySelector(".promo-backdrop");
 const promoBtnClose = document.querySelector(".promo-modal__btn-close");
@@ -68,35 +70,57 @@ const promoBtnSearchPromocode = document.getElementById(
 );
 
 const promocodes = {
-  lelelele52: "Вы получили 2 кг мефедрона",
-  ez100ton: "Вы получили 100 ton на баланс",
-  idiNaxui: "Иди нахуй",
+  lelelele52: "Ви отримали 2 кг мефедрону",
+  ez100ton: "Ви отримали 100 ton на баланс",
+  idiNaxui: "Ідіть нахуй",
 };
 
-lockIcon.addEventListener("click", () => {
-  userInv.classList.add("open");
-});
-promoBtnOpen.addEventListener("click", () => {
-  promobackdrop.classList.remove("is-hidden");
-});
-promoBtnClose.addEventListener("click", () => {
-  promobackdrop.classList.add("is-hidden");
-});
-promoBtnSearchPromocode.addEventListener("click", () => {
-  const inputValue = promoInput.value.trim();
+// Додаємо обробники подій тільки якщо елементи існують
+if (lockIcon && userInv) {
+  lockIcon.addEventListener("click", () => {
+    userInv.classList.add("open");
+  });
+}
 
-  if (promocodes[inputValue]) {
-    alert(promocodes[inputValue]);
-  } else {
-    alert("Промокод не действителен харе вводить на рандом");
-  }
+if (promoBtnOpen && promobackdrop) {
+  promoBtnOpen.addEventListener("click", () => {
+    promobackdrop.classList.remove("is-hidden");
+  });
+}
 
-  promoInput.value = "";
-});
+if (promoBtnClose && promobackdrop) {
+  promoBtnClose.addEventListener("click", () => {
+    promobackdrop.classList.add("is-hidden");
+  });
+}
 
-new Swiper(".user-page-game-history__swiper", {
-  direction: "vertical",
-  slidesPerView: "auto",
-  freeMode: true,
-  mousewheel: true,
-});
+if (promoBtnSearchPromocode && promoInput) {
+  promoBtnSearchPromocode.addEventListener("click", () => {
+    const inputValue = promoInput.value.trim();
+
+    if (promocodes[inputValue]) {
+      alert(promocodes[inputValue]);
+    } else {
+      alert("Промокод не дійсний");
+    }
+
+    promoInput.value = "";
+  });
+}
+
+// Ініціалізація Swiper
+if (typeof Swiper !== "undefined") {
+  new Swiper(".user-page-game-history__swiper", {
+    direction: "vertical",
+    slidesPerView: "auto",
+    freeMode: true,
+    mousewheel: true,
+  });
+}
+
+const telegramId = getTelegramId();
+if (telegramId) {
+  connectProfile(telegramId);
+} else {
+  console.log("Не вдалося отримати Telegram ID");
+}
