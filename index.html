@@ -89,5 +89,15 @@
     <script src="js/inventory.js"></script>
     <script src="js/crash-game.js"></script>
     <script src="js/nav-bar.js"></script> -->
+    <script>
+  window.addEventListener("DOMContentLoaded", function () {
+    if (window.Telegram && Telegram.WebApp) {
+      Telegram.WebApp.ready(); // Telegram говорит "я готов"
+      Telegram.WebApp.sendData("open"); // это и отправляет сообщение в бота!
+    } else {
+      console.warn("Telegram WebApp API not available.");
+    }
+  });
+</script>
   </body>
 </html>
