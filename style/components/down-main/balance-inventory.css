@@ -51,7 +51,7 @@
 .inventory-buttons__balance::before {
   content: "";
   position: absolute;
-  background: url('web/images/inventory/balance.svg') no-repeat center/cover;
+  background: url("web/images/inventory/balance.svg") no-repeat center/cover;
   width: 20px;
   height: 20px;
   left: 22%;
@@ -80,7 +80,7 @@
 .inventory-buttons__inventory::before {
   content: "";
   position: absolute;
-  background: url('web/images/inventory/gift.svg') no-repeat center/cover;
+  background: url("web/images/inventory/gift.svg") no-repeat center/cover;
   width: 20px;
   height: 20px;
   left: 15%;
@@ -128,7 +128,7 @@
   height: 137px; */
 }
 .inventory-skins-items-card__current {
-color: #fff;
+  color: #fff;
   text-align: center;
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
@@ -138,7 +138,7 @@ color: #fff;
 }
 .current {
   margin-left: -61px;
-   display: flex;
+  display: flex;
   height: 24px;
   width: 46px;
   padding: 4px 7px 4px 5px;
@@ -152,8 +152,8 @@ color: #fff;
 }
 
 .current img {
-    margin-left: 12%;
-    margin-top: -3%;
+  margin-left: 12%;
+  margin-top: -3%;
 }
 
 /* .inventory-skins-items-card__current::after {
@@ -284,7 +284,6 @@ color: #fff;
   left: 130%;
 }
 
-
 /* balance */
 
 .bet {
@@ -376,8 +375,24 @@ color: #fff;
   text-transform: uppercase;
   width: 100%;
 }
+.stop-btn {
+  background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%);
+  padding: 10px 13px;
+  border-radius: 20px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.37;
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+  width: 100%;
+}
 @media (min-width: 400px) {
   .select-bet__btn {
+    padding: 28px 46px;
+  }
+  .stop-btn {
     padding: 28px 46px;
   }
 }

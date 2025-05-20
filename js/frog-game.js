@@ -4,6 +4,11 @@ const coefficientDisplay = document.getElementById("coefficient");
 const progressLine = document.querySelector(".line");
 const frogGif = document.querySelector(".main-frog-wrapper-container__icon");
 const historyTrack = document.getElementById("history-track");
+const selectBetBtns = document.querySelectorAll(".select-bet__btn");
+const stopBtns = document.querySelectorAll(".stop-btn");
+const balancePole = document.querySelector(".main-balance");
+const fieldBet = document.querySelectorAll(".select-bet-count__number");
+import { fieldValues, balance } from "./balance.js";
 
 // Константы
 const LINE_WIDTH = 380;
@@ -17,8 +22,8 @@ if (frogGif) frogGif.style.display = "block";
 
 // Анимация появления полосок
 if (bars) {
-  bars.forEach(function(bar, index) {
-    setTimeout(function() {
+  bars.forEach(function (bar, index) {
+    setTimeout(function () {
       bar.style.opacity = "1";
       bar.style.transform = "translateY(0)";
     }, (index + 1) * 300);
@@ -47,9 +52,10 @@ function generateCrashCoefficient() {
     } else {
       const length = Math.floor(Math.random() * 5) + 1;
       for (let i = 0; i < length; i++) {
-        let coef = Math.random() < 0.3 ? 
-          3.5 + Math.random() * 11.5 : 
-          2.0 + Math.random() * 2.0;
+        let coef =
+          Math.random() < 0.3
+            ? 3.5 + Math.random() * 11.5
+            : 2.0 + Math.random() * 2.0;
         seriesQueue.push(parseFloat(coef.toFixed(2)));
       }
     }
@@ -76,7 +82,8 @@ function startGame() {
     progressLine.style.width = "0%";
     progressLine.style.transform = "rotate(0deg)";
     progressLine.style.opacity = "1";
-    progressLine.style.backgroundImage = "linear-gradient(135deg, #6a0dad, #b366ff)";
+    progressLine.style.backgroundImage =
+      "linear-gradient(135deg, #6a0dad, #b366ff)";
   }
 
   if (frogGif) {
@@ -109,7 +116,9 @@ function updateGameState(crashAt) {
       progressLine.style.width = "100%";
       progressLine.style.transform = `rotate(-${liftProgress * 15}deg)`;
       frogGif.style.left = `${100 + liftProgress * 25}%`;
-      frogGif.style.transform = `translateX(-50%) scale(${0.7 - liftProgress * 0.1})`;
+      frogGif.style.transform = `translateX(-50%) scale(${
+        0.7 - liftProgress * 0.1
+      })`;
     } else {
       progressLine.style.width = "0%";
       frogGif.style.opacity = "0";
@@ -128,7 +137,8 @@ function stopGame() {
   coefficientDisplay.classList.add("crash-glow");
   coefficientDisplay.style.color = "#ff0000";
   if (progressLine) {
-    progressLine.style.backgroundImage = "linear-gradient(135deg, #ff0000, #ff6b6b)";
+    progressLine.style.backgroundImage =
+      "linear-gradient(135deg, #ff0000, #ff6b6b)";
   }
 
   addToHistory(currentCoefficient, true);
@@ -154,7 +164,9 @@ function addToHistory(coef, isCrash) {
   // Вставка слева
   historyTrack.insertBefore(div, historyTrack.firstChild);
 
-  const items = historyTrack.querySelectorAll(".main-coefficients__coefficient");
+  const items = historyTrack.querySelectorAll(
+    ".main-coefficients__coefficient"
+  );
 
   // Сдвиг всех вправо
   items.forEach((item, index) => {
@@ -172,3 +184,42 @@ function addToHistory(coef, isCrash) {
 }
 
 startGame();
+
+stopBtns.forEach((stopBtn, index) => {
+  stopBtn.addEventListener("click", () => {
+    const field = fieldBet[index];
+    const betValue = parseFloat(field.dataset.bet);
+
+    if (!betValue || betValue <= 0) return;
+
+    if (isGameActive) {
+      const gain = betValue * currentCoefficient;
+      balance.value += gain;
+
+      balancePole.innerHTML = `
+        ${balance.value.toFixed(2)} +
+        <img
+          src="web/images/main/ton-icon.svg"
+          alt="Token"
+          class="main-balance__token"
+        />
+      `;
+    }
+
+    field.textContent = "0";
+    field.dataset.bet = "0";
+  });
+});
+
+setInterval(() => {
+  stopBtns.forEach((stopBtn, index) => {
+    const selectBtn = selectBetBtns[index];
+    if (isGameActive) {
+      selectBtn.style.display = "none";
+      stopBtn.style.display = "block";
+    } else {
+      selectBtn.style.display = "block";
+      stopBtn.style.display = "none";
+    }
+  });
+}, 500);
