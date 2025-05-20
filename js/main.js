@@ -2,14 +2,6 @@ const mainRocket = document.querySelector(".main-block-rocket");
 const mainFrog = document.querySelector(".main-frog");
 const progressBar = document.querySelector(".progress-bar");
 
-// Настройка жабки — всегда показывать, не трогать display/visibility по toggle
-mainFrog.style.position = "absolute";
-mainFrog.style.top = "0";
-mainFrog.style.left = "0";
-mainFrog.style.width = "100%";
-mainFrog.style.visibility = "visible"; // Всегда видна
-mainFrog.style.opacity = "1";          // Всегда видна
-mainFrog.style.transition = "opacity 0.5s ease-in-out";
 
 const peer = new RTCPeerConnection();
 peer.createDataChannel("pingTest");
