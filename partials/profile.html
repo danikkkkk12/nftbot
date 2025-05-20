@@ -8,24 +8,14 @@
   </div>
   <div class="user-page-inv">
     <button class="user-page-inv__btn user-page-inv__btn--inv" type="button" data-lang-key="inventory">
-      <img
-        src="web/images/profile/lock-icon.svg"
-        alt="lock-icon"
-        class="user-page-inv__icon user-page-inv__icon--lock"
-      />
-      <img
-        src="web/images/inventory/gift.svg"
-        alt="lock-icon"
-        class="user-page-inv__icon user-page-inv__icon--inv"
-      />
+      <img src="web/images/profile/lock-icon.svg" alt="lock-icon"
+        class="user-page-inv__icon user-page-inv__icon--lock" />
+      <img src="web/images/inventory/gift.svg" alt="lock-icon" class="user-page-inv__icon user-page-inv__icon--inv" />
       Инвентарь
     </button>
-    <button class="user-page-inv__btn user-page-inv__btn--promo promo-open-btn" type="button" data-lang-key="activatePromo">
-      <img
-        src="web/images/profile/promo.svg"
-        alt="lock-icon"
-        class="user-page-inv__icon user-page-inv__icon--promo"
-      />
+    <button class="user-page-inv__btn user-page-inv__btn--promo promo-open-btn" type="button"
+      data-lang-key="activatePromo">
+      <img src="web/images/profile/promo.svg" alt="lock-icon" class="user-page-inv__icon user-page-inv__icon--promo" />
       Активировать промокод
     </button>
   </div>
@@ -65,6 +55,14 @@
           </div>
         </div>
       </div> -->
+      <div class="user-page-inventory">
+        <div class="user-page-inventory__empty">
+          <p class="user-page-inventory__empty-text" data-lang-key="userPageInventoryText">Упс! Видимо, вы еще не играли</p>
+          <button class="user-page-inventory__empty-btn" type="button" data-lang-key="navPlay" id="frog-inventory"><span
+              class="user-page-inventory__empty-span" data-lang-key="navPlay">Начать!</span></button>
+        </div>
+        <!-- Здесь будет список предметов, когда они появятся -->
+      </div>
     </div>
   </div>
 </section>

@@ -1,13 +1,22 @@
-// Отримання елементів DOM
+// Получаем элементы DOM
 const lockIcon = document.querySelector(".user-page-inv__icon--lock");
 const iconInv = document.querySelector(".user-page-inv__icon--inv");
 const userInv = document.querySelector(".user-page-inv");
-// profile
-
+const inventoryBtn = document.querySelector(".user-page-inv__btn--inv");
+const inventorySection = document.querySelector(".user-page-inventory");
+const startPlayingBtn = document.querySelector(".user-page-inventory__empty-btn");
 const userName = document.querySelector(".user-page-profile__name");
 const userId = document.querySelector(".user-page-profile__id");
 const userAvatar = document.querySelector(".user-page-profile__avatar");
 
+// Элементы для промокодов (если нужны)
+const promoBtnOpens = document.querySelectorAll(".promo-open-btn");
+const promobackdrop = document.querySelector(".promo-backdrop");
+const promoBtnClose = document.querySelector(".promo-modal__btn-close");
+const promoInput = document.querySelector(".promo-modal__input");
+const promoBtnSearchPromocode = document.getElementById("promoModalSearchPromocode");
+
+// Функция получения Telegram ID
 function getTelegramId() {
   const urlParams = new URLSearchParams(window.location.search);
   const telegramId = urlParams.get("tgId");
@@ -21,61 +30,94 @@ function getTelegramId() {
   return null;
 }
 
+// Функция подключения профиля
 async function connectProfile(telegramId) {
   if (!telegramId) {
-    console.log("Telegram ID не знайдено");
+    console.log("Telegram ID не найден");
     return null;
   }
 
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
-    if (!response.ok) throw new Error("Помилка мережі");
+    if (!response.ok) throw new Error("Ошибка сети");
 
     const users = await response.json();
     const user = users.find((user) => user.telegramId == telegramId);
 
     if (!user) {
-      console.log("Користувача з таким Telegram ID не знайдено");
+      console.log("Пользователь с таким Telegram ID не найден");
       return null;
     }
 
-    if (userName) userName.textContent = user.username || "Без імені";
+    if (userName) userName.textContent = user.username || "Без имени";
     if (userId) userId.textContent = `User ID: ${user.telegramId}`;
     if (userAvatar)
       userAvatar.setAttribute("src", user.avatar || "default-avatar-url.jpg");
 
     return user;
   } catch (error) {
-    console.error("Помилка при отриманні профілю:", error);
+    console.error("Ошибка при получении профиля:", error);
     return null;
   }
 }
 
-const promoBtnOpens = document.querySelectorAll(".promo-open-btn");
-const promobackdrop = document.querySelector(".promo-backdrop");
-const promoBtnClose = document.querySelector(".promo-modal__btn-close");
-const promoInput = document.querySelector(".promo-modal__input");
-const promoBtnSearchPromocode = document.getElementById(
-  "promoModalSearchPromocode"
-);
-
-const promocodes = {
-  lelelele52: "Ви отримали 2 кг мефедрону",
-  ez100ton: "Ви отримали 100 ton на баланс",
-  idiNaxui: "Ідіть нахуй",
-};
-
-if (lockIcon && userInv) {
-  lockIcon.addEventListener("click", () => {
-    userInv.classList.add("open");
+// Обработчик кнопки инвентаря
+if (inventoryBtn && inventorySection) {
+  inventoryBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    inventorySection.classList.toggle("open");
+    
+    // Проверяем есть ли предметы в инвентаре
+    const hasItems = checkInventoryItems(); // Ваша функция проверки
+    
+    if (!hasItems) {
+      const emptyMessage = inventorySection.querySelector(".user-page-inventory__empty");
+      if (emptyMessage) {
+        emptyMessage.style.display = "block";
+      }
+    }
   });
 }
 
-promoBtnOpens.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    promobackdrop.classList.remove("is-hidden");
+// Функция проверки инвентаря (заглушка)
+function checkInventoryItems() {
+  // Здесь должна быть реальная проверка вашего API
+  return false; // Пока всегда пусто
+}
+
+// Обработчик иконки замка
+if (lockIcon && inventorySection) {
+  lockIcon.addEventListener("click", (e) => {
+    e.preventDefault();
+    userInv.classList.add("open");
+    inventorySection.classList.add("open");
   });
-});
+}
+
+// Инициализация Swiper для истории игр
+if (document.querySelector(".user-page-game-history__swiper")) {
+  new Swiper(".user-page-game-history__swiper", {
+    direction: "vertical",
+    slidesPerView: "auto",
+    freeMode: true,
+    mousewheel: true,
+  });
+}
+
+// Промокоды (если нужны)
+const promocodes = {
+  lelelele52: "Вы получили 2 кг мефедрону",
+  ez100ton: "Вы получили 100 ton на баланс",
+  idiNaxui: "Идите нахуй",
+};
+
+if (promoBtnOpens) {
+  promoBtnOpens.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (promobackdrop) promobackdrop.classList.remove("is-hidden");
+    });
+  });
+}
 
 if (promoBtnClose && promobackdrop) {
   promoBtnClose.addEventListener("click", () => {
@@ -90,24 +132,22 @@ if (promoBtnSearchPromocode && promoInput) {
     if (promocodes[inputValue]) {
       alert(promocodes[inputValue]);
     } else {
-      alert("Промокод не дійсний");
+      alert("Промокод не действителен");
     }
 
     promoInput.value = "";
   });
 }
 
-// Ініціалізація Swiper
-new Swiper(".user-page-game-history__swiper", {
-  direction: "vertical",
-  slidesPerView: "auto",
-  freeMode: true,
-  mousewheel: true,
+// Подключаем профиль при загрузке
+document.addEventListener("DOMContentLoaded", () => {
+  const telegramId = getTelegramId();
+  if (telegramId) {
+    connectProfile(telegramId);
+  } else {
+    console.log("Не удалось получить Telegram ID");
+    // Устанавливаем дефолтные значения
+    if (userName) userName.textContent = "Гость";
+    if (userId) userId.textContent = "User ID: 0000";
+  }
 });
-
-const telegramId = getTelegramId();
-if (telegramId) {
-  connectProfile(telegramId);
-} else {
-  console.log("Не вдалося отримати Telegram ID");
-}

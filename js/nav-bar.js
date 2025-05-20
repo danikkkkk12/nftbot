@@ -39,6 +39,15 @@ navItems.forEach((item) => {
     setActiveItem(this);
   });
 });
+const profileInvBtn = document.querySelector(".user-page-inventory__empty-btn")
+profileInvBtn.addEventListener ("click", function(){
+const sections = document.querySelectorAll("section")
+sections.forEach((section) => {
+      section.style.display = "none";
+    });
+      document.querySelector(".main-rocket").style.display = "block";
+      document.querySelector(".down-main").style.display = "block";
+})
 
 document.addEventListener('DOMContentLoaded', () => {
     const initiallyActiveItem = document.querySelector(".icon-navigation-bar .nav-item.active-item");
