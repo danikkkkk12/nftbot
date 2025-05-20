@@ -64,6 +64,7 @@
             promoModalInputPlaceholder: "Введите промо-код...",
             promoModalConfirmButton: "Подтвердить",
             takeBetButton: 'Забрать выигрыш',
+            userPageInventoryText: 'Упс! Видимо, вы еще не играли',
         },
         en: {
             inventory: "Inventory",
@@ -127,6 +128,7 @@
             promoModalInputPlaceholder: "Enter promo-code...",
             promoModalConfirmButton: "Confirm",
             takeBetButton: 'Collect winnings',
+            userPageInventoryText: 'Oops! Looks like you have not played yet',
         },
     };
 
