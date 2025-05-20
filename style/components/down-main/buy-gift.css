@@ -237,9 +237,9 @@
 }
 
 .buy-btn {
-  padding: 17px 82px;
+  padding: 17px 0;
   max-width: 409px;
-  width: 80%;
+  width: 100%;
   background: white;
   font-family: "Montserrat", sans-serif;
   border: none;
