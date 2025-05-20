@@ -119,7 +119,7 @@ if (typeof Swiper !== "undefined") {
 }
 
 const telegramId = getTelegramId();
-alert(telegramIdtelegramId);
+alert(telegramId);
 if (telegramId) {
   connectProfile(telegramId);
 } else {

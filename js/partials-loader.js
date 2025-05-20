@@ -11,7 +11,6 @@
     document.body.appendChild(clone);
   }
 
-  // Завантажуємо скрипти послідовно
   const scripts = [
     "js/main.js",
     "js/modal.js",
@@ -27,7 +26,7 @@
     "js/giveaway.js",
     // "server/test-post.js",
     "js/friends.js",
-    "js/translation.js"
+    "js/translation.js",
   ];
 
   for (const src of scripts) {
@@ -35,7 +34,7 @@
       const script = document.createElement("script");
       script.src = src;
       script.async = false;
-      script.type = "module"
+      script.type = "module";
       script.onload = resolve;
       script.onerror = reject;
       document.body.appendChild(script);
