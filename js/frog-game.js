@@ -37,7 +37,10 @@ let isGameActive = false;
 let seriesQueue = [];
 let seriesIndex = 0;
 
-// Генерация коэффициентов
+export function getIsGameActive() {
+  return isGameActive;
+}
+
 function generateCrashCoefficient() {
   if (seriesIndex >= seriesQueue.length) {
     seriesQueue = [];
@@ -223,3 +226,5 @@ setInterval(() => {
     }
   });
 }, 500);
+
+export { isGameActive, startGame, stopGame };
