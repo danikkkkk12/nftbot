@@ -1,6 +1,6 @@
 const mainRocket = document.querySelector(".main-block-rocket");
 const mainFrog = document.querySelector(".main-frog");
-const progressBar = document.querySelector(".progress-bar");
+// const progressBar = document.querySelector(".progress-bar");
 
 // Настройка жабки — всегда показывать, не трогать display/visibility по toggle
 mainFrog.style.position = "absolute";
@@ -52,8 +52,8 @@ function resetProgressBar() {
   progressBar.style.animation = "fillProgress 4s linear forwards";
 }
 
-progressBar.addEventListener("animationend", () => {
-  toggleRocketSection();
-});
+// progressBar.addEventListener("animationend", () => {
+//   toggleRocketSection();
+// });
 
 
