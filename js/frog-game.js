@@ -3,58 +3,53 @@ const bars = document.querySelectorAll(".bar");
 const coefficientDisplay = document.getElementById("coefficient");
 const progressLine = document.querySelector(".line");
 const frogGif = document.querySelector(".main-frog-wrapper-container__icon");
-const historySlider = document.getElementById("history-slider");
+const historyTrack = document.getElementById("history-track");
 
 // Константы
 const LINE_WIDTH = 380;
-const BASE_GAME_SPEED = 200; // базовая задержка в миллисекундах
-const maxHistoryItems = 30;
-const scrollSpeed = 1; // пикселей за тик
+const BASE_GAME_SPEED = 200;
+const maxHistoryItems = 7; // Сколько коэффициентов видно одновременно
 
 // Инициализация
 coefficientDisplay.style.opacity = "0";
 frogGif.style.opacity = "0";
-frogGif.style.display = "block"; // если изначально display: none
+if (frogGif) frogGif.style.display = "block";
 
 // Анимация появления полосок
-bars.forEach(function (bar, index) {
-  setTimeout(function () {
-    bar.style.opacity = "1";
-    bar.style.transform = "translateY(0)";
-  }, (index + 1) * 300);
-});
+if (bars) {
+  bars.forEach(function(bar, index) {
+    setTimeout(function() {
+      bar.style.opacity = "1";
+      bar.style.transform = "translateY(0)";
+    }, (index + 1) * 300);
+  });
+}
 
-// Переменные игры вне цикла
+// Переменные игры
 let currentCoefficient = 1.0;
 let gameInterval;
 let isGameActive = false;
-
-// Генерация "серии" коэффициентов с балансом
 let seriesQueue = [];
 let seriesIndex = 0;
 
+// Генерация коэффициентов
 function generateCrashCoefficient() {
   if (seriesIndex >= seriesQueue.length) {
     seriesQueue = [];
     const seriesTypeRoll = Math.random();
 
     if (seriesTypeRoll < 0.6) {
-      // Плохая серия — чаще краши 1.0-2.5
-      const length = Math.floor(Math.random() * 3) + 2; // 2-4 краша
+      const length = Math.floor(Math.random() * 3) + 2;
       for (let i = 0; i < length; i++) {
         const coef = 1 + Math.random() * 1.5 * Math.pow(Math.random(), 2);
         seriesQueue.push(parseFloat(coef.toFixed(2)));
       }
     } else {
-      // Хорошая серия — 2.0+
-      const length = Math.floor(Math.random() * 5) + 1; // 1-5 коэфов
+      const length = Math.floor(Math.random() * 5) + 1;
       for (let i = 0; i < length; i++) {
-        let coef;
-        if (Math.random() < 0.3) {
-          coef = 3.5 + Math.random() * 11.5;
-        } else {
-          coef = 2.0 + Math.random() * 2.0;
-        }
+        let coef = Math.random() < 0.3 ? 
+          3.5 + Math.random() * 11.5 : 
+          2.0 + Math.random() * 2.0;
         seriesQueue.push(parseFloat(coef.toFixed(2)));
       }
     }
@@ -70,28 +65,29 @@ function getSpeedByCoefficient(coef) {
   return 0.06;
 }
 
-setTimeout(startGame, 2500);
-
+// Игровой процесс
 function startGame() {
   currentCoefficient = 1.0;
   coefficientDisplay.innerText = `x${currentCoefficient.toFixed(2)}`;
   coefficientDisplay.style.color = "#ffffff";
   coefficientDisplay.style.opacity = "1";
 
-  progressLine.style.width = "0%";
-  progressLine.style.transform = "rotate(0deg)";
-  progressLine.style.opacity = "1";
-  progressLine.style.backgroundImage = "linear-gradient(135deg, #6a0dad, #b366ff)"; // фиолетовый градиент
+  if (progressLine) {
+    progressLine.style.width = "0%";
+    progressLine.style.transform = "rotate(0deg)";
+    progressLine.style.opacity = "1";
+    progressLine.style.backgroundImage = "linear-gradient(135deg, #6a0dad, #b366ff)";
+  }
 
-  frogGif.style.opacity = "0";
-  frogGif.style.left = "0px";
-  frogGif.style.transform = "translateX(-50%) scale(0.7)";
-  frogGif.style.display = "block";
+  if (frogGif) {
+    frogGif.style.opacity = "0";
+    frogGif.style.left = "0px";
+    frogGif.style.transform = "translateX(-50%) scale(0.7)";
+    frogGif.style.display = "block";
+  }
 
   isGameActive = true;
-
   const crashAt = generateCrashCoefficient();
-
   gameInterval = setInterval(() => updateGameState(crashAt), BASE_GAME_SPEED);
 }
 
@@ -102,28 +98,22 @@ function updateGameState(crashAt) {
   currentCoefficient = parseFloat((currentCoefficient + speed).toFixed(2));
   coefficientDisplay.innerText = `x${currentCoefficient.toFixed(2)}`;
 
-  if (currentCoefficient >= 1.2 && currentCoefficient <= 1.4) {
-    const progress = (currentCoefficient - 1.2) / 0.2;
-    progressLine.style.width = `${progress * 100}%`;
-    progressLine.style.transform = "rotate(0deg)";
-
-    frogGif.style.left = `${progress * 100}%`;
-    frogGif.style.opacity = "1";
-    frogGif.style.transform = "translateX(-50%) scale(0.7)";
-  } else if (currentCoefficient > 1.4) {
-    const liftProgress = Math.min((currentCoefficient - 1.4) / 0.25, 1);
-    const extraDistance = 80;
-
-    progressLine.style.width = "100%";
-    progressLine.style.transform = `rotate(-${liftProgress * 15}deg)`;
-
-    frogGif.style.left = `${100 + ((liftProgress * extraDistance) / LINE_WIDTH) * 100}%`;
-    frogGif.style.opacity = "1";
-    frogGif.style.transform = `translateX(-50%) scale(${0.7 - liftProgress * 0.1})`;
-  } else {
-    // Для currentCoefficient < 1.2 можно скрыть лягушку и прогресс
-    progressLine.style.width = "0%";
-    frogGif.style.opacity = "0";
+  if (progressLine && frogGif) {
+    if (currentCoefficient >= 1.2 && currentCoefficient <= 1.4) {
+      const progress = (currentCoefficient - 1.2) / 0.2;
+      progressLine.style.width = `${progress * 100}%`;
+      frogGif.style.left = `${progress * 100}%`;
+      frogGif.style.opacity = "1";
+    } else if (currentCoefficient > 1.4) {
+      const liftProgress = Math.min((currentCoefficient - 1.4) / 0.25, 1);
+      progressLine.style.width = "100%";
+      progressLine.style.transform = `rotate(-${liftProgress * 15}deg)`;
+      frogGif.style.left = `${100 + liftProgress * 25}%`;
+      frogGif.style.transform = `translateX(-50%) scale(${0.7 - liftProgress * 0.1})`;
+    } else {
+      progressLine.style.width = "0%";
+      frogGif.style.opacity = "0";
+    }
   }
 
   if (currentCoefficient >= crashAt) {
@@ -137,7 +127,9 @@ function stopGame() {
 
   coefficientDisplay.classList.add("crash-glow");
   coefficientDisplay.style.color = "#ff0000";
-  progressLine.style.backgroundImage = "linear-gradient(135deg, #ff0000, #ff6b6b)";
+  if (progressLine) {
+    progressLine.style.backgroundImage = "linear-gradient(135deg, #ff0000, #ff6b6b)";
+  }
 
   addToHistory(currentCoefficient, true);
 
@@ -146,39 +138,37 @@ function stopGame() {
     coefficientDisplay.style.opacity = "0";
     progressLine.style.opacity = "0";
     frogGif.style.opacity = "0";
-    progressLine.style.backgroundImage = "linear-gradient(135deg, #6a0dad, #b366ff)";
 
     setTimeout(startGame, 3000);
   }, 2000);
 }
 
+// Добавление коэффициента в историю (вставка слева)
 function addToHistory(coef, isCrash) {
   const div = document.createElement("div");
   div.classList.add("main-coefficients__coefficient");
   div.classList.add(isCrash ? "lose" : "win");
   div.textContent = `${coef.toFixed(2)}x`;
-  historySlider.appendChild(div);
+  div.style.transition = "transform 0.3s ease";
 
-  if (historySlider.children.length > maxHistoryItems) {
-    historySlider.removeChild(historySlider.children[0]);
+  // Вставка слева
+  historyTrack.insertBefore(div, historyTrack.firstChild);
+
+  const items = historyTrack.querySelectorAll(".main-coefficients__coefficient");
+
+  // Сдвиг всех вправо
+  items.forEach((item, index) => {
+    item.style.transform = `translateX(${index * 100}%)`;
+  });
+
+  // Удаление самого правого, если их больше 6
+  if (items.length > maxHistoryItems) {
+    const last = items[items.length - 1];
+    last.classList.add("fade-out");
+    setTimeout(() => {
+      if (last.parentNode) last.parentNode.removeChild(last);
+    }, 300);
   }
 }
 
-let scrollPosition = 0;
-
-function autoScrollHistory() {
-  if (historySlider.scrollWidth <= historySlider.clientWidth) {
-    scrollPosition = 0;
-  } else {
-    scrollPosition += scrollSpeed;
-    if (scrollPosition > historySlider.scrollWidth - historySlider.clientWidth) {
-      scrollPosition = 0;
-    }
-  }
-  historySlider.scrollLeft = scrollPosition;
-  requestAnimationFrame(autoScrollHistory);
-}
-
-requestAnimationFrame(autoScrollHistory);
-
-
+startGame();

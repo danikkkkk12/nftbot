@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  margin-top: 20px;
+  margin-left: 10px;
 }
 
 .main-frog__wrapper {
@@ -13,7 +13,7 @@
 
 .bar {
   position: relative;
-  width: 380px;
+  width: 375px;
   height: 4px;
   background-color: rgb(150, 149, 149);
   opacity: 0;
