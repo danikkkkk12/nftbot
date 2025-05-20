@@ -1,9 +1,9 @@
 const mainBlockRocket = document.querySelector(".main-block-rocket");
 const rocketContent = document.querySelector(".rocket-content");
 const mainFrog = document.querySelector(".main-frog");
-// const progressBar = document.querySelector(".progress-bar");
+const progressBar = document.querySelector(".progress-bar");
 
-// Настройка элементов
+import { startGame, stopGame, getIsGameActive } from "./frog-game.js";
 rocketContent.style.transition = "opacity 0.5s ease-in-out";
 mainFrog.style.position = "absolute";
 mainFrog.style.top = "0";
@@ -13,8 +13,6 @@ mainFrog.style.height = "100%";
 mainFrog.style.visibility = "hidden";
 mainFrog.style.opacity = "0";
 mainFrog.style.transition = "opacity 0.5s ease-in-out";
-
-let isGameRunning = false;
 
 function showRocket() {
   mainFrog.style.opacity = "0";
@@ -30,29 +28,21 @@ function showFrog() {
   setTimeout(() => {
     mainFrog.style.visibility = "visible";
     mainFrog.style.opacity = "1";
-    // Запускаем игру через событие, чтобы frog-game.js мог обработать
-    const startGameEvent = new Event('startGame');
-    document.dispatchEvent(startGameEvent);
+    startGame();
   }, 500);
 }
-
 function resetProgressBar() {
   progressBar.style.animation = "none";
-  progressBar.offsetHeight; // Это вызывает перерисовку
+  progressBar.offsetHeight; 
   progressBar.style.animation = "progressAnimation 5s linear forwards";
 }
 
-
-// Обработчики событий
 progressBar.addEventListener("animationend", () => {
-  if (!isGameRunning) {
-    isGameRunning = true;
+  if (!getIsGameActive()) {
     showFrog();
   }
 });
-
-document.addEventListener('gameCrash', () => {
-  isGameRunning = false;
+document.addEventListener("gameCrash", () => {
   setTimeout(() => {
     showRocket();
     setTimeout(() => {
@@ -61,14 +51,6 @@ document.addEventListener('gameCrash', () => {
   }, 2000);
 });
 
-// Инициализация
-document.addEventListener("DOMContentLoaded", function() {
-  resetProgressBar();
-});
 
-// progressBar.addEventListener("animationend", () => {
-//   toggleRocketSection();
-// });
-
-
+resetProgressBar();
 
