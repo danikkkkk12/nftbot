@@ -1,5 +1,4 @@
-const modal = document.getElementById("modalOverlay");
-const closeBtn = document.getElementById("closeModalBtn");
+const closeBtn = document.getElementById("closeGiftModalBtn");
 const grid = document.querySelector(".grid__wrapper");
 const searchInput = document.getElementById("searchInput");
 const buyBtn = document.getElementById("buyBtn");
