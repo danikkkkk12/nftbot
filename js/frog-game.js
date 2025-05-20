@@ -76,7 +76,6 @@ function getSpeedByCoefficient(coef) {
 
 // Игровой процесс
 function startGame() {
-  // Сброс предыдущей игры
   if (gameInterval) {
     clearInterval(gameInterval);
   }
@@ -86,7 +85,8 @@ function startGame() {
   coefficientDisplay.style.opacity = "1";
 
   if (progressLine) {
-    progressLine.style.backgroundImage = "linear-gradient(135deg, #6a0dad, #b366ff)";
+    progressLine.style.backgroundImage =
+      "linear-gradient(135deg, #6a0dad, #b366ff)";
     progressLine.style.opacity = "1";
     progressLine.style.width = "0%";
     progressLine.style.transform = "rotate(0deg)";
@@ -101,7 +101,6 @@ function startGame() {
     frogGif.style.transform = "translateX(-50%) scale(0.7)";
   }
 
-  // Запуск новой игры
   currentCoefficient = 1.0;
   coefficientDisplay.innerText = `x${currentCoefficient.toFixed(2)}`;
 
@@ -155,8 +154,7 @@ function stopGame() {
 
   addToHistory(currentCoefficient, true);
 
-  // Отправляем событие о завершении игры
-  const gameCrashEvent = new Event('gameCrash');
+  const gameCrashEvent = new Event("gameCrash");
   document.dispatchEvent(gameCrashEvent);
 
   setTimeout(() => {
@@ -192,11 +190,6 @@ function addToHistory(coef, isCrash) {
     }, 300);
   }
 }
-
-
-// Слушаем событие начала игры
-document.addEventListener('startGame', startGame);
-startGame();
 
 stopBtns.forEach((stopBtn, index) => {
   stopBtn.addEventListener("click", () => {
