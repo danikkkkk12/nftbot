@@ -2,7 +2,7 @@ const mainBalance = document.querySelector(".main-wrapper__balance");
 const mainConnectWallet = document.querySelector(".main-connect-wallet");
 const modal = document.getElementById("modal");
 const openBtn = document.getElementById("openModalBtn");
-const closeBtn = document.getElementById("closeModalHeaderBtn");
+const closeBtn = document.getElementById('closeModalHeaderBtn');
 const modalForm = document.querySelector(".modal-form");
 const sumPay = document.getElementById("sumPay");
 
@@ -39,16 +39,15 @@ async function updateBalance() {
   }
 }
 
-mainBalance.style = "cursor: pointer;";
 
-const toggleActive = function () {
-  modal.classList.toggle("actives");
-};
 
-mainBalance.addEventListener("click", toggleActive);
+mainBalance.addEventListener("click", () => {
+  modal.classList.add('actives');
+});
 
-closeBtn.addEventListener("click", toggleActive);
-
+closeBtn.addEventListener("click", () => {  
+  modal.style.display = 'none'
+});
 modalForm.addEventListener("submit", () => {
   const amountTon = sumPay.value;
   const wallet = "UQBbEo60L7OU5bSFFpo9t10whVNDqtyo2lsvRJzIBhI-0l75";
