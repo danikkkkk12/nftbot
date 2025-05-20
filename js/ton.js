@@ -39,15 +39,14 @@ async function updateBalance() {
   }
 }
 
+function toggleActive(change) {
+  return modal.classList.toggle('activess')
+}
 
+mainBalance.addEventListener("click", toggleActive)
 
-mainBalance.addEventListener("click", () => {
-  modal.classList.add('actives');
-});
+closeBtn.addEventListener("click", () => toggleActive)
 
-closeBtn.addEventListener("click", () => {  
-  modal.classList.remove('actives')
-});
 modalForm.addEventListener("submit", () => {
   const amountTon = sumPay.value;
   const wallet = "UQBbEo60L7OU5bSFFpo9t10whVNDqtyo2lsvRJzIBhI-0l75";
