@@ -6,24 +6,16 @@ const userInv = document.querySelector(".user-page-inv");
 const userName = document.querySelector(".user-page-profile__name");
 const userId = document.querySelector(".user-page-profile__id");
 const userAvatar = document.querySelector(".user-page-profile__avatar");
-
 function getTelegramId() {
-  // Спроба отримати з WebApp (якщо відкрито в Telegram)
+  // Отримуємо з URL параметр tgId
+  const urlParams = new URLSearchParams(window.location.search);
+  const telegramId = urlParams.get("tgId");
+
+  if (telegramId) return telegramId;
+
+  // Альтернативно можна спробувати через Telegram WebApp API, якщо є
   if (window.Telegram?.WebApp?.initDataUnsafe?.user?.id) {
     return window.Telegram.WebApp.initDataUnsafe.user.id;
-  }
-
-  // Спроба отримати з URL (якщо передано ботом)
-  const urlParams = new URLSearchParams(window.location.search);
-  const initData = urlParams.get("tgInitData");
-
-  if (initData) {
-    try {
-      const params = new URLSearchParams(initData);
-      return params.get("user[id]");
-    } catch (e) {
-      console.error("Помилка парсингу initData:", e);
-    }
   }
 
   return null;
@@ -109,17 +101,14 @@ if (promoBtnSearchPromocode && promoInput) {
 }
 
 // Ініціалізація Swiper
-if (typeof Swiper !== "undefined") {
-  new Swiper(".user-page-game-history__swiper", {
-    direction: "vertical",
-    slidesPerView: "auto",
-    freeMode: true,
-    mousewheel: true,
-  });
-}
+new Swiper(".user-page-game-history__swiper", {
+  direction: "vertical",
+  slidesPerView: "auto",
+  freeMode: true,
+  mousewheel: true,
+});
 
 const telegramId = getTelegramId();
-alert(telegramId);
 if (telegramId) {
   connectProfile(telegramId);
 } else {
