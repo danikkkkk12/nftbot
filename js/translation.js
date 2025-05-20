@@ -1,4 +1,3 @@
-
     const langButtons = document.querySelectorAll(".user-page-change-language__btn");
     const profileIdElement = document.querySelector(".user-page-profile__id");
 
@@ -64,6 +63,7 @@
             promoModalTitle: "Введите промокод",
             promoModalInputPlaceholder: "Введите промо-код...",
             promoModalConfirmButton: "Подтвердить",
+            takeBetButton: 'Забрать выигрыш',
         },
         en: {
             inventory: "Inventory",
@@ -126,6 +126,7 @@
             promoModalTitle: "Enter promotional code",
             promoModalInputPlaceholder: "Enter promo-code...",
             promoModalConfirmButton: "Confirm",
+            takeBetButton: 'Collect winnings',
         },
     };
 

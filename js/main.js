@@ -1,7 +1,7 @@
 const mainBlockRocket = document.querySelector(".main-block-rocket");
 const rocketContent = document.querySelector(".rocket-content");
 const mainFrog = document.querySelector(".main-frog");
-const progressBar = document.querySelector(".progress-bar");
+// const progressBar = document.querySelector(".progress-bar");
 
 // Настройка элементов
 rocketContent.style.transition = "opacity 0.5s ease-in-out";
@@ -42,6 +42,7 @@ function resetProgressBar() {
   progressBar.style.animation = "progressAnimation 5s linear forwards";
 }
 
+
 // Обработчики событий
 progressBar.addEventListener("animationend", () => {
   if (!isGameRunning) {
@@ -64,5 +65,10 @@ document.addEventListener('gameCrash', () => {
 document.addEventListener("DOMContentLoaded", function() {
   resetProgressBar();
 });
+
+// progressBar.addEventListener("animationend", () => {
+//   toggleRocketSection();
+// });
+
 
 
