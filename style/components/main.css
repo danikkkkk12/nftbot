@@ -192,7 +192,7 @@
   font-weight: bold;
   width: 55px;
   height: 30px;
-  border-radius: 3px;
+  border-radius: 10px;
   flex-shrink: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
   will-change: transform, opacity;
