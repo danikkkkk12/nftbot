@@ -1,7 +1,7 @@
 .main-frog {
   z-index: 1;
   height: 2px;
-  margin: 0px auto;
+  margin: -10px -7px;
   max-width: 440px;
   width: 100%;
 }

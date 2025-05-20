@@ -13,7 +13,7 @@ import { fieldValues, balance } from "./balance.js";
 // Константы
 const LINE_WIDTH = 380;
 const BASE_GAME_SPEED = 200;
-const maxHistoryItems = 7; // Сколько коэффициентов видно одновременно
+const maxHistoryItems = 7;
 
 // Инициализация
 coefficientDisplay.style.opacity = "0";
@@ -76,12 +76,18 @@ function getSpeedByCoefficient(coef) {
 
 // Игровой процесс
 function startGame() {
-  currentCoefficient = 1.0;
-  coefficientDisplay.innerText = `x${currentCoefficient.toFixed(2)}`;
+  // Сброс предыдущей игры
+  if (gameInterval) {
+    clearInterval(gameInterval);
+  }
+
+  coefficientDisplay.classList.remove("crash-glow");
   coefficientDisplay.style.color = "#ffffff";
   coefficientDisplay.style.opacity = "1";
 
   if (progressLine) {
+    progressLine.style.backgroundImage = "linear-gradient(135deg, #6a0dad, #b366ff)";
+    progressLine.style.opacity = "1";
     progressLine.style.width = "0%";
     progressLine.style.transform = "rotate(0deg)";
     progressLine.style.opacity = "1";
@@ -93,8 +99,11 @@ function startGame() {
     frogGif.style.opacity = "0";
     frogGif.style.left = "0px";
     frogGif.style.transform = "translateX(-50%) scale(0.7)";
-    frogGif.style.display = "block";
   }
+
+  // Запуск новой игры
+  currentCoefficient = 1.0;
+  coefficientDisplay.innerText = `x${currentCoefficient.toFixed(2)}`;
 
   isGameActive = true;
   const crashAt = generateCrashCoefficient();
@@ -146,17 +155,18 @@ function stopGame() {
 
   addToHistory(currentCoefficient, true);
 
+  // Отправляем событие о завершении игры
+  const gameCrashEvent = new Event('gameCrash');
+  document.dispatchEvent(gameCrashEvent);
+
   setTimeout(() => {
     coefficientDisplay.classList.remove("crash-glow");
     coefficientDisplay.style.opacity = "0";
     progressLine.style.opacity = "0";
     frogGif.style.opacity = "0";
-
-    setTimeout(startGame, 3000);
   }, 2000);
 }
 
-// Добавление коэффициента в историю (вставка слева)
 function addToHistory(coef, isCrash) {
   const div = document.createElement("div");
   div.classList.add("main-coefficients__coefficient");
@@ -164,19 +174,16 @@ function addToHistory(coef, isCrash) {
   div.textContent = `${coef.toFixed(2)}x`;
   div.style.transition = "transform 0.3s ease";
 
-  // Вставка слева
   historyTrack.insertBefore(div, historyTrack.firstChild);
 
   const items = historyTrack.querySelectorAll(
     ".main-coefficients__coefficient"
   );
 
-  // Сдвиг всех вправо
   items.forEach((item, index) => {
     item.style.transform = `translateX(${index * 100}%)`;
   });
 
-  // Удаление самого правого, если их больше 6
   if (items.length > maxHistoryItems) {
     const last = items[items.length - 1];
     last.classList.add("fade-out");
@@ -186,6 +193,9 @@ function addToHistory(coef, isCrash) {
   }
 }
 
+
+// Слушаем событие начала игры
+document.addEventListener('startGame', startGame);
 startGame();
 
 stopBtns.forEach((stopBtn, index) => {
