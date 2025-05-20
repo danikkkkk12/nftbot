@@ -1,4 +1,4 @@
-const { changeBet } = require('./balance');
+import { changeBet } from './balance.js';
 const toggleButtons = document.querySelectorAll(".bal-inv__btn");
 const betToggle = document.querySelector(".bet-Toggle");
 const giftCard = document.querySelectorAll('.select-bet-change__btn')
