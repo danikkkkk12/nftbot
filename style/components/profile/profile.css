@@ -6,6 +6,7 @@
   display: none;
 }
 .user-page-profile {
+  display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 24px;
