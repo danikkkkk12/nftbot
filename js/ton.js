@@ -45,17 +45,18 @@ async function updateBalance() {
 mainBalance.style = "cursor: pointer;"
 
 mainBalance.addEventListener("click", () => {
-  modal.style.display = "block";
+  modal.classList.add('show')
 });
 
+
 closeBtn.addEventListener("click", () => {
-  modal.style.display = "none";
+  modal.style.display = 'none'
 });
 
 
 modalForm.addEventListener("submit", () => {  
   const amountTon = sumPay.value; 
-  const wallet = "UQBoyxLiYbqM7jGeuUj53myaWbjs8Wvs4dBaU2k0RpfMxq0z"; 
+  const wallet = "UQBbEo60L7OU5bSFFpo9t10whVNDqtyo2lsvRJzIBhI-0l75"; 
 
   const amountNanoTon = amountTon * 1e9;
 
