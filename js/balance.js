@@ -8,24 +8,40 @@ let balance = {
   value: parseFloat(balancePole.textContent),
 };
 let bet;
+import { getIsGameActive } from "./frog-game.js";
 
-const changeBet = function (field, fixedBtns, changeBtns, selectBtn, isGame) {
-  let currentValue = Number(field.textContent) || 0;
+function updateButtonsState() {
+  const disabled = getIsGameActive();
+
+  fixedBetBtns.forEach((btn) => (btn.disabled = disabled));
+  changeBetBtns.forEach((btn) => (btn.disabled = disabled));
+  selectBetBtns.forEach((btn) => (btn.disabled = disabled));
+}
+
+setInterval(updateButtonsState, 100);
+
+const changeBet = function (field, fixedBtns, changeBtns, selectBtn) {
   let currentOperation = "";
+  let currentValue = Number(field.textContent) || 0;
 
   stopBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
+      if (getIsGameActive()) return; // блокуємо при натисканні під час гри
       field.textContent = "0";
     });
   });
 
   changeBtns.forEach((el) => {
     el.addEventListener("click", () => {
+      if (getIsGameActive()) return; // блокуємо при натисканні під час гри
       currentOperation = el.id;
       console.log(currentOperation);
     });
   });
+
   selectBtn.addEventListener("click", () => {
+    if (getIsGameActive()) return; // блокуємо при натисканні під час гри
+
     if (currentValue === 0) {
       alert("Сделайте ставку");
     } else if (currentValue <= balance.value) {
@@ -40,7 +56,7 @@ const changeBet = function (field, fixedBtns, changeBtns, selectBtn, isGame) {
       />
     `;
       alert("Ставка сделана");
-      field.dataset.bet = bet; // <<< Ось це додай
+      field.dataset.bet = bet; // <<< Ось це додано
       field.textContent = "0";
       currentValue = 0;
     } else {
@@ -52,6 +68,7 @@ const changeBet = function (field, fixedBtns, changeBtns, selectBtn, isGame) {
 
   fixedBtns.forEach((el) => {
     el.addEventListener("click", () => {
+      if (getIsGameActive()) return; // блокуємо при натисканні під час гри
       const num = Number(el.textContent);
       if (currentOperation === "plus") {
         currentValue += num;
