@@ -46,7 +46,7 @@ mainBalance.addEventListener("click", () => {
 });
 
 closeBtn.addEventListener("click", () => {  
-  modal.style.display = 'none'
+  modal.classList.remove('actives')
 });
 modalForm.addEventListener("submit", () => {
   const amountTon = sumPay.value;
