@@ -157,6 +157,28 @@ function stopGame() {
   const gameCrashEvent = new Event("gameCrash");
   document.dispatchEvent(gameCrashEvent);
 
+  // Определяем результат игры (выигрыш или проигрыш)
+  let isWin = false;
+  let totalBet = 0;
+  
+  fieldBet.forEach((field) => {
+    const bet = parseFloat(field.dataset.bet || "0");
+    if (bet > 0) {
+      totalBet += bet;
+      isWin = true; // Если есть активные ставки при остановке - это выигрыш
+    }
+  });
+
+  // Отправляем событие с результатом
+window.dispatchEvent(new CustomEvent('betResult', {
+  detail: { 
+    isWin: isWin,
+    coefficient: currentCoefficient,
+    totalBet: totalBet.toFixed(2)
+  }
+}));
+
+
   setTimeout(() => {
     coefficientDisplay.classList.remove("crash-glow");
     coefficientDisplay.style.opacity = "0";
@@ -164,7 +186,6 @@ function stopGame() {
     frogGif.style.opacity = "0";
   }, 2000);
 }
-
 function addToHistory(coef, isCrash) {
   const div = document.createElement("div");
   div.classList.add("main-coefficients__coefficient");
@@ -230,4 +251,4 @@ setInterval(() => {
   });
 }, 500);
 
-export { isGameActive, startGame, stopGame };
+export { isGameActive, startGame, stopGame, currentCoefficient };

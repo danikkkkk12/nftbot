@@ -1,3 +1,5 @@
+
+
 const fixedBetBtns = document.querySelectorAll(".select-bet-change__btn");
 const changeBetBtns = document.querySelectorAll(".select-bet-count__btn");
 const fieldBet = document.querySelectorAll(".select-bet-count__number");
@@ -39,18 +41,19 @@ const changeBet = function (field, fixedBtns, changeBtns, selectBtn) {
     });
   });
 
-  selectBtn.addEventListener("click", () => {
-    if (getIsGameActive()) return; // блокуємо при натисканні під час гри
+  // В обработчике ставки (selectBtn.addEventListener)
+selectBtn.addEventListener("click", () => {
+  if (getIsGameActive()) return;
 
-    if (currentValue === 0) {
-      bet = 0;
-      currentValue = 0;
-      field.textContent = "0";
-      alert("Сделайте ставку");
-    } else if (currentValue <= balance.value) {
-      bet = currentValue;
-      balance.value -= bet;
-      balancePole.innerHTML = `
+  if (currentValue === 0) {
+    bet = 0;
+    currentValue = 0;
+    field.textContent = "0";
+    alert("Сделайте ставку");
+  } else if (currentValue <= balance.value) {
+    bet = currentValue;
+    balance.value -= bet;
+    balancePole.innerHTML = `
       ${balance.value.toFixed(2)} 
       <img
         src="web/images/main/ton-icon.svg"
@@ -58,16 +61,21 @@ const changeBet = function (field, fixedBtns, changeBtns, selectBtn) {
         class="main-balance__token"
       />
     `;
-      alert("Ставка сделана");
-      field.dataset.bet = bet; // <<< Ось це додано
-      field.textContent = "0";
-      currentValue = 0;
-    } else {
-      alert("Недостаточно средств на балансе");
-      field.textContent = "0";
-      currentValue = 0;
-    }
-  });
+    alert("Ставка сделана");
+    field.dataset.bet = bet;
+    field.textContent = "0";
+    currentValue = 0;
+    
+    // Перемещаем dispatchEvent сюда, после успешной ставки
+    window.dispatchEvent(new CustomEvent('newBet', { 
+      detail: { amount: bet } 
+    }));
+  } else {
+    alert("Недостаточно средств на балансе");
+    field.textContent = "0";
+    currentValue = 0;
+  }
+});
 
   fixedBtns.forEach((el) => {
     el.addEventListener("click", () => {
@@ -110,6 +118,7 @@ fieldBet.forEach((field, index) => {
   }
   fieldValues.push(field);
 });
+
 
 export { changeBet };
 export { fieldValues, balance, bet };
