@@ -69,8 +69,8 @@ async function connectProfile(telegramId) {
 if (inventoryBtn && inventorySection) {
   inventoryBtn.addEventListener("click", (e) => {
     e.preventDefault();
-     document.querySelector(".user-page-game-history").style.display = "none";
-     document.querySelector(".user-page-inventory").style.display = "block";
+    document.querySelector(".user-page-game-history").style.display = "none";
+    document.querySelector(".user-page-inventory").style.display = "block";
     inventorySection.classList.toggle("open");
 
     // Проверяем есть ли предметы в инвентаре
@@ -147,6 +147,7 @@ if (promoBtnSearchPromocode && promoInput) {
   });
 }
 
+export { getTelegramId };
 // Подключаем профиль при загрузке
 
 document.addEventListener("DOMContentLoaded", () => {
