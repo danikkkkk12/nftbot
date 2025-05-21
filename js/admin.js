@@ -2,7 +2,7 @@ const addAdminInput = document.querySelector(".admin-add__input-add");
 const addAdminBtn = document.querySelector(".admin-add__btn--add");
 const removeAdminInput = document.querySelector(".admin-add__input--remove");
 const removeAdminBtn = document.querySelector(".admin-add__btn--remove");
-const openAdminPage = document.querySelector(".user-page-inv__icon--admin");
+const openAdminPage = document.querySelector(".user-page-inv__btn--admin");
 const adminSection = document.querySelector(".admin");
 
 import { getTelegramId } from "./profile.js";
