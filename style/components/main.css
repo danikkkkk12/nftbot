@@ -66,7 +66,8 @@
 
 .main-wrapper-balance__logo {
   margin-left: -20px;
-
+width: 62px;
+height: 48px;
 }
 
 .main-connect-wallet {
@@ -279,9 +280,10 @@
   flex-direction: column;
 }
 
-/* .main-block-rocket__icon {
-  margin: 31px 0px 0px 177px;
-} */
+.main-block-rocket__icon {
+  width: 80px;
+height: 68px;
+}
 .main-block-rocket__text {
   font-family: "Montserrat", sans-serif;
   font-weight: 600;

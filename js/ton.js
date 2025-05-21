@@ -29,6 +29,11 @@ async function getBalance(address) {
   }
 }
 
+function shortenAddress(address) {
+  return address.slice(0, 5) + '...' + address.slice(-4);
+}
+
+
 async function updateBalance() {
   if (tonConnect.wallet && tonConnect.wallet.account) {
     try {
@@ -45,6 +50,22 @@ async function updateBalance() {
     }
   }
 }
+
+tonConnect.onStatusChange(async (walletInfo) => {
+  if (walletInfo && walletInfo.account && walletInfo.account.address) {
+    const address = walletInfo.account.address;
+    const shortAddr = shortenAddress(address);
+
+    if (mainConnectWallet) {
+      mainConnectWallet.innerText = shortAddr;
+      mainConnectWallet.disabled = true; 
+      mainConnectWallet.style.cursor = "default";
+    }
+
+    await updateBalance();
+  }
+});
+
 
 function toggleActive() {
   if (modal) {
