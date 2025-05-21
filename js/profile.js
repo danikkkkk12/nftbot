@@ -150,7 +150,6 @@ if (promoBtnSearchPromocode && promoInput) {
 export { getTelegramId };
 // Подключаем профиль при загрузке
 
-document.addEventListener("DOMContentLoaded", () => {
   const telegramId = getTelegramId();
   if (telegramId) {
     connectProfile(telegramId);
@@ -160,7 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (userName) userName.textContent = "Гость";
     if (userId) userId.textContent = "User ID: 0000";
   }
-});
 
 // Получаем элементы DOM
 
