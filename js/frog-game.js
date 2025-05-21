@@ -272,5 +272,5 @@ setInterval(() => {
 }, 500);
 
 export { isGameActive, startGame, stopGame, currentCoefficient };
-export { isGameActive, startGame, stopGame };
+
 
