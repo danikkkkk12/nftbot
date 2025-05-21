@@ -68,7 +68,9 @@ function changeBet(field, fixedBtns, changeBtns, selectBtn) {
       currentValue = 0;
 
       // Сигналим о новой ставке
-      window.dispatchEvent(new CustomEvent("newBet", { detail: { amount: bet } }));
+      window.dispatchEvent(
+        new CustomEvent("newBet", { detail: { amount: bet } })
+      );
     } else {
       alert("Недостаточно средств на балансе");
       field.textContent = "0";
@@ -120,4 +122,4 @@ new Swiper(".bet-count__swiper", {
   slidesPerView: "auto",
   freeMode: true,
   mousewheel: true,
-
+});
