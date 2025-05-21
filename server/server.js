@@ -14,6 +14,36 @@ app.use(express.static(path.join(__dirname, '..')));
 // Подключение к БД
 connectDB();
 
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
+
+let clients = new Set();
+
+wss.on('connection', (ws) => {
+  clients.add(ws);
+  console.log('Подключился клиент. Сейчас онлайн:', clients.size);
+
+  // Рассылаем число онлайнов всем
+  broadcastOnline();
+
+  ws.on('close', () => {
+    clients.delete(ws);
+    console.log('Клиент отключился. Сейчас онлайн:', clients.size);
+    broadcastOnline();
+  });
+});
+
+function broadcastOnline() {
+  const count = clients.size;
+  const message = JSON.stringify({ online: count });
+
+  for (let client of clients) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message);
+    }
+  }
+}
+
 // Маршруты
 // app.post('/api/users', async (req, res) => {
 //   try {
