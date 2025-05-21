@@ -107,15 +107,13 @@ searchInput.addEventListener("input", renderGrid);
 openBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     modalOverlay.classList.remove("is-hidden");
-    document.body.style.overflow =
-      document.body.style.overflow === "hidden" ? "visible" : "hidden";
+    document.body.style.overflow = "hidden";
   });
 });
 
 closeBtn.addEventListener("click", () => {
   modalOverlay.classList.add("is-hidden");
-  document.body.style.overflow =
-    document.body.style.overflow === "hidden" ? "visible" : "hidden";
+  document.body.style.overflow = "";
 });
 
 renderGrid();

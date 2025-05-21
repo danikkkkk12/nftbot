@@ -1,4 +1,5 @@
 import { bet } from "./balance.js";
+import { changeBet } from "./balance.js";
 const toggleButtons = document.querySelectorAll(".bal-inv__btn");
 const betToggle = document.querySelector(".bet-Toggle");
 const giftCard = document.querySelectorAll(".select-bet-change__btn");
@@ -37,6 +38,8 @@ if (betToggle) {
 
 betBtn.forEach((btn, index) => {
   btn.addEventListener("click", () => {
+
+    const betValue = Number(fieldBet[index].textContent);
     const userName = userNames.textContent.trim();
     const userAvatar = userProfImg.src;
 

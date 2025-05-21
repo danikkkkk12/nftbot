@@ -120,4 +120,4 @@ new Swiper(".bet-count__swiper", {
   slidesPerView: "auto",
   freeMode: true,
   mousewheel: true,
-});
+
