@@ -33,7 +33,7 @@ function showFrog() {
 }
 function resetProgressBar() {
   progressBar.style.animation = "none";
-  progressBar.offsetHeight; 
+  progressBar.offsetHeight;
   progressBar.style.animation = "progressAnimation 5s linear forwards";
 }
 
@@ -50,7 +50,25 @@ document.addEventListener("gameCrash", () => {
     }, 600);
   }, 2000);
 });
+const socket = new WebSocket("ws://localhost:8080");
 
+socket.addEventListener("message", (event) => {
+  console.log("Получено сообщение:", event.data);
+  const data = JSON.parse(event.data);
+  const el = document.getElementById("onlineCount");
+  if (el && data.online !== undefined) {
+    el.textContent = data.online;
+  } else {
+    console.warn("Элемент для вывода не найден или данные невалидны");
+  }
+});
+
+socket.addEventListener("error", (e) => {
+  console.error("Ошибка WebSocket:", e);
+});
+
+socket.addEventListener("close", () => {
+  console.log("WebSocket соединение закрыто");
+});
 
 resetProgressBar();
-
