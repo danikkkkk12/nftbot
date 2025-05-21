@@ -6,8 +6,7 @@ const openAdminPage = document.querySelector(".user-page-inv__btn--admin");
 const adminSection = document.querySelector(".admin");
 
 import { getTelegramId } from "./profile.js";
-alert(getTelegramId())
-// Перевірка, чи користувач адміністратор
+
 const isUserAdmin = async function () {
   const tgId = getTelegramId();
 
@@ -16,6 +15,7 @@ const isUserAdmin = async function () {
     const users = await response.json();
 
     const user = users.find((user) => user.telegramId === tgId);
+    alert(user);
 
     if (user && user.isAdmin) {
       return user;
