@@ -13,6 +13,7 @@
 
   const scripts = [
     "js/translation.js",
+    "js/profile.js",
     "js/admin.js",
     "js/main.js",
     "js/ton.js",
@@ -22,7 +23,6 @@
     "js/buy-gift.js",
     "js/crash-game.js",
     "js/nav-bar.js",
-    "js/profile.js",
     "js/frog-game.js",
     "js/giveaway.js",
     "js/friends.js",
