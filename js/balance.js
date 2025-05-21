@@ -43,6 +43,9 @@ const changeBet = function (field, fixedBtns, changeBtns, selectBtn) {
     if (getIsGameActive()) return; // блокуємо при натисканні під час гри
 
     if (currentValue === 0) {
+      bet = 0;
+      currentValue = 0;
+      field.textContent = "0";
       alert("Сделайте ставку");
     } else if (currentValue <= balance.value) {
       bet = currentValue;
@@ -109,7 +112,7 @@ fieldBet.forEach((field, index) => {
 });
 
 export { changeBet };
-export { fieldValues, balance };
+export { fieldValues, balance, bet };
 
 // slider
 
