@@ -5,16 +5,14 @@ const removeAdminBtn = document.querySelector(".admin-add__btn--remove");
 const openAdminPage = document.querySelector(".user-page-inv__btn--admin");
 const adminSection = document.querySelector(".admin");
 
-import { getTelegramIdAsync } from "./profile.js";
+import { getTelegramId } from "./profile.js";
 
-const isUserAdmin = async function () {
-  const tgId = await getTelegramIdAsync(); // <- чекаємо на ID
-
+const isUserAdmin = async function (tgId) {
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
     const users = await response.json();
 
-    const user = users.find((user) => user.telegramId == tgId);
+    const user = users.find((user) => user.telegramId === tgId);
 
     if (user && user.isAdmin) {
       return user;
@@ -109,30 +107,32 @@ const showSection = function (targetSection) {
   targetSection.style.display = "block";
 };
 
-// Показати/приховати кнопку входу в адмінку
-isUserAdmin().then((user) => {
-  if (user) {
-    openAdminPage.style.display = "flex";
-  } else {
-    openAdminPage.style.display = "none";
-  }
-});
+const telegramId = getTelegramId();
+if (telegramId) {
+  isUserAdmin(telegramId).then((user) => {
+    if (user) {
+      openAdminPage.style.display = "flex";
+    } else {
+      openAdminPage.style.display = "none";
+    }
+  });
+
+  addAdminBtn.addEventListener("click", () => {
+    const id = Number(addAdminInput.value.trim());
+    if (!id) return alert("Введіть коректний ID користувача");
+    addAdmins(id);
+  });
+
+  removeAdminBtn.addEventListener("click", () => {
+    const id = Number(removeAdminInput.value.trim());
+    if (!id) return alert("Введіть коректний ID користувача");
+    removeAdmins(id);
+  });
+} else {
+  console.log("Не удалось получить Telegram ID");
+}
 
 // Клік по кнопці входу в адмінку
 openAdminPage.addEventListener("click", () => {
   showSection(adminSection);
-});
-
-// Клік по кнопці додати адміністратора
-addAdminBtn.addEventListener("click", () => {
-  const id = Number(addAdminInput.value.trim());
-  if (!id) return alert("Введіть коректний ID користувача");
-  addAdmins(id);
-});
-
-// Клік по кнопці видалити адміністратора
-removeAdminBtn.addEventListener("click", () => {
-  const id = Number(removeAdminInput.value.trim());
-  if (!id) return alert("Введіть коректний ID користувача");
-  removeAdmins(id);
 });
