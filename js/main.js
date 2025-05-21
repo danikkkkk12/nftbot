@@ -67,8 +67,7 @@ document.addEventListener("gameCrash", () => {
   }, 2000);
 });
 
-// WebSocket
-const socket = new WebSocket("ws://localhost:8080");
+const socket = new WebSocket("wss://web-socket-nftbot.onrender.com");
 
 socket.addEventListener("message", (event) => {
   console.log("Получено сообщение:", event.data);
@@ -92,6 +91,7 @@ socket.addEventListener("error", (e) => {
 socket.addEventListener("close", () => {
   console.log("WebSocket соединение закрыто");
 });
+
 
 resetProgressBar();
 
