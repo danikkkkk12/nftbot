@@ -4,7 +4,9 @@ const iconInv = document.querySelector(".user-page-inv__icon--inv");
 const userInv = document.querySelector(".user-page-inv");
 const inventoryBtn = document.querySelector(".user-page-inv__btn--inv");
 const inventorySection = document.querySelector(".user-page-inventory");
-const startPlayingBtn = document.querySelector(".user-page-inventory__empty-btn");
+const startPlayingBtn = document.querySelector(
+  ".user-page-inventory__empty-btn"
+);
 const userName = document.querySelector(".user-page-profile__name");
 const userId = document.querySelector(".user-page-profile__id");
 const userAvatar = document.querySelector(".user-page-profile__avatar");
@@ -14,7 +16,9 @@ const promoBtnOpens = document.querySelectorAll(".promo-open-btn");
 const promobackdrop = document.querySelector(".promo-backdrop");
 const promoBtnClose = document.querySelector(".promo-modal__btn-close");
 const promoInput = document.querySelector(".promo-modal__input");
-const promoBtnSearchPromocode = document.getElementById("promoModalSearchPromocode");
+const promoBtnSearchPromocode = document.getElementById(
+  "promoModalSearchPromocode"
+);
 
 // Функция получения Telegram ID
 function getTelegramId() {
@@ -65,13 +69,17 @@ async function connectProfile(telegramId) {
 if (inventoryBtn && inventorySection) {
   inventoryBtn.addEventListener("click", (e) => {
     e.preventDefault();
+     document.querySelector(".user-page-game-history").style.display = "none";
+     document.querySelector(".user-page-inventory").style.display = "block";
     inventorySection.classList.toggle("open");
-    
+
     // Проверяем есть ли предметы в инвентаре
     const hasItems = checkInventoryItems(); // Ваша функция проверки
-    
+
     if (!hasItems) {
-      const emptyMessage = inventorySection.querySelector(".user-page-inventory__empty");
+      const emptyMessage = inventorySection.querySelector(
+        ".user-page-inventory__empty"
+      );
       if (emptyMessage) {
         emptyMessage.style.display = "block";
       }
@@ -140,14 +148,12 @@ if (promoBtnSearchPromocode && promoInput) {
 }
 
 // Подключаем профиль при загрузке
-document.addEventListener("DOMContentLoaded", () => {
-  const telegramId = getTelegramId();
-  if (telegramId) {
-    connectProfile(telegramId);
-  } else {
-    console.log("Не удалось получить Telegram ID");
-    // Устанавливаем дефолтные значения
-    if (userName) userName.textContent = "Гость";
-    if (userId) userId.textContent = "User ID: 0000";
-  }
-});
+const telegramId = getTelegramId();
+if (telegramId) {
+  connectProfile(telegramId);
+} else {
+  console.log("Не удалось получить Telegram ID");
+  // Устанавливаем дефолтные значения
+  if (userName) userName.textContent = "Гость";
+  if (userId) userId.textContent = "User ID: 0000";
+}
