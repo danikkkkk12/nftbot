@@ -4,8 +4,10 @@ const removeAdminInput = document.querySelector(".admin-add__input--remove");
 const removeAdminBtn = document.querySelector(".admin-add__btn--remove");
 const openAdminPage = document.querySelector(".user-page-inv__icon--admin");
 const adminSection = document.querySelector(".admin");
+
 import { getTelegramId } from "./profile.js";
 
+// Перевірка, чи користувач адміністратор
 const isUserAdmin = async function () {
   const tgId = getTelegramId();
 
@@ -25,6 +27,8 @@ const isUserAdmin = async function () {
     return false;
   }
 };
+
+// Додати адміністратора
 const addAdmins = async function (userId) {
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
@@ -61,6 +65,7 @@ const addAdmins = async function (userId) {
   }
 };
 
+// Видалити адміністратора
 const removeAdmins = async function (userId) {
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
@@ -97,6 +102,7 @@ const removeAdmins = async function (userId) {
   }
 };
 
+// Показати секцію
 const showSection = function (targetSection) {
   document.querySelectorAll("section").forEach((section) => {
     section.style.display = "none";
@@ -104,6 +110,7 @@ const showSection = function (targetSection) {
   targetSection.style.display = "block";
 };
 
+// Показати/приховати кнопку входу в адмінку
 isUserAdmin().then((user) => {
   if (user) {
     openAdminPage.style.display = "block";
@@ -111,14 +118,22 @@ isUserAdmin().then((user) => {
     openAdminPage.style.display = "none";
   }
 });
+
+// Клік по кнопці входу в адмінку
 openAdminPage.addEventListener("click", () => {
   showSection(adminSection);
 });
+
+// Клік по кнопці додати адміністратора
 addAdminBtn.addEventListener("click", () => {
-  const id = Number(addAdminInput.value);
+  const id = Number(addAdminInput.value.trim());
+  if (!id) return alert("Введіть коректний ID користувача");
   addAdmins(id);
 });
+
+// Клік по кнопці видалити адміністратора
 removeAdminBtn.addEventListener("click", () => {
-  const id = Number(removeAdminInput.value);
-  addAdmins(id);
+  const id = Number(removeAdminInput.value.trim());
+  if (!id) return alert("Введіть коректний ID користувача");
+  removeAdmins(id);
 });
