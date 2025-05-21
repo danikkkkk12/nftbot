@@ -17,13 +17,16 @@ const maxHistoryItems = 7;
 
 // Инициализация
 coefficientDisplay.style.opacity = "0";
-frogGif.style.opacity = "0";
-if (frogGif) frogGif.style.display = "block";
+
+if (frogGif) {
+  frogGif.style.opacity = "0";
+  frogGif.style.display = "block";
+}
 
 // Анимация появления полосок
-if (bars) {
-  bars.forEach(function (bar, index) {
-    setTimeout(function () {
+if (bars.length > 0) {
+  bars.forEach((bar, index) => {
+    setTimeout(() => {
       bar.style.opacity = "1";
       bar.style.transform = "translateY(0)";
     }, (index + 1) * 300);
@@ -36,6 +39,28 @@ let gameInterval;
 let isGameActive = false;
 let seriesQueue = [];
 let seriesIndex = 0;
+
+// Функция для переключения видимости кнопок (событие, а не setInterval)
+function toggleButtons() {
+  selectBetBtns.forEach((selectBtn, index) => {
+    const stopBtn = stopBtns[index];
+    if (!stopBtn) return;
+
+    if (isGameActive) {
+      selectBtn.style.display = "none";
+      stopBtn.style.display = "block";
+    } else {
+      selectBtn.style.display = "block";
+      stopBtn.style.display = "none";
+    }
+  });
+}
+
+// Запускаем toggleButtons при смене состояния игры
+function setGameActive(active) {
+  isGameActive = active;
+  toggleButtons();
+}
 
 export function getIsGameActive() {
   return isGameActive;
@@ -76,23 +101,17 @@ function getSpeedByCoefficient(coef) {
 
 // Игровой процесс
 function startGame() {
-  if (gameInterval) {
-    clearInterval(gameInterval);
-  }
+  if (gameInterval) clearInterval(gameInterval);
 
   coefficientDisplay.classList.remove("crash-glow");
   coefficientDisplay.style.color = "#ffffff";
   coefficientDisplay.style.opacity = "1";
 
   if (progressLine) {
-    progressLine.style.backgroundImage =
-      "linear-gradient(135deg, #6a0dad, #b366ff)";
+    progressLine.style.backgroundImage = "linear-gradient(135deg, #6a0dad, #b366ff)";
     progressLine.style.opacity = "1";
     progressLine.style.width = "0%";
     progressLine.style.transform = "rotate(0deg)";
-    progressLine.style.opacity = "1";
-    progressLine.style.backgroundImage =
-      "linear-gradient(135deg, #6a0dad, #b366ff)";
   }
 
   if (frogGif) {
@@ -104,7 +123,8 @@ function startGame() {
   currentCoefficient = 1.0;
   coefficientDisplay.innerText = `x${currentCoefficient.toFixed(2)}`;
 
-  isGameActive = true;
+  setGameActive(true);
+
   const crashAt = generateCrashCoefficient();
   gameInterval = setInterval(() => updateGameState(crashAt), BASE_GAME_SPEED);
 }
@@ -127,9 +147,7 @@ function updateGameState(crashAt) {
       progressLine.style.width = "100%";
       progressLine.style.transform = `rotate(-${liftProgress * 15}deg)`;
       frogGif.style.left = `${100 + liftProgress * 25}%`;
-      frogGif.style.transform = `translateX(-50%) scale(${
-        0.7 - liftProgress * 0.1
-      })`;
+      frogGif.style.transform = `translateX(-50%) scale(${0.7 - liftProgress * 0.1})`;
     } else {
       progressLine.style.width = "0%";
       frogGif.style.opacity = "0";
@@ -142,14 +160,14 @@ function updateGameState(crashAt) {
 }
 
 function stopGame() {
-  isGameActive = false;
+  setGameActive(false);
+
   clearInterval(gameInterval);
 
   coefficientDisplay.classList.add("crash-glow");
   coefficientDisplay.style.color = "#ff0000";
   if (progressLine) {
-    progressLine.style.backgroundImage =
-      "linear-gradient(135deg, #ff0000, #ff6b6b)";
+    progressLine.style.backgroundImage = "linear-gradient(135deg, #ff0000, #ff6b6b)";
   }
 
   addToHistory(currentCoefficient, true);
@@ -182,8 +200,8 @@ window.dispatchEvent(new CustomEvent('betResult', {
   setTimeout(() => {
     coefficientDisplay.classList.remove("crash-glow");
     coefficientDisplay.style.opacity = "0";
-    progressLine.style.opacity = "0";
-    frogGif.style.opacity = "0";
+    if (progressLine) progressLine.style.opacity = "0";
+    if (frogGif) frogGif.style.opacity = "0";
   }, 2000);
 }
 function addToHistory(coef, isCrash) {
@@ -193,11 +211,11 @@ function addToHistory(coef, isCrash) {
   div.textContent = `${coef.toFixed(2)}x`;
   div.style.transition = "transform 0.3s ease";
 
+  if (!historyTrack) return;
+
   historyTrack.insertBefore(div, historyTrack.firstChild);
 
-  const items = historyTrack.querySelectorAll(
-    ".main-coefficients__coefficient"
-  );
+  const items = historyTrack.querySelectorAll(".main-coefficients__coefficient");
 
   items.forEach((item, index) => {
     item.style.transform = `translateX(${index * 100}%)`;
@@ -212,25 +230,27 @@ function addToHistory(coef, isCrash) {
   }
 }
 
+// Обработчики stopBtns
 stopBtns.forEach((stopBtn, index) => {
   stopBtn.addEventListener("click", () => {
     const field = fieldBet[index];
-    const betValue = parseFloat(field.dataset.bet);
+    if (!field) return;
 
+    const betValue = parseFloat(field.dataset.bet);
     if (!betValue || betValue <= 0) return;
 
     if (isGameActive) {
       const gain = betValue * currentCoefficient;
       balance.value += gain;
 
-      balancePole.innerHTML = `
-        ${balance.value.toFixed(2)} +
-        <img
-          src="web/images/main/ton-icon.svg"
-          alt="Token"
-          class="main-balance__token"
-        />
-      `;
+      if (balancePole) {
+        balancePole.textContent = balance.value.toFixed(2);
+        const img = document.createElement("img");
+        img.src = "web/images/main/ton-icon.svg";
+        img.alt = "Token";
+        img.className = "main-balance__token";
+        balancePole.appendChild(img);
+      }
     }
 
     field.textContent = "0";
@@ -252,3 +272,5 @@ setInterval(() => {
 }, 500);
 
 export { isGameActive, startGame, stopGame, currentCoefficient };
+export { isGameActive, startGame, stopGame };
+
