@@ -6,10 +6,8 @@ if (copyButton) {
         try {
             await navigator.clipboard.writeText("https://t.me/nftgo_bot");
             notification.classList.add("show");
-
             setTimeout(() => notification.classList.remove("show"), 2000);
         } catch (err) {
-            console.error("Failed to copy: ", err);
             alert("Не удалось скопировать ссылку. Попробуйте вручную.");
         }
     });
@@ -17,8 +15,152 @@ if (copyButton) {
 
 const inviteMainButton = document.querySelector(".invite-button-main");
 
+let invitedFriendsCount = 0;
+let referralTonBalance = 0;
+const invitedFriendsData = [];
+const processedReferralEvents = new Set();
+const FRIENDS_PER_TON = 40;
+const TONS_PER_MILESTONE = 1;
+let nextSimulatedFriendNumericId = 1;
+
+let currentSimulatedReferralId = null;
+let isInvitationActive = false;
+
+const referralTonBalanceEl = document.getElementById('referralTonBalanceAmount');
+const withdrawButton = document.querySelector('.withdraw-button');
+const invitedCountHeaderEl = document.getElementById('invitedCountHeader');
+const invitedFriendsListContainerEl = document.getElementById('invitedFriendsListContainer');
+const noInvitedFriendsMessageEl = document.getElementById('noInvitedFriendsMessage');
+const taskProgressTextEl = document.getElementById('inviteTaskProgressText');
+
+function updateReferralBalanceDisplay() {
+    if (referralTonBalanceEl) {
+        referralTonBalanceEl.innerHTML = `${referralTonBalance.toFixed(2)} <img src="web/images/main/ton-icon.svg" class="diamond-icon" />`;
+    }
+}
+
+function updateInvitedCountDisplay() {
+    if (invitedCountHeaderEl) {
+        invitedCountHeaderEl.textContent = `Invited (${invitedFriendsCount})`;
+    }
+    if (taskProgressTextEl) {
+        const currentProgress = invitedFriendsCount % FRIENDS_PER_TON;
+        taskProgressTextEl.textContent = `${currentProgress} / ${FRIENDS_PER_TON}`;
+    }
+}
+
+function displayInvitedFriends() {
+    if (!invitedFriendsListContainerEl) return;
+
+    const existingMessage = invitedFriendsListContainerEl.querySelector('#noInvitedFriendsMessage');
+    invitedFriendsListContainerEl.innerHTML = '';
+    if (existingMessage) {
+         invitedFriendsListContainerEl.appendChild(existingMessage);
+    }
+
+    if (invitedFriendsData.length === 0) {
+        if (noInvitedFriendsMessageEl) {
+            noInvitedFriendsMessageEl.style.display = 'block';
+        }
+    } else {
+        if (noInvitedFriendsMessageEl) {
+            noInvitedFriendsMessageEl.style.display = 'none';
+        }
+        const fragment = document.createDocumentFragment();
+        invitedFriendsData.forEach(friend => {
+            const friendItem = document.createElement('div');
+            friendItem.classList.add('invited-friend-item');
+
+            const nicknameSpan = document.createElement('span');
+            nicknameSpan.textContent = friend.nickname;
+
+            const profitSpan = document.createElement('span');
+            profitSpan.innerHTML = `0.00 <img src="web/images/main/ton-icon.svg" class="diamond-icon invited-friend-profit-icon" />`;
+
+            friendItem.appendChild(nicknameSpan);
+            friendItem.appendChild(profitSpan);
+            fragment.appendChild(friendItem);
+        });
+        invitedFriendsListContainerEl.appendChild(fragment);
+    }
+}
+
+async function getNicknameForSimulation() {
+    const currentUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
+    let baseUsernameToUse = null;
+
+    if (currentUser?.id) {
+        try {
+            const response = await fetch("https://nftbotserver.onrender.com/api/users");
+            if (response.ok) {
+                const users = await response.json();
+                const userData = users.find(user => user.telegramId == currentUser.id);
+                if (userData && userData.username) {
+                    baseUsernameToUse = userData.username;
+                }
+            } else {
+                 console.warn("Network response was not ok when fetching users for nickname simulation.");
+            }
+        } catch (error) {
+            console.error("Error fetching nickname via API for simulation:", error);
+        }
+    }
+
+    if (!baseUsernameToUse && currentUser?.username) {
+        baseUsernameToUse = currentUser.username;
+    }
+
+    if (baseUsernameToUse) {
+        const countOfThisUser = invitedFriendsData.filter(f => f.nickname && f.nickname.startsWith(baseUsernameToUse)).length;
+        if (countOfThisUser > 0) {
+            return `${baseUsernameToUse} (${countOfThisUser + 1})`;
+        }
+        return baseUsernameToUse;
+    }
+
+    const fallbackNickname = `Friend #${nextSimulatedFriendNumericId}`;
+    nextSimulatedFriendNumericId++;
+    return fallbackNickname;
+}
+
+async function simulateFriendJoining(referralEventId) {
+    if (!referralEventId) {
+        isInvitationActive = false;
+        return;
+    }
+
+    if (processedReferralEvents.has(referralEventId)) {
+        return;
+    }
+    processedReferralEvents.add(referralEventId);
+
+    const friendNickname = await getNicknameForSimulation();
+
+    invitedFriendsCount++;
+    invitedFriendsData.push({ id: referralEventId, nickname: friendNickname, profit: 0.00 });
+
+    if (invitedFriendsCount > 0 && invitedFriendsCount % FRIENDS_PER_TON === 0) {
+        referralTonBalance += TONS_PER_MILESTONE;
+    }
+
+    updateInvitedCountDisplay();
+    updateReferralBalanceDisplay();
+    displayInvitedFriends();
+
+    isInvitationActive = false;
+    currentSimulatedReferralId = null;
+}
+
+function withdrawFunds() {
+    if (referralTonBalance > 0) {
+        alert(`Attempting to withdraw ${referralTonBalance.toFixed(2)} TON. (This is a placeholder for actual withdrawal functionality)`);
+    } else {
+        alert("No funds to withdraw.");
+    }
+}
+
 if (inviteMainButton) {
-    inviteMainButton.addEventListener("click", function () {
+    inviteMainButton.addEventListener("click", async function () {
         const telegramDeepLink = "https://t.me/nftgo_bot";
         const shareMessage = `
 🚀 *Привет!*  
@@ -29,10 +171,34 @@ if (inviteMainButton) {
 
 🔥 *Присоединяйся прямо сейчас!*  
 `;
-
         window.open(
             `https://t.me/share/url?url=${encodeURIComponent(telegramDeepLink)}&text=${encodeURIComponent(shareMessage)}`,
             "_blank"
         );
+
+        let referralIdToProcess;
+        if (!isInvitationActive) {
+            currentSimulatedReferralId = `sim_ref_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+            isInvitationActive = true;
+            referralIdToProcess = currentSimulatedReferralId;
+        } else {
+            referralIdToProcess = currentSimulatedReferralId;
+        }
+        
+        if (referralIdToProcess) {
+            setTimeout(async () => {
+                await simulateFriendJoining(referralIdToProcess);
+            }, 750); 
+        }
     });
 }
+
+if (withdrawButton) {
+    withdrawButton.addEventListener('click', withdrawFunds);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateReferralBalanceDisplay();
+    updateInvitedCountDisplay();
+    displayInvitedFriends();
+});

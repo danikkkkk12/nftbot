@@ -30,10 +30,12 @@
   border-radius: 10px 20px 0px 0px;
   margin: 0 auto;
   max-width: 440px;
+  height: 340px;
 }
 
 .main-balance__token {
   margin-left: 5px;
+  margin-right: 5px;
 }
 
 .flex {
@@ -42,9 +44,6 @@
 }
 
 .main-balance {
-  max-width: 100px;
-  justify-content: space-between;
-  width: 100%;
   height: 44px;
   top: 20px;
   margin-left: 10px;
@@ -59,9 +58,10 @@
 
 @media (min-width: 390px) {
   .main-balance {
-    margin-left: 55px;
+    margin-left: 40px;
     padding-left: 10px;
   }
+
 }
 
 .main-wrapper-balance__logo {
@@ -70,7 +70,7 @@
 }
 
 .main-connect-wallet {
-  margin-left: 8px;
+  margin-left: 12px;
   max-width: 162px;
   width: 100%;
   height: 44px;
@@ -139,7 +139,6 @@
 
 .main-news__button {
   border: none;
-  max-width: 91px;
   height: 36px;
   padding: 7px 11px;
   border-radius: 10px;
@@ -177,6 +176,7 @@
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   margin-top: 16px;
+  z-index: -1;
 }
 
 #history-track {
@@ -219,6 +219,7 @@
 .fade-out {
   opacity: 0;
 }
+
 .main-coefficients__coefficient.fade-out {
   opacity: 0;
   transform: translateX(20px) scale(0.9);
@@ -243,9 +244,15 @@
 }
 
 @keyframes crashGlow {
-  from { text-shadow: 0 0 5px #ff0000; }
-  to { text-shadow: 0 0 15px #ff0000, 0 0 20px #ff6b6b; }
+  from {
+    text-shadow: 0 0 5px #ff0000;
+  }
+
+  to {
+    text-shadow: 0 0 15px #ff0000, 0 0 20px #ff6b6b;
+  }
 }
+
 .main-network-status__span {
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
@@ -259,14 +266,13 @@
   margin-top: 14px;
 }
 
-.main-block-rocket {
-  height: 193px;
+.rocket-content {
   border: 1px solid rgba(152, 78, 237, 0.5);
+  height: 193px;
   border-radius: 20px;
   margin-top: 12px;
   max-width: 409px;
   width: 100%;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -286,17 +292,17 @@
 }
 
 .progress-container {
-  width: 242px;
-  height: 6px;
   background-color: rgba(150, 150, 150, 0.5);
   border-radius: 5px;
   overflow: hidden;
   margin: 14px auto;
+  width: 242px;
+  height: 4px;
 }
 
 .progress-bar {
-  width: 50%;
-  height: 100%;
+  width: 0;
+  height: 8px;
   background: linear-gradient(90deg,
       rgba(136, 69, 245, 1),
       rgba(79, 40, 143, 1));
@@ -312,3 +318,38 @@
     width: 100%;
   }
 }
+
+.main-block-rocket {
+  position: relative;
+}
+
+/* .rocket-content {
+  width: 100%;
+  height: 100%;
+}
+
+.progress-container {
+  width: 100%;
+  height: 4px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+}
+
+@keyframes progressAnimation {
+  0% { width: 0%; }
+  100% { width: 100%; }
+} */
+@keyframes progressAnimation {
+  from { width: 0; }
+  to { width: 240px; }
+}
+
+/* .progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #6a0dad, #b366ff);
+  animation: progressAnimation 5s linear forwards;
+} */

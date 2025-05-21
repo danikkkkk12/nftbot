@@ -4,21 +4,29 @@ const coefficientDisplay = document.getElementById("coefficient");
 const progressLine = document.querySelector(".line");
 const frogGif = document.querySelector(".main-frog-wrapper-container__icon");
 const historyTrack = document.getElementById("history-track");
+const selectBetBtns = document.querySelectorAll(".select-bet__btn");
+const stopBtns = document.querySelectorAll(".stop-btn");
+const balancePole = document.querySelector(".main-balance");
+const fieldBet = document.querySelectorAll(".select-bet-count__number");
+import { fieldValues, balance } from "./balance.js";
 
 // Константы
 const LINE_WIDTH = 380;
 const BASE_GAME_SPEED = 200;
-const maxHistoryItems = 7; // Сколько коэффициентов видно одновременно
+const maxHistoryItems = 7;
 
 // Инициализация
 coefficientDisplay.style.opacity = "0";
-frogGif.style.opacity = "0";
-if (frogGif) frogGif.style.display = "block";
+
+if (frogGif) {
+  frogGif.style.opacity = "0";
+  frogGif.style.display = "block";
+}
 
 // Анимация появления полосок
-if (bars) {
-  bars.forEach(function(bar, index) {
-    setTimeout(function() {
+if (bars.length > 0) {
+  bars.forEach((bar, index) => {
+    setTimeout(() => {
       bar.style.opacity = "1";
       bar.style.transform = "translateY(0)";
     }, (index + 1) * 300);
@@ -32,7 +40,32 @@ let isGameActive = false;
 let seriesQueue = [];
 let seriesIndex = 0;
 
-// Генерация коэффициентов
+// Функция для переключения видимости кнопок (событие, а не setInterval)
+function toggleButtons() {
+  selectBetBtns.forEach((selectBtn, index) => {
+    const stopBtn = stopBtns[index];
+    if (!stopBtn) return;
+
+    if (isGameActive) {
+      selectBtn.style.display = "none";
+      stopBtn.style.display = "block";
+    } else {
+      selectBtn.style.display = "block";
+      stopBtn.style.display = "none";
+    }
+  });
+}
+
+// Запускаем toggleButtons при смене состояния игры
+function setGameActive(active) {
+  isGameActive = active;
+  toggleButtons();
+}
+
+export function getIsGameActive() {
+  return isGameActive;
+}
+
 function generateCrashCoefficient() {
   if (seriesIndex >= seriesQueue.length) {
     seriesQueue = [];
@@ -47,9 +80,10 @@ function generateCrashCoefficient() {
     } else {
       const length = Math.floor(Math.random() * 5) + 1;
       for (let i = 0; i < length; i++) {
-        let coef = Math.random() < 0.3 ? 
-          3.5 + Math.random() * 11.5 : 
-          2.0 + Math.random() * 2.0;
+        let coef =
+          Math.random() < 0.3
+            ? 3.5 + Math.random() * 11.5
+            : 2.0 + Math.random() * 2.0;
         seriesQueue.push(parseFloat(coef.toFixed(2)));
       }
     }
@@ -67,26 +101,30 @@ function getSpeedByCoefficient(coef) {
 
 // Игровой процесс
 function startGame() {
-  currentCoefficient = 1.0;
-  coefficientDisplay.innerText = `x${currentCoefficient.toFixed(2)}`;
+  if (gameInterval) clearInterval(gameInterval);
+
+  coefficientDisplay.classList.remove("crash-glow");
   coefficientDisplay.style.color = "#ffffff";
   coefficientDisplay.style.opacity = "1";
 
   if (progressLine) {
+    progressLine.style.backgroundImage = "linear-gradient(135deg, #6a0dad, #b366ff)";
+    progressLine.style.opacity = "1";
     progressLine.style.width = "0%";
     progressLine.style.transform = "rotate(0deg)";
-    progressLine.style.opacity = "1";
-    progressLine.style.backgroundImage = "linear-gradient(135deg, #6a0dad, #b366ff)";
   }
 
   if (frogGif) {
     frogGif.style.opacity = "0";
     frogGif.style.left = "0px";
     frogGif.style.transform = "translateX(-50%) scale(0.7)";
-    frogGif.style.display = "block";
   }
 
-  isGameActive = true;
+  currentCoefficient = 1.0;
+  coefficientDisplay.innerText = `x${currentCoefficient.toFixed(2)}`;
+
+  setGameActive(true);
+
   const crashAt = generateCrashCoefficient();
   gameInterval = setInterval(() => updateGameState(crashAt), BASE_GAME_SPEED);
 }
@@ -122,7 +160,8 @@ function updateGameState(crashAt) {
 }
 
 function stopGame() {
-  isGameActive = false;
+  setGameActive(false);
+
   clearInterval(gameInterval);
 
   coefficientDisplay.classList.add("crash-glow");
@@ -133,17 +172,38 @@ function stopGame() {
 
   addToHistory(currentCoefficient, true);
 
+  const gameCrashEvent = new Event("gameCrash");
+  document.dispatchEvent(gameCrashEvent);
+
+  // Определяем результат игры (выигрыш или проигрыш)
+  let isWin = false;
+  let totalBet = 0;
+  
+  fieldBet.forEach((field) => {
+    const bet = parseFloat(field.dataset.bet || "0");
+    if (bet > 0) {
+      totalBet += bet;
+      isWin = true; // Если есть активные ставки при остановке - это выигрыш
+    }
+  });
+
+  // Отправляем событие с результатом
+window.dispatchEvent(new CustomEvent('betResult', {
+  detail: { 
+    isWin: isWin,
+    coefficient: currentCoefficient,
+    totalBet: totalBet.toFixed(2)
+  }
+}));
+
+
   setTimeout(() => {
     coefficientDisplay.classList.remove("crash-glow");
     coefficientDisplay.style.opacity = "0";
-    progressLine.style.opacity = "0";
-    frogGif.style.opacity = "0";
-
-    setTimeout(startGame, 3000);
+    if (progressLine) progressLine.style.opacity = "0";
+    if (frogGif) frogGif.style.opacity = "0";
   }, 2000);
 }
-
-// Добавление коэффициента в историю (вставка слева)
 function addToHistory(coef, isCrash) {
   const div = document.createElement("div");
   div.classList.add("main-coefficients__coefficient");
@@ -151,17 +211,16 @@ function addToHistory(coef, isCrash) {
   div.textContent = `${coef.toFixed(2)}x`;
   div.style.transition = "transform 0.3s ease";
 
-  // Вставка слева
+  if (!historyTrack) return;
+
   historyTrack.insertBefore(div, historyTrack.firstChild);
 
   const items = historyTrack.querySelectorAll(".main-coefficients__coefficient");
 
-  // Сдвиг всех вправо
   items.forEach((item, index) => {
     item.style.transform = `translateX(${index * 100}%)`;
   });
 
-  // Удаление самого правого, если их больше 6
   if (items.length > maxHistoryItems) {
     const last = items[items.length - 1];
     last.classList.add("fade-out");
@@ -171,4 +230,47 @@ function addToHistory(coef, isCrash) {
   }
 }
 
-startGame();
+// Обработчики stopBtns
+stopBtns.forEach((stopBtn, index) => {
+  stopBtn.addEventListener("click", () => {
+    const field = fieldBet[index];
+    if (!field) return;
+
+    const betValue = parseFloat(field.dataset.bet);
+    if (!betValue || betValue <= 0) return;
+
+    if (isGameActive) {
+      const gain = betValue * currentCoefficient;
+      balance.value += gain;
+
+      if (balancePole) {
+        balancePole.textContent = balance.value.toFixed(2);
+        const img = document.createElement("img");
+        img.src = "web/images/main/ton-icon.svg";
+        img.alt = "Token";
+        img.className = "main-balance__token";
+        balancePole.appendChild(img);
+      }
+    }
+
+    field.textContent = "0";
+    field.dataset.bet = "0";
+  });
+});
+
+setInterval(() => {
+  stopBtns.forEach((stopBtn, index) => {
+    const selectBtn = selectBetBtns[index];
+    if (isGameActive) {
+      selectBtn.style.display = "none";
+      stopBtn.style.display = "block";
+    } else {
+      selectBtn.style.display = "block";
+      stopBtn.style.display = "none";
+    }
+  });
+}, 500);
+
+export { isGameActive, startGame, stopGame, currentCoefficient };
+
+

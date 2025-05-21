@@ -291,3 +291,4 @@ if (telegramId) {
 openAdminPage.addEventListener("click", () => {
   showSection(adminSection);
 });
+
