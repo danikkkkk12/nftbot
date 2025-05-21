@@ -6,7 +6,7 @@ const openAdminPage = document.querySelector(".user-page-inv__btn--admin");
 const adminSection = document.querySelector(".admin");
 
 import { getTelegramId } from "./profile.js";
-
+alert(getTelegramId())
 // Перевірка, чи користувач адміністратор
 const isUserAdmin = async function () {
   const tgId = getTelegramId();
@@ -113,7 +113,7 @@ const showSection = function (targetSection) {
 // Показати/приховати кнопку входу в адмінку
 isUserAdmin().then((user) => {
   if (user) {
-    openAdminPage.style.display = "block";
+    openAdminPage.style.display = "flex";
   } else {
     openAdminPage.style.display = "none";
   }
