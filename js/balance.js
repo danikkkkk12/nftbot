@@ -20,69 +20,37 @@ function updateButtonsState() {
   selectBetBtns.forEach((btn) => (btn.disabled = disabled));
 }
 
-// Лучше событие, а не setInterval, но если нужен интервал:
+// Обновляем состояние кнопок каждую 0.1 секунду
 setInterval(updateButtonsState, 100);
 
-// Добавляем обработчики для stopBtns один раз
+// Обработчик кнопок стоп — сбрасывает ставки, если игра не активна
 stopBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     if (getIsGameActive()) return;
-    fieldBet.forEach(field => field.textContent = "0");
+    fieldBet.forEach((field) => (field.textContent = "0"));
   });
 });
 
-const changeBet = function (field, fixedBtns, changeBtns, selectBtn) {
+function changeBet(field, fixedBtns, changeBtns, selectBtn) {
   let currentOperation = "";
   let currentValue = Number(field.textContent) || 0;
 
+  // Обработка кнопок плюс/минус
   changeBtns.forEach((el) => {
     el.addEventListener("click", () => {
       if (getIsGameActive()) return;
-      currentOperation = el.id;
-      console.log(currentOperation);
+      currentOperation = el.id; // например "plus" или "minus"
+      console.log("Текущая операция:", currentOperation);
     });
   });
 
-  // В обработчике ставки (selectBtn.addEventListener)
-selectBtn.addEventListener("click", () => {
-  if (getIsGameActive()) return;
-
-  if (currentValue === 0) {
-    bet = 0;
-    currentValue = 0;
-    field.textContent = "0";
-    alert("Сделайте ставку");
-  } else if (currentValue <= balance.value) {
-    bet = currentValue;
-    balance.value -= bet;
-    balancePole.innerHTML = `
-      ${balance.value.toFixed(2)} 
-      <img
-        src="web/images/main/ton-icon.svg"
-        alt="Token"
-        class="main-balance__token"
-      />
-    `;
-    alert("Ставка сделана");
-    field.dataset.bet = bet;
-    field.textContent = "0";
-    currentValue = 0;
-    
-    // Перемещаем dispatchEvent сюда, после успешной ставки
-    window.dispatchEvent(new CustomEvent('newBet', { 
-      detail: { amount: bet } 
-    }));
-  } else {
-    alert("Недостаточно средств на балансе");
-    field.textContent = "0";
-    currentValue = 0;
-  }
-});
+  // Обработка кнопки "Сделать ставку"
   selectBtn.addEventListener("click", () => {
     if (getIsGameActive()) return;
 
     if (currentValue === 0) {
       alert("Сделайте ставку");
+      field.textContent = "0";
     } else if (currentValue <= balance.value) {
       bet = currentValue;
       balance.value -= bet;
@@ -98,6 +66,9 @@ selectBtn.addEventListener("click", () => {
       field.dataset.bet = bet;
       field.textContent = "0";
       currentValue = 0;
+
+      // Сигналим о новой ставке
+      window.dispatchEvent(new CustomEvent("newBet", { detail: { amount: bet } }));
     } else {
       alert("Недостаточно средств на балансе");
       field.textContent = "0";
@@ -105,6 +76,7 @@ selectBtn.addEventListener("click", () => {
     }
   });
 
+  // Обработка фиксированных кнопок изменения ставки
   fixedBtns.forEach((el) => {
     el.addEventListener("click", () => {
       if (getIsGameActive()) return;
@@ -114,13 +86,12 @@ selectBtn.addEventListener("click", () => {
       } else if (currentOperation === "minus" && currentValue >= num) {
         currentValue -= num;
       }
-
       field.textContent = currentValue;
     });
   });
+}
 
-};
-
+// Разбиваем кнопки на две группы и связываем с соответствующими полями
 const firstFixedHalf = Array.from(fixedBetBtns).slice(0, 5);
 const firstChangedHalf = Array.from(changeBetBtns).slice(0, 2);
 const firstSelectBtn = selectBetBtns[0];
@@ -140,15 +111,14 @@ fieldBet.forEach((field, index) => {
   fieldValues.push(field);
 });
 
+// Экспортируем необходимые переменные и функции
+export { changeBet, fieldValues, balance, bet };
 
-export { changeBet };
-export { fieldValues, balance, bet };
-export { changeBet, fieldValues, balance };
-
-
+// Инициализация слайдера Swiper
 new Swiper(".bet-count__swiper", {
   direction: "vertical",
   slidesPerView: "auto",
   freeMode: true,
   mousewheel: true,
 });
+

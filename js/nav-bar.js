@@ -3,7 +3,7 @@ const iconNavigationBar = document.querySelector(".icon-navigation-bar");
 const sections = document.querySelectorAll("section");
 
 function setActiveItem(clickedItem) {
-  navItems.forEach((item) => item.classList.remove("active-item"));
+  navItems.forEach(item => item.classList.remove("active-item"));
   clickedItem.classList.add("active-item");
 
   if (clickedItem.id === "frog") {
@@ -14,11 +14,11 @@ function setActiveItem(clickedItem) {
 }
 
 function hideAllSections() {
-  sections.forEach((section) => (section.style.display = "none"));
+  sections.forEach(section => (section.style.display = "none"));
 }
 
 function showSectionsBySelectors(selectors) {
-  selectors.forEach((selector) => {
+  selectors.forEach(selector => {
     const el = document.querySelector(selector);
     if (el) {
       if (selector === "#friends") {
@@ -30,8 +30,8 @@ function showSectionsBySelectors(selectors) {
   });
 }
 
-navItems.forEach((item) => {
-  item.addEventListener("click", (event) => {
+navItems.forEach(item => {
+  item.addEventListener("click", event => {
     const targetId = event.currentTarget.id;
     console.log(targetId, event.currentTarget);
 
@@ -57,43 +57,21 @@ navItems.forEach((item) => {
     setActiveItem(event.currentTarget);
   });
 });
+
 const profileInvBtn = document.querySelector(".user-page-inventory__empty-btn");
-profileInvBtn.addEventListener("click", function () {
-  const sections = document.querySelectorAll("section");
-  sections.forEach((section) => {
-    section.style.display = "none";
-  });
-  document.querySelector(".main-rocket").style.display = "block";
-  document.querySelector(".down-main").style.display = "block";
+if (profileInvBtn) {
+  profileInvBtn.addEventListener("click", () => {
+    hideAllSections();
+    showSectionsBySelectors([".main-rocket", ".down-main"]);
 
-  navItems.forEach((item) => {
-    item.classList.remove("active-item");
+    navItems.forEach(item => item.classList.remove("active-item"));
   });
-});
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-  const initiallyActiveItem = document.querySelector(
-    ".icon-navigation-bar .nav-item.active-item"
-  );
-
-  const profileInvBtn = document.querySelector(
-    ".user-page-inventory__empty-btn"
-  );
-  if (profileInvBtn) {
-    profileInvBtn.addEventListener("click", () => {
-      hideAllSections();
-      showSectionsBySelectors([".main-rocket", ".down-main"]);
-    });
-  }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const iconNavigationBar = document.querySelector(".icon-navigation-bar");
   if (!iconNavigationBar) return;
 
-  const initiallyActiveItem = iconNavigationBar.querySelector(
-    ".nav-item.active-item"
-  );
+  const initiallyActiveItem = iconNavigationBar.querySelector(".nav-item.active-item");
 
   if (initiallyActiveItem && initiallyActiveItem.id === "frog") {
     iconNavigationBar.classList.remove("purple-theme");
@@ -101,3 +79,4 @@ document.addEventListener("DOMContentLoaded", () => {
     iconNavigationBar.classList.add("purple-theme");
   }
 });
+
