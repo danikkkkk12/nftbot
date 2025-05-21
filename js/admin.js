@@ -5,17 +5,16 @@ const removeAdminBtn = document.querySelector(".admin-add__btn--remove");
 const openAdminPage = document.querySelector(".user-page-inv__btn--admin");
 const adminSection = document.querySelector(".admin");
 
-import { getTelegramId } from "./profile.js";
+import { getTelegramIdAsync } from "./profile.js";
 
 const isUserAdmin = async function () {
-  const tgId = getTelegramId();
+  const tgId = await getTelegramIdAsync(); // <- чекаємо на ID
 
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
     const users = await response.json();
 
-    const user = users.find((user) => user.telegramId === tgId);
-    alert(user);
+    const user = users.find((user) => user.telegramId == tgId);
 
     if (user && user.isAdmin) {
       return user;
