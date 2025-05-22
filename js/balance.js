@@ -6,10 +6,36 @@ const fieldBet = document.querySelectorAll(".select-bet-count__number");
 const selectBetBtns = document.querySelectorAll(".select-bet__btn");
 const balancePole = document.querySelector(".main-balance");
 const stopBtns = document.querySelectorAll(".stop-btn");
+import { telegramId } from "./profile.js";
+
+const getBalance = async function (tgId) {
+  try {
+    const response = await fetch(
+      `https://nftbotserver.onrender.com/api/users/${tgId}`
+    );
+    if (!response.ok) throw new Error("Користувача не знайдено");
+
+    const user = await response.json();
+
+    if (user && user.balance !== undefined) {
+      return user.balance;
+    } else {
+      console.log("Користувач не має балансу");
+      return null;
+    }
+  } catch (err) {
+    console.log("getBalance error:", err.message);
+    return null;
+  }
+};
 
 let balance = {
   value: parseFloat(balancePole.textContent),
 };
+getBalance(telegramId).then((bal) => {
+  balance.value = bal || 0;
+  balancePole.textContent = balance.value.toFixed(2);
+});
 let bet;
 
 function updateButtonsState() {
