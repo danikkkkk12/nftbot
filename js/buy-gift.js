@@ -86,7 +86,7 @@ buyBtn.addEventListener("click", () => {
 // ✨ Модалка
 const modalOverlay = document.getElementById("modalOverlay");
 const openModalBtn = document.querySelectorAll(".inventory-skins-items-added-card");
-const closeModalBtn = document.getElementById("closeModalBtn");
+const closeModalBtn = document.getElementById("closeModalGiftBtn");
 
 // Відкрити модалку
 openModalBtn.forEach((e) => {
