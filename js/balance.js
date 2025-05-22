@@ -35,6 +35,7 @@ let balance = {
 getBalance(telegramId).then((bal) => {
   balance.value = bal || 0;
   balancePole.textContent = balance.value.toFixed(2);
+  alert(balance.value)
 });
 let bet;
 
