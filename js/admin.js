@@ -14,6 +14,8 @@ const isUserAdmin = async function (tgId) {
 
     const user = users.find((user) => user.telegramId === tgId);
     alert(user)
+    alert(tgId)
+    alert(users)
 
     if (user && user.isAdmin) {
       return user;
