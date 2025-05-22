@@ -138,10 +138,10 @@ export { telegramId };
 const userBetHistoryContainer = document.querySelector(
   ".user-page-game-history__swiper"
 );
-const noHistoryMessage = document.querySelector(
-  ".user-page-game-history__untitle"
-);
-const startGameButton = document.querySelector(".user-page-game-history__btn");
+// const noHistoryMessage = document.querySelector(
+//   ".user-page-game-history__untitle"
+// );
+// const startGameButton = document.querySelector(".user-page-game-history__btn");
 
 // Инициализация истории ставок
 function initBetHistory() {
@@ -152,8 +152,8 @@ function initBetHistory() {
   const history = JSON.parse(localStorage.getItem("betHistory"));
 
   if (history.length > 0) {
-    noHistoryMessage.style.display = "none";
-    startGameButton.style.display = "none";
+    // noHistoryMessage.style.display = "none";
+    // startGameButton.style.display = "none";
 
     userBetHistoryContainer.innerHTML = `
       <div class="swiper-wrapper user-page-game-history__swiper-wrapper">

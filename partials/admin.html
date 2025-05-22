@@ -46,13 +46,14 @@
           placeholder="Введите награду"
           class="admin__input admin-promo__input admin-promo__input--reward"
         />
+        <button
+          class="admin__btn admin-promo__btn admin-promo__btn--add"
+          type="button"
+        >
+          Добавить
+        </button>
       </label>
-      <button
-        class="admin__btn admin-promo__btn admin-promo__btn--add"
-        type="button"
-      >
-        Добавить
-      </button>
+
       <label class="admin__label admin-promo__label">
         Удалить промокод
         <input
@@ -68,11 +69,19 @@
         </button>
       </label>
       <button
-        class="admin__btn admin__btn--search admin-promo__btn--search"
+        class="admin__btn admin__btn--search admin-promo__btn--get"
         type="button"
       >
         Получить список промокодов
       </button>
+      <div class="admin-promo-list swiper">
+        <div class="admin-promo-list__swiper-wrapper swiper-wrapper">
+          <div class="swiper-slide admin-promo-list__card">
+            <strong class="admin-promo-list__strong">LELELELELE52</strong> : 10
+            <img src="web/images/inventory/ton.svg" alt="ton" />
+          </div>
+        </div>
+      </div>
     </div>
     <div class="admin-balance">
       <label class="admin__label admin-balance__label">

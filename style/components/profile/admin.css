@@ -4,7 +4,8 @@
 }
 .admin {
   margin: 0 auto;
-  display: none;
+  padding: 20px 0 0;
+  /* display: none; */
 }
 .admin__container {
   background-color: #231c46;
@@ -69,4 +70,25 @@
 .admin-balance {
   padding-top: 15px;
   border-top: 4px solid rgba(136, 69, 245, 0.2);
+}
+.admin-promo__input--add {
+  margin-bottom: 10px;
+}
+.admin-promo-list {
+  height: 100px;
+}
+.admin-promo-list__card {
+  padding: 5px;
+  border-radius: 20px;
+  margin-bottom: 7px;
+  background-color: #262352;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+
+  color: #fff;
+}
+.admin-promo-list__strong {
+  color: #8845f5;
 }
