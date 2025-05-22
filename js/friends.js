@@ -19,9 +19,14 @@ let invitedFriendsCount = 0;
 let referralTonBalance = 0;
 const invitedFriendsData = [];
 const processedReferralEvents = new Set();
-const FRIENDS_PER_TON = 40;
-const TONS_PER_MILESTONE = 1;
 let nextSimulatedFriendNumericId = 1;
+
+const rewardTiers = [
+    { friends: 10, reward: 0.05, claimed: false },
+    { friends: 25, reward: 0.1, claimed: false },
+    { friends: 50, reward: 0.15, claimed: false },
+    { friends: 100, reward: 0.2, claimed: false }
+];
 
 let currentSimulatedReferralId = null;
 let isInvitationActive = false;
@@ -31,11 +36,10 @@ const withdrawButton = document.querySelector('.withdraw-button');
 const invitedCountHeaderEl = document.getElementById('invitedCountHeader');
 const invitedFriendsListContainerEl = document.getElementById('invitedFriendsListContainer');
 const noInvitedFriendsMessageEl = document.getElementById('noInvitedFriendsMessage');
-const taskProgressTextEl = document.getElementById('inviteTaskProgressText');
 
 function updateReferralBalanceDisplay() {
     if (referralTonBalanceEl) {
-        referralTonBalanceEl.innerHTML = `${referralTonBalance.toFixed(2)} <img src="web/images/main/ton-icon.svg" class="diamond-icon" />`;
+        referralTonBalanceEl.innerHTML = `${referralTonBalance.toFixed(2)} <img src="web/images/main/ton-icon.svg" class="diamond-icon" alt="ton-icon"/>`;
     }
 }
 
@@ -43,10 +47,27 @@ function updateInvitedCountDisplay() {
     if (invitedCountHeaderEl) {
         invitedCountHeaderEl.textContent = `Invited (${invitedFriendsCount})`;
     }
-    if (taskProgressTextEl) {
-        const currentProgress = invitedFriendsCount % FRIENDS_PER_TON;
-        taskProgressTextEl.textContent = `${currentProgress} / ${FRIENDS_PER_TON}`;
-    }
+
+    const taskItems = document.querySelectorAll('.task-list .task-item');
+    taskItems.forEach(taskItem => {
+        const progressTextEl = taskItem.querySelector('.progress-text');
+        const targetFriendsAttr = taskItem.getAttribute('data-tier-friends');
+
+        if (progressTextEl && targetFriendsAttr) {
+            const targetFriends = parseInt(targetFriendsAttr, 10);
+            const currentProgress = Math.min(invitedFriendsCount, targetFriends);
+            progressTextEl.textContent = `${currentProgress} / ${targetFriends}`;
+
+            const tier = rewardTiers.find(t => t.friends === targetFriends);
+            if (tier) {
+                 if (tier.claimed || invitedFriendsCount >= targetFriends) {
+                    taskItem.classList.add('completed');
+                } else {
+                    taskItem.classList.remove('completed');
+                }
+            }
+        }
+    });
 }
 
 function displayInvitedFriends() {
@@ -139,9 +160,12 @@ async function simulateFriendJoining(referralEventId) {
     invitedFriendsCount++;
     invitedFriendsData.push({ id: referralEventId, nickname: friendNickname, profit: 0.00 });
 
-    if (invitedFriendsCount > 0 && invitedFriendsCount % FRIENDS_PER_TON === 0) {
-        referralTonBalance += TONS_PER_MILESTONE;
-    }
+    rewardTiers.forEach(tier => {
+        if (!tier.claimed && invitedFriendsCount >= tier.friends) {
+            referralTonBalance += tier.reward;
+            tier.claimed = true;
+        }
+    });
 
     updateInvitedCountDisplay();
     updateReferralBalanceDisplay();

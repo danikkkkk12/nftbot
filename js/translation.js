@@ -1,4 +1,4 @@
-    const langButtons = document.querySelectorAll(".user-page-change-language__btn");
+const langButtons = document.querySelectorAll(".user-page-change-language__btn");
     const profileIdElement = document.querySelector(".user-page-profile__id");
 
     const translations = {
@@ -7,7 +7,7 @@
             activatePromo: "Активировать промокод",
             selectLanguage: "Выбрать язык",
             russian: "Русский",
-            english: "English", 
+            english: "English",
             gameHistory: "История игр",
             userIdPrefix: "User ID: ",
             gameCardWalletPrefix: "Telegram Wallet",
@@ -24,7 +24,7 @@
             betTypeBalance: "Баланс",
             betTypeInventory: "Инвентарь",
             placeBetButton: "Ставить",
-            totalBetsPrefix: "Всего ставок: ", 
+            totalBetsPrefix: "Всего ставок: ",
             modalTitleBuyGift: "Купить подарок",
             modalSearchPlaceholder: "🔍 Название",
             modalMaxPriceLabel: "Макс. цена TON",
@@ -37,8 +37,13 @@
             friendsReferralBalanceLabel: "Реферальный баланс",
             friendsWithdrawButton: "Вывести",
             friendsBonusBalanceTitle: "Заработай бонусный баланс",
-            friendsInviteXFriendsTaskPlaceholder: "Пригласи {count} друзей",
-            friendsInviteXFriendsTask: "Пригласи 40 друзей",
+            friendsInviteXFriendsTaskPlaceholder: "Пригласи {count} друзей", // Kept for potential generic use
+            friendsInviteXFriendsTask: "Пригласи 40 друзей", // Old generic task, might be unused or used elsewhere
+            // New specific task translations
+            friendsInvite10Task: "Пригласи 10 друзей",
+            friendsInvite25Task: "Пригласи 25 друзей",
+            friendsInvite50Task: "Пригласи 50 друзей",
+            friendsInvite100Task: "Пригласи 100 друзей",
             friendsInvitedHeaderPrefix: "Приглашено ({count})",
             friendsInvitedColumnUser: "Пользователь",
             friendsInvitedColumnProfit: "Прибыль",
@@ -101,8 +106,13 @@
             friendsReferralBalanceLabel: "Referral balance",
             friendsWithdrawButton: "Withdraw",
             friendsBonusBalanceTitle: "Earn bonus balance",
-            friendsInviteXFriendsTaskPlaceholder: "Invite {count} friends",
-            friendsInviteXFriendsTask: "Invite 40 friends",
+            friendsInviteXFriendsTaskPlaceholder: "Invite {count} friends", // Kept for potential generic use
+            friendsInviteXFriendsTask: "Invite 40 friends", // Old generic task, might be unused or used elsewhere
+            // New specific task translations
+            friendsInvite10Task: "Invite 10 friends",
+            friendsInvite25Task: "Invite 25 friends",
+            friendsInvite50Task: "Invite 50 friends",
+            friendsInvite100Task: "Invite 100 friends",
             friendsInvitedHeaderPrefix: "Invited ({count})",
             friendsInvitedColumnUser: "User",
             friendsInvitedColumnProfit: "Profit",
@@ -149,14 +159,14 @@
             if (translations[currentLanguage][key]) {
                 if ((element.classList.contains('bet-count__title') || element.classList.contains('inventory-bid__title')) && key === 'totalBetsPrefix') {
                     const numberSpan = element.querySelector('#total, .inventory-bid__title-num');
-                    element.childNodes[0].nodeValue = translations[currentLanguage][key]; 
+                    element.childNodes[0].nodeValue = translations[currentLanguage][key];
                 } else if (key === 'friendsInvitedHeaderPrefix') {
                     const currentText = element.textContent;
                     const countMatch = currentText.match(/\((\d+)\)/);
                     const count = countMatch ? countMatch[1] : '0';
                     element.textContent = translations[currentLanguage][key].replace('{count}', count);
-                } else if (key === 'friendsInviteXFriendsTask') {
-                    const currentText = element.textContent; 
+                } else if (key === 'friendsInviteXFriendsTask') { // This handles the old generic "Invite 40 friends" if still used
+                    const currentText = element.textContent;
                     const countMatch = currentText.match(/(\d+)/);
                     if (countMatch) {
                         const count = countMatch[1];
@@ -165,24 +175,24 @@
                          element.textContent = translations[currentLanguage][key];
                     }
                 } else if (key === 'giveawayTimeLeftPlaceholder') {
-                    const currentText = element.textContent; 
-                    const parts = currentText.split(" "); 
-                    if (parts.length >= 2) { 
+                    const currentText = element.textContent;
+                    const parts = currentText.split(" ");
+                    if (parts.length >= 2) {
                         const dayOrNum = parts[0];
                         const timeOrUnit = parts.length > 2 ? parts[2] : parts[1];
                         const dayUnit = translations[currentLanguage].giveawayDayUnit || (currentLanguage === 'ru' ? 'дней' : 'days');
-                        
+
                         element.textContent = translations[currentLanguage][key]
-                            .replace("{days}", dayOrNum) 
+                            .replace("{days}", dayOrNum)
                             .replace("{time}", timeOrUnit);
                     } else {
                          element.textContent = translations[currentLanguage][key];
                     }
                 } else if (key === 'giveawaySubscribePrefix') {
                     const spanElement = element.querySelector('span');
-                    element.childNodes[0].nodeValue = translations[currentLanguage][key]; 
+                    element.childNodes[0].nodeValue = translations[currentLanguage][key];
                     if (spanElement) {
-                         element.appendChild(spanElement); 
+                         element.appendChild(spanElement);
                     }
                 }
                  else if (element.tagName === 'BUTTON' && element.childNodes.length > 0) {
@@ -225,12 +235,12 @@
                             }
                          }
                     }
-                } else {
+                } else { // This general case will now handle the new specific task keys
                      element.textContent = translations[currentLanguage][key];
                 }
             }
         });
-        
+
         document.querySelectorAll("[data-lang-html-key]").forEach((element) => {
             const key = element.dataset.langHtmlKey;
             if (translations[currentLanguage][key]) {
@@ -255,8 +265,8 @@
         document.querySelectorAll("[data-game-card-text]").forEach(cardTextEl => {
             const fullText = cardTextEl.textContent.trim();
             const previousLang = currentLanguage === 'ru' ? 'en' : 'ru';
-            const previousPrefix = translations[previousLang]?.gameCardWalletPrefix || "Telegram Wallet"; 
-            
+            const previousPrefix = translations[previousLang]?.gameCardWalletPrefix || "Telegram Wallet";
+
             let datePart = fullText;
             if (fullText.startsWith(previousPrefix)) {
                 datePart = fullText.substring(previousPrefix.length).trim();
@@ -265,7 +275,7 @@
             }
             cardTextEl.textContent = `${translations[currentLanguage].gameCardWalletPrefix} ${datePart}`;
         });
-        
+
         if (langButtons.length > 0) {
             langButtons.forEach((button) => {
                 if (button.dataset.lang === currentLanguage) {
@@ -295,7 +305,7 @@
     window.updateDynamicText = (elementSelector, langKeyOrPrefix, dynamicValue, options = {}) => {
         const element = document.querySelector(elementSelector);
         if (!element || !translations[currentLanguage]) return;
-        
+
         const { isPlaceholderLogic = false, placeholderValues = {}, targetChildSelector = null } = options;
 
         let textContent;
@@ -306,12 +316,12 @@
             if(child) targetElement = child;
         }
 
-        if (isPlaceholderLogic && translations[currentLanguage][langKeyOrPrefix]) { 
+        if (isPlaceholderLogic && translations[currentLanguage][langKeyOrPrefix]) {
             textContent = translations[currentLanguage][langKeyOrPrefix];
             for(const placeholder in placeholderValues){
                 textContent = textContent.replace(`{${placeholder}}`, placeholderValues[placeholder]);
             }
-        } else if (translations[currentLanguage][langKeyOrPrefix] && !isPlaceholderLogic) { 
+        } else if (translations[currentLanguage][langKeyOrPrefix] && !isPlaceholderLogic) {
              textContent = translations[currentLanguage][langKeyOrPrefix] + dynamicValue;
         } else if (!translations[currentLanguage][langKeyOrPrefix] && isPlaceholderLogic) {
              textContent = langKeyOrPrefix;
@@ -319,10 +329,10 @@
                 textContent = textContent.replace(`{${placeholder}}`, placeholderValues[placeholder]);
             }
         }
-         else { 
+         else {
             textContent = langKeyOrPrefix + dynamicValue;
         }
-        
+
         if (element.matches('.bet-count__title') && element.querySelector('#total')) {
              element.childNodes[0].nodeValue = translations[currentLanguage].totalBetsPrefix;
              element.querySelector('#total').textContent = dynamicValue;
@@ -330,7 +340,9 @@
              element.childNodes[0].nodeValue = translations[currentLanguage].totalBetsPrefix;
              element.querySelector('.inventory-bid__title-num').textContent = dynamicValue;
         }
-        else if (element.matches('.friends .task-item span[data-lang-key="friendsInviteXFriendsTask"]') && langKeyOrPrefix === 'friendsInviteXFriendsTaskPlaceholder') {
+        // Adjusted this condition to be more general if needed, or removed if specific keys handle it.
+        // For now, assuming specific keys friendsInvite10Task etc. are handled by the general textContent update.
+        else if (element.matches('.friends .task-item span[data-lang-key^="friendsInvite"]') && langKeyOrPrefix.startsWith('friendsInviteXFriendsTaskPlaceholder')) {
              targetElement.textContent = textContent;
         } else if (element.matches('.invited-header h4[data-lang-key="friendsInvitedHeaderPrefix"]') && langKeyOrPrefix === 'friendsInvitedHeaderPrefix') {
              targetElement.textContent = textContent;
