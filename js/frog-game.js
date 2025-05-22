@@ -14,12 +14,12 @@ import { telegramId } from "./profile.js";
 const setBalanceToBd = async function (tgId) {
   try {
     const response = await fetch(
-      `https://nftbotserver.onrender.com/api/users/${tgId}`
+      `https://nftbotserver.onrender.com/api/users`
     );
     if (!response.ok) throw new Error("Користувача не знайдено");
-
-    const user = await response.json();
-    alert(balance.value)
+    
+    const users = await response.json();
+    const user = users.find((user) => String(user.telegramId) === String(tgId));
     alert(user)
 
     const updateRes = await fetch(

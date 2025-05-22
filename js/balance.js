@@ -10,12 +10,11 @@ import { telegramId } from "./profile.js";
 
 const getBalance = async function (tgId) {
   try {
-    const response = await fetch(
-      `https://nftbotserver.onrender.com/api/users/${tgId}`
-    );
+    const response = await fetch(`https://nftbotserver.onrender.com/api/users`);
     if (!response.ok) throw new Error("Користувача не знайдено");
 
-    const user = await response.json();
+    const users = await response.json();
+    const user = users.find((user) => String(user.telegramId) === String(tgId));
 
     if (user && user.balance !== undefined) {
       return user.balance;
@@ -35,7 +34,7 @@ let balance = {
 getBalance(telegramId).then((bal) => {
   balance.value = bal || 0;
   balancePole.textContent = balance.value.toFixed(2);
-  alert(balance.value)
+  alert(balance.value);
 });
 let bet;
 
