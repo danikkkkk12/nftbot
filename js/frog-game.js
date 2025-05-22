@@ -13,14 +13,11 @@ import { telegramId } from "./profile.js";
 
 const setBalanceToBd = async function (tgId) {
   try {
-    const response = await fetch(
-      `https://nftbotserver.onrender.com/api/users`
-    );
+    const response = await fetch(`https://nftbotserver.onrender.com/api/users`);
     if (!response.ok) throw new Error("Користувача не знайдено");
-    
+
     const users = await response.json();
     const user = users.find((user) => String(user.telegramId) === String(tgId));
-    alert(user)
 
     const updateRes = await fetch(
       `https://nftbotserver.onrender.com/api/users/${tgId}/balance`,
@@ -283,7 +280,7 @@ stopBtns.forEach((stopBtn, index) => {
     if (isGameActive) {
       const gain = betValue * currentCoefficient;
       balance.value += gain;
-
+      alert(balance.value)
       if (balancePole) {
         balancePole.textContent = balance.value.toFixed(2);
         const img = document.createElement("img");
