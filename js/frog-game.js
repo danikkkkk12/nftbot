@@ -13,13 +13,15 @@ import { telegramId } from "./profile.js";
 
 const setBalanceToBd = async function (tgId) {
   try {
-    // Спочатку знаходимо користувача
-    const userRes = await fetch(
-      `https://nftbotserver.onrender.com/api/users/${tgId}`
+    const response = await fetch(
+      `https://nftbotserver.onrender.com/api/users`
     );
-    if (!userRes.ok) throw new Error("Користувача не знайдено");
+    if (!response.ok) throw new Error("Користувача не знайдено");
+    
+    const users = await response.json();
+    const user = users.find((user) => String(user.telegramId) === String(tgId));
+    alert(user)
 
-    // Потім оновлюємо баланс
     const updateRes = await fetch(
       `https://nftbotserver.onrender.com/api/users/${tgId}/balance`,
       {
@@ -30,12 +32,14 @@ const setBalanceToBd = async function (tgId) {
     );
 
     if (!updateRes.ok) throw new Error("Помилка оновлення балансу");
+
     return true;
   } catch (err) {
     console.error("setBalanceToBd error:", err.message);
     return false;
   }
 };
+
 // Константы
 const LINE_WIDTH = 380;
 const BASE_GAME_SPEED = 200;
@@ -188,91 +192,50 @@ function updateGameState(crashAt) {
   }
 }
 
-async function stopGame() {
-  // Зупиняємо гру
+function stopGame() {
   setGameActive(false);
+
   clearInterval(gameInterval);
 
-  // Встановлюємо візуальні стилі для "крашу"
   coefficientDisplay.classList.add("crash-glow");
   coefficientDisplay.style.color = "#ff0000";
-
   if (progressLine) {
     progressLine.style.backgroundImage =
       "linear-gradient(135deg, #ff0000, #ff6b6b)";
   }
 
-  // Додаємо результат до історії
   addToHistory(currentCoefficient, true);
 
-  // Визначаємо активні ставки та загальну суму
-  const activeBets = [];
-  let totalBet = 0;
+  const gameCrashEvent = new Event("gameCrash");
+  document.dispatchEvent(gameCrashEvent);
 
+  // Определяем результат игры (выигрыш или проигрыш)
+  let isWin = false;
+  let totalBet = 0;
   fieldBet.forEach((field) => {
-    const betValue = parseFloat(field.dataset.bet || "0");
-    if (betValue > 0) {
-      activeBets.push({
-        element: field,
-        value: betValue,
-      });
-      totalBet += betValue;
+    const bet = parseFloat(field.dataset.bet || "0");
+    if (bet > 0) {
+      totalBet += bet;
+      isWin = true; // Если есть активные ставки при остановке - это выигрыш
     }
   });
 
-  const isWin = activeBets.length > 0;
-  let totalGain = 0;
+  // Отправл яем событие с результатом
 
-  // Обробляємо виграші
-  if (isWin) {
-    totalGain = totalBet * currentCoefficient;
-    balance.value += totalGain;
-
-    // Оновлюємо відображення балансу
-    if (balancePole) {
-      balancePole.innerHTML = `
-        ${balance.value.toFixed(2)}
-        <img
-          src="web/images/main/ton-icon.svg"
-          alt="Token"
-          class="main-balance__token"
-        />
-      `;
-    }
-
-    // Скидаємо ставки
-    activeBets.forEach((bet) => {
-      bet.element.textContent = "0";
-      bet.element.dataset.bet = "0";
-    });
-
-    // Оновлюємо баланс на бекенді
-    if (telegramId) {
-      try {
-        await setBalanceToBd(telegramId);
-      } catch (err) {
-        console.error("Помилка оновлення балансу:", err);
-        // Можна додати сповіщення для користувача
-      }
-    }
-  }
-
-  // Відправляємо подію з результатами гри
   window.dispatchEvent(
     new CustomEvent("betResult", {
       detail: {
-        isWin,
+        isWin: isWin,
         coefficient: currentCoefficient,
         totalBet: totalBet.toFixed(2),
-        totalGain: isWin ? totalGain.toFixed(2) : "0.00",
       },
     })
   );
 
-  // Відправляємо подію "крашу" гри
-  document.dispatchEvent(new Event("gameCrash"));
+  if (telegramId) {
+    setBalanceToBd(telegramId);
+  }
 
-  // Затримка перед прихованням елементів
   setTimeout(() => {
     coefficientDisplay.classList.remove("crash-glow");
     coefficientDisplay.style.opacity = "0";
@@ -280,29 +243,6 @@ async function stopGame() {
     if (frogGif) frogGif.style.opacity = "0";
   }, 2000);
 }
-
-// Отправл яем событие с результатом
-
-window.dispatchEvent(
-  new CustomEvent("betResult", {
-    detail: {
-      isWin: isWin,
-      coefficient: currentCoefficient,
-      totalBet: totalBet.toFixed(2),
-    },
-  })
-);
-
-if (telegramId) {
-  setBalanceToBd(telegramId);
-}
-
-setTimeout(() => {
-  coefficientDisplay.classList.remove("crash-glow");
-  coefficientDisplay.style.opacity = "0";
-  if (progressLine) progressLine.style.opacity = "0";
-  if (frogGif) frogGif.style.opacity = "0";
-}, 2000);
 function addToHistory(coef, isCrash) {
   const div = document.createElement("div");
   div.classList.add("main-coefficients__coefficient");
