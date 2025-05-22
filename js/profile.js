@@ -149,15 +149,15 @@ if (promoBtnSearchPromocode && promoInput) {
 
 // Подключаем профиль при загрузке
 
-const telegramId = getTelegramId();
-if (telegramId) {
-  connectProfile(telegramId);
-} else {
-  console.log("Не удалось получить Telegram ID");
-  // Устанавливаем дефолтные значения
-  if (userName) userName.textContent = "Гость";
-  if (userId) userId.textContent = "User ID: 0000";
-}
+// const telegramId = getTelegramId();
+// if (telegramId) {
+//   connectProfile(telegramId);
+// } else {
+//   console.log("Не удалось получить Telegram ID");
+//   // Устанавливаем дефолтные значения
+//   if (userName) userName.textContent = "Гость";
+//   if (userId) userId.textContent = "User ID: 0000";
+// }
 export { telegramId };
 
 // Получаем элементы DOM
@@ -173,7 +173,7 @@ const startGameButton = document.querySelector(".user-page-game-history__btn");
 // Инициализация истории ставок
 function initBetHistory() {
   if (!localStorage.getItem("betHistory")) {
-    localStorage.setItem("betHistory", JSON.stringify([]));
+    localStorage.setItem("betHistory", JSON.stringify([]) || []);
   }
 
   const history = JSON.parse(localStorage.getItem("betHistory"));
@@ -333,17 +333,15 @@ window.addEventListener("betResult", (event) => {
 loadHistoryFromStorage();
 
 // Инициализация при загрузке страницы
-document.addEventListener("DOMContentLoaded", () => {
-  initBetHistory();
+initBetHistory();
 
-  const telegramId = getTelegramId();
-  if (telegramId) {
-    connectProfile(telegramId);
-  } else {
-    console.log("Не удалось получить Telegram ID");
-    if (userName) userName.textContent = "Гость";
-    if (userId) userId.textContent = "User ID: 0000";
-  }
-});
+const telegramId = getTelegramId();
+if (telegramId) {
+  connectProfile(telegramId);
+} else {
+  console.log("Не удалось получить Telegram ID");
+  if (userName) userName.textContent = "Гость";
+  if (userId) userId.textContent = "User ID: 0000";
+}
 
 // ... остальной существующий код ...
