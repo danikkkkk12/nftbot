@@ -207,6 +207,10 @@
   width: 16px;
   height: 16px;
 }
+.modal-overlay.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
 
 .potion {
   width: 80px;
@@ -219,6 +223,16 @@
   width: 50px;
   border-radius: 20px;
 }
+
+.card-choosen {
+  border: 2px solid #231C46;
+}
+
+.gift-card.selected {
+  outline: 3px solid #00ffcc;
+  border-radius: 10px;
+}
+
 
 .card-label {
   font-size: 14px;
