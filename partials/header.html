@@ -15,23 +15,24 @@
     </div>
     <div class="modal" id="modal">
       <div class="modal__content">
-        <h2 class="modal__title">Пополнение кошелька</h2>
+        <h2 class="modal__title">Deposit</h2>
         <button type="button" class="modal__close" id="closeModalHeaderBtn">
           &times;
         </button>
+        <div class="modal-btn-container">
+          <button type="button" class="modal-btn-container-ton">
+            <img src="web/images/inventory/ton.svg" alt="" class="modal-btn-container-ton__img">
+            TON
+          </button>
+          <button type="button" class="modal-btn-container-cryptoBot">
+            <img src="/web/images/main/59505061.webp" alt="" class="modal-btn-container-cryptoBot__img">
+            Crypto Bot
+          </button>
+        </div>
 
-        <form class="modal-form">
-          <label class="label" for="wayWallet">Выберите способ оплаты</label>
-          <select name="wayWallet" id="wayWallet" required size="3">
-            <option value="value2" selected>-- Выберите --</option>
-            <option value="value1">TON</option>
-          </select>
 
-          <label class="label" for="sumPay">Выберите сумму оплаты</label>
-          <input type="number" name="sumPay" id="sumPay" min="0" required />
-
-          <button class="btn" type="submit">Оплатить</button>
-        </form>
+        <div class="modal-container-ton"></div>
+        <div class="modal-container-cryptoBot"></div>
       </div>
     </div>
     <div class="main-wallet">
