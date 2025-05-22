@@ -4,7 +4,7 @@
 }
 .admin {
   margin: 0 auto;
-  /* display: none; */
+  display: none;
 }
 .admin__container {
   background-color: #231c46;
