@@ -88,6 +88,7 @@ const modalOverlay = document.getElementById("modalOverlay");
 const openModalBtn = document.querySelectorAll(".inventory-skins-items-added-card");
 const closeModalBtn = document.querySelector(".close-btn");
 
+
 openModalBtn.forEach((e) => {
   e.addEventListener("click", () => {
     modalOverlay.classList.remove("is-hidden");

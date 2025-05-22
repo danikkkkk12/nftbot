@@ -205,7 +205,7 @@ const showPromocodes = async function () {
     const promocodes = await response.json();
 
     if (!Array.isArray(promocodes) || promocodes.length === 0) {
-      promoContainer.textContent = "❗️Промокоди відсутні.";
+      promoContainer.textContent = "❗️Промокоды отсутствуют.";
       return;
     }
 
