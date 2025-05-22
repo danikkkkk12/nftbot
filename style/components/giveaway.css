@@ -56,8 +56,8 @@
   font-weight: 600;
   font-size: 16px;
   background: linear-gradient(90deg, #F8F3FF 0%, #09E6FF 100%);
-  /* -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .giveaway-wrapper-paragraph__potions {
@@ -88,6 +88,7 @@
 .wrapper-block-giveaway{
   margin-left: 100px;
   gap: 5px;
+  margin-top: 5px;
 }
 .giveaway-right-paragraph__number{
   font-family: "Montserrat", sans-serif;
@@ -100,6 +101,8 @@
   font-weight: 600;
   font-size: 14px;
   color: rgba(214, 214, 214, 1);
+  margin-left: -20px;
+  margin-top: 5px;
 }
 .giveaway-right-paragraph-mail__span{
   font-family: "Montserrat", sans-serif;
