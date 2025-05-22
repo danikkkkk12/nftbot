@@ -13,9 +13,6 @@ const isUserAdmin = async function (tgId) {
     const users = await response.json();
 
     const user = users.find((user) => String(user.telegramId) === String(tgId));
-    alert(user);
-    alert(tgId);
-    alert(users);
 
     if (user && user.isAdmin) {
       return user;

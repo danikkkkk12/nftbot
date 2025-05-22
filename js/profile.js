@@ -66,31 +66,30 @@ async function connectProfile(telegramId) {
 }
 
 // Обработчик кнопки инвентаря
-if (inventoryBtn && inventorySection) {
-  inventoryBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    document.querySelector(".user-page-game-history").style.display = "none";
-    document.querySelector(".user-page-inventory").style.display = "block";
-    inventorySection.classList.toggle("open");
+inventoryBtn.addEventListener("click", () => {
+  const gameHistorySection = document.querySelector(".user-page-game-history");
 
-    // Проверяем есть ли предметы в инвентаре
-    const hasItems = checkInventoryItems(); // Ваша функция проверки
+  // Скрываем историю игр
+  if (gameHistorySection) gameHistorySection.style.display = "none";
 
-    if (!hasItems) {
-      const emptyMessage = inventorySection.querySelector(
-        ".user-page-inventory__empty"
-      );
-      if (emptyMessage) {
-        emptyMessage.style.display = "block";
-      }
-    }
-  });
-}
+  // Показываем инвентарь
+  inventorySection.classList.add("openInvSection");
+  
+
+  // Проверяем наличие предметов в инвентаре
+  const hasItems = checkInventoryItems();
+
+  // Показываем или скрываем сообщение о пустом инвентаре
+  const emptyMessage = inventorySection.querySelector(".user-page-inventory__empty");
+  if (emptyMessage) {
+    emptyMessage.style.display = hasItems ? "none" : "block";
+  }
+});
 
 // Функция проверки инвентаря (заглушка)
 function checkInventoryItems() {
   // Здесь должна быть реальная проверка вашего API
-  return false; // Пока всегда пусто
+  return false;
 }
 
 // Обработчик иконки замка
