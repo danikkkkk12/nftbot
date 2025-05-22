@@ -65,32 +65,7 @@ async function connectProfile(telegramId) {
   }
 }
 
-// Обработчик кнопки инвентаря
-inventoryBtn.addEventListener("click", () => {
-  const gameHistorySection = document.querySelector(".user-page-game-history");
 
-  // Скрываем историю игр
-  if (gameHistorySection) gameHistorySection.style.display = "none";
-
-  // Показываем инвентарь
-  inventorySection.classList.add("openInvSection");
-  
-
-  // Проверяем наличие предметов в инвентаре
-  const hasItems = checkInventoryItems();
-
-  // Показываем или скрываем сообщение о пустом инвентаре
-  const emptyMessage = inventorySection.querySelector(".user-page-inventory__empty");
-  if (emptyMessage) {
-    emptyMessage.style.display = hasItems ? "none" : "block";
-  }
-});
-
-// Функция проверки инвентаря (заглушка)
-function checkInventoryItems() {
-  // Здесь должна быть реальная проверка вашего API
-  return false;
-}
 
 // Обработчик иконки замка
 if (lockIcon && inventorySection) {
@@ -344,3 +319,33 @@ if (telegramId) {
 }
 
 // ... остальной существующий код ...
+inventoryBtn.addEventListener("click", () => {
+  const gameHistorySection = document.querySelector(".user-page-game-history");
+  const inventorySection = document.querySelector(".user-page-inventory");
+  const isOpen = inventorySection.classList.contains("openInvSection");
+  const emptyMessage = inventorySection.querySelector(".user-page-inventory__empty");
+
+  if (isOpen) {
+    inventorySection.classList.remove("openInvSection");
+    if (gameHistorySection) gameHistorySection.style.display = "block";
+    if (emptyMessage) emptyMessage.style.display = "none"; // Скрываем при закрытии
+  } else {
+    if (gameHistorySection) gameHistorySection.style.display = "none";
+    inventorySection.classList.add("openInvSection");
+
+    const hasItems = checkInventoryItems();
+
+    console.log("emptyMessage:", emptyMessage);
+    console.log("hasItems:", hasItems);
+
+    if (emptyMessage) {
+      emptyMessage.style.display = hasItems ? "none" : "block";
+      console.log("emptyMessage style after:", emptyMessage.style.display);
+    }
+  }
+});
+
+function checkInventoryItems() {
+  return false;
+}
+
