@@ -5,7 +5,7 @@
       alt="logo"
       class="main-wrapper-balance__logo"
     />
-    <div class="main-balance flex">
+    <div class="main-balance flex" style="cursor: pointer">
       0.00 +
       <img
         src="web/images/main/ton-icon.svg"
@@ -16,23 +16,18 @@
     <div class="modal" id="modal">
       <div class="modal__content">
         <h2 class="modal__title">Пополнение кошелька</h2>
-        <button
-          type="button"
-          class="modal__close"
-          id="closeModalHeaderBtn"
-          type="button"
-        >
+        <button type="button" class="modal__close" id="closeModalHeaderBtn">
           &times;
         </button>
 
-        <form action="" class="modal-form">
-          <label for="wayWallet">Выберите способ оплаты</label>
-          <select name="wayWallet" id="select" required>
+        <form class="modal-form">
+          <label class="label" for="wayWallet">Выберите способ оплаты</label>
+          <select name="wayWallet" id="wayWallet" required size="3">
             <option value="value2" selected>-- Выберите --</option>
             <option value="value1">TON</option>
           </select>
 
-          <label for="sumPay">Выберите сумму оплаты</label>
+          <label class="label" for="sumPay">Выберите сумму оплаты</label>
           <input type="number" name="sumPay" id="sumPay" min="0" required />
 
           <button class="btn" type="submit">Оплатить</button>

@@ -1,17 +1,14 @@
-import { changeBet } from './balance.js';
+import { bet } from "./balance.js";
+import { changeBet } from "./balance.js";
 const toggleButtons = document.querySelectorAll(".bal-inv__btn");
 const betToggle = document.querySelector(".bet-Toggle");
-const giftCard = document.querySelectorAll('.select-bet-change__btn')
-const betContainer = document.querySelector('.bet-count-list') 
-const userNames = document.querySelector('.user-page-profile__name');
-const userProfImg = document.querySelector('.user-page-profile__avatar')
-const totalBet = document.getElementById('total')
+const giftCard = document.querySelectorAll(".select-bet-change__btn");
+const betContainer = document.querySelector(".bet-count-list");
+const userNames = document.querySelector(".user-page-profile__name");
+const userProfImg = document.querySelector(".user-page-profile__avatar");
+const totalBet = document.getElementById("total");
 const fieldBet = document.querySelectorAll(".select-bet-count__number");
-const betBtn = document.querySelectorAll('.select-bet__btn')
-
-
-
-
+const betBtn = document.querySelectorAll(".select-bet__btn");
 
 console.log(betToggle);
 
@@ -40,25 +37,28 @@ if (betToggle) {
 }
 
 betBtn.forEach((btn, index) => {
-  btn.addEventListener('click', () => {
-    const betValue = Number(fieldBet[index].textContent); 
+  btn.addEventListener("click", () => {
+
+    const betValue = Number(fieldBet[index].textContent);
     const userName = userNames.textContent.trim();
     const userAvatar = userProfImg.src;
 
-    betContainer.innerHTML += `
+    if (bet) {
+      betContainer.innerHTML += `
        <li class="swiper-slide bet-count-list__item">
         <div class="bet-count-list__profile">
           <img src="${userAvatar}" class="bet-count-list__avatar" alt="avatar">
           <h3 class="bet-count-list__username">${userName}</h3>
         </div>
         <div class="bet-count-list__number">
-          <span class="count">${betValue}</span>
+          <span class="count">${bet}</span>
           <img src="web/images/main/ton-icon.svg" alt="diamond" class="bet-count-list__diamond" />
         </div>
       </li>
     `;
+    }
 
-      const total = document.querySelectorAll('.bet-count-list__item').length;
+    const total = document.querySelectorAll(".bet-count-list__item").length;
     totalBet.textContent = total;
   });
 });
@@ -73,7 +73,7 @@ betBtn.forEach((btn, index) => {
 //             </div>
 //             <div class="bet-count-list__number">
 //             <span class="count">${betValue}</span>
-              
+
 //               <img
 //                 src="web/images/main/ton-icon.svg"
 //                 alt="diamond"
@@ -87,6 +87,3 @@ betBtn.forEach((btn, index) => {
 //     totalBet.textContent = currentCount
 //   })
 // })
-
-
-

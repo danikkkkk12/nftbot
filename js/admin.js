@@ -1,0 +1,183 @@
+const addAdminInput = document.querySelector(".admin-add__input-add");
+const addAdminBtn = document.querySelector(".admin-add__btn--add");
+const removeAdminInput = document.querySelector(".admin-add__input--remove");
+const removeAdminBtn = document.querySelector(".admin-add__btn--remove");
+const openAdminPage = document.querySelector(".user-page-inv__btn--admin");
+const adminSection = document.querySelector(".admin");
+const updateUserBalanceBtn = document.querySelector(
+  ".admin-balance__btn-update"
+);
+const updateUserBalanceId = document.querySelector(".admin-balance__input--id");
+const updateUserBalanceSumma = document.querySelector(
+  ".admin-balance__input--summa"
+);
+
+import { telegramId } from "./profile.js";
+
+const isUserAdmin = async function (tgId) {
+  try {
+    const response = await fetch("https://nftbotserver.onrender.com/api/users");
+    const users = await response.json();
+
+    const user = users.find((user) => String(user.telegramId) === String(tgId));
+
+    if (user && user.isAdmin) {
+      return user;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log("Помилка при перевірці адміністратора:", err);
+    return false;
+  }
+};
+
+// Додати адміністратора
+const addAdmins = async function (userId) {
+  try {
+    const response = await fetch("https://nftbotserver.onrender.com/api/users");
+    if (!response.ok)
+      throw new Error("Не удалось получить список пользователей");
+
+    const users = await response.json();
+    const user = users.find((u) => String(u.telegramId) === String(userId));
+
+    if (!user) {
+      return alert("Вы ввели неверный ID");
+    }
+
+    if (user.isAdmin) {
+      return alert("Пользователь уже является администратором");
+    }
+
+    const updateRes = await fetch(
+      `https://nftbotserver.onrender.com/api/users/${user.telegramId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isAdmin: true }),
+      }
+    );
+
+    if (updateRes.ok) {
+      alert("Пользователь успешно назначен администратором");
+    } else {
+      alert("Ошибка при обновлении пользователя");
+    }
+  } catch (err) {
+    console.error("Ошибка при добавлении администратора:", err);
+  }
+};
+
+const removeAdmins = async function (userId) {
+  try {
+    const response = await fetch("https://nftbotserver.onrender.com/api/users");
+    if (!response.ok)
+      throw new Error("Не удалось получить список пользователей");
+
+    const users = await response.json();
+    const user = users.find((u) => String(u.telegramId) === String(userId));
+
+    if (!user) {
+      return alert("Вы ввели неверный ID");
+    }
+
+    if (!user.isAdmin) {
+      return alert("Пользователь не является администратором");
+    }
+
+    const updateRes = await fetch(
+      `https://nftbotserver.onrender.com/api/users/${user.telegramId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isAdmin: false }),
+      }
+    );
+
+    if (updateRes.ok) {
+      alert("Пользователь успешно лишен прав администратора");
+    } else {
+      alert("Ошибка при обновлении пользователя");
+    }
+  } catch (err) {
+    console.error("Ошибка при снятии администратора:", err);
+  }
+};
+const updateUserBalance = async function (userId, balance) {
+  try {
+    const response = await fetch("https://nftbotserver.onrender.com/api/users");
+    if (!response.ok)
+      throw new Error("Не вдалося отримати список користувачів");
+
+    const users = await response.json();
+    const user = users.find((u) => String(u.telegramId) === String(userId));
+
+    if (!user) {
+      return alert("Вы ввели неверный ID");
+    }
+
+    if (balance >= 0) {
+      const updateRes = await fetch(
+        `https://nftbotserver.onrender.com/api/users/${user.telegramId}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ balance: balance }),
+        }
+      );
+
+      if (updateRes.ok) {
+        alert(`Баланс пользователя успешно обновлен на ${balance}`);
+      } else {
+        alert("Ошибка при изменение баланса");
+      }
+    } else {
+      alert("Нельзя вводить отрицательный баланс")
+    }
+  } catch (err) {
+    console.error("Ошибка при изменение баланса:", err);
+  }
+};
+
+// Показати секцію
+const showSection = function (targetSection) {
+  document.querySelectorAll("section").forEach((section) => {
+    section.style.display = "none";
+  });
+  targetSection.style.display = "block";
+};
+if (telegramId) {
+  isUserAdmin(telegramId).then((user) => {
+    if (user) {
+      openAdminPage.style.display = "flex";
+    } else {
+      openAdminPage.style.display = "none";
+    }
+  });
+
+  addAdminBtn.addEventListener("click", () => {
+    const id = Number(addAdminInput.value.trim());
+    if (!id) return alert("Введите корректный ID пользователя");
+    addAdmins(id);
+  });
+
+  removeAdminBtn.addEventListener("click", () => {
+    const id = Number(removeAdminInput.value.trim());
+    if (!id) return alert("Введите корректный ID пользователя");
+    removeAdmins(id);
+  });
+  updateUserBalanceBtn.addEventListener("click", () => {
+    const id = Number(updateUserBalanceId.value.trim());
+    const balance = Number(updateUserBalanceSumma.value.trim());
+    if (!id) return alert("Введите корректный ID пользователя");
+    updateUserBalance(id, balance);
+  });
+} else {
+  console.log("Не удалось получить Telegram ID");
+}
+
+// Клік по кнопці входу в адмінку
+openAdminPage.addEventListener("click", () => {
+  showSection(adminSection);
+});
