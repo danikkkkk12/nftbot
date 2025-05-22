@@ -19,6 +19,8 @@ const setBalanceToBd = async function (tgId) {
     if (!response.ok) throw new Error("Користувача не знайдено");
 
     const user = await response.json();
+    alert(balance.value)
+    alert(user)
 
     const updateRes = await fetch(
       `https://nftbotserver.onrender.com/api/users/${tgId}/balance`,
