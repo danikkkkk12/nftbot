@@ -120,7 +120,16 @@ font-family: Montserrat;
 padding-left: 17px;
 }
 
-
+#sumPayCryptoBot {
+  background: #150f27;
+  color: #fff;
+  border-radius: 20px;
+  height: 40px;
+  margin-top: 10px;
+  border: none;
+font-family: Montserrat;
+padding-left: 17px;
+}
 
 .modal-btn-container {
   display: flex;
