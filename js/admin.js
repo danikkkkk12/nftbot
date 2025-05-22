@@ -147,21 +147,28 @@ const updateUserBalance = async function (userId, balance) {
   }
 };
 const addNewPromo = async function (promoCode, reward) {
-  const response = await fetch(
-    "https://nftbotserver.onrender.com/api/promocode",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        code: promoCode.toUpperCase(),
-        reward,
-        isActive: true,
-      }),
-    }
-  );
-  if (!response.ok) throw new Error("Не вдалося додати промокод");
-  const newPromo = await response.json();
-  alert(`Промокод "${newPromo.code}" додано успішно!`);
+  try {
+    const response = await fetch(
+      "https://nftbotserver.onrender.com/api/promocode",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          code: promoCode.trim().toUpperCase(),
+          reward,
+          isActive: true,
+        }),
+      }
+    );
+
+    if (!response.ok) throw new Error("Не вдалося додати промокод");
+
+    const newPromo = await response.json();
+    alert(`✅ Промокод "${newPromo.code}" додано успішно!`);
+  } catch (err) {
+    console.error(err);
+    alert("❌ Сталася помилка при додаванні промокоду!");
+  }
 };
 const deletePromo = async function (promoCode) {
   try {
