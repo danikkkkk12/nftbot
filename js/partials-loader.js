@@ -15,6 +15,7 @@
     "js/translation.js",
     "js/profile.js",
     "js/admin.js",
+    "js/addUserBalance.js",
     "js/promocodes.js",
     "js/main.js",
     "js/ton.js",
@@ -27,7 +28,6 @@
     "js/frog-game.js",
     "js/giveaway.js",
     "js/friends.js",
-    "js/addUserBalance.js",
   ];
 
   for (const src of scripts) {
