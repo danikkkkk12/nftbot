@@ -18,6 +18,7 @@ const addPromoInputReward = document.querySelector(
 const addPromoBtn = document.querySelector(".admin-promo__btn--add");
 const deletePromoInput = document.querySelector(".admin-promo__input--delete");
 const deletePromoBtn = document.querySelector(".admin-promo__btn--delete");
+const getPromoList = document.querySelector(".admin-promo__btn--get");
 
 import { telegramId } from "./profile.js";
 
@@ -189,6 +190,41 @@ const deletePromo = async function (promoCode) {
     alert(`Помилка при видаленні промокоду: ${err.message}`);
   }
 };
+
+const showPromocodes = async function () {
+  const promoContainer = document.querySelector(
+    ".admin-promo-list__swiper-wrapper"
+  );
+
+  try {
+    const response = await fetch(
+      "https://nftbotserver.onrender.com/api/promocode"
+    );
+    if (!response.ok) throw new Error("Не вдалося отримати список промокодів");
+
+    const promocodes = await response.json();
+
+    if (!Array.isArray(promocodes) || promocodes.length === 0) {
+      promoContainer.textContent = "❗️Промокоди відсутні.";
+      return;
+    }
+
+    promoContainer.innerHTML = promocodes
+      .map(
+        (promo) => `
+          <div class="swiper-slide admin-promo-list__card">
+            <strong class="admin-promo-list__strong">${promo.code}</strong> : ${promo.reward}
+            <img src="web/images/inventory/ton.svg" alt="ton" />
+          </div>
+        `
+      )
+      .join("");
+  } catch (err) {
+    console.error(err);
+    promoContainer.textContent = "❌ Помилка при отриманні промокодів.";
+  }
+};
+
 const showSection = function (targetSection) {
   document.querySelectorAll("section").forEach((section) => {
     section.style.display = "none";
@@ -235,6 +271,9 @@ if (telegramId) {
     if (!id) return alert("Введите корректный ID пользователя");
     updateUserBalance(id, balance);
   });
+  getPromoList.addEventListener("click", () => {
+    showPromocodes();
+  });
 } else {
   console.log("Не удалось получить Telegram ID");
 }
@@ -242,4 +281,11 @@ if (telegramId) {
 // Клік по кнопці входу в адмінку
 openAdminPage.addEventListener("click", () => {
   showSection(adminSection);
+});
+
+new Swiper(".admin-promo-list", {
+  direction: "vertical",
+  slidesPerView: 4,
+  freeMode: true,
+  mousewheel: true,
 });
