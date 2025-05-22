@@ -66,3 +66,7 @@
 .admin-promo {
   padding-top: 15px;
 }
+.admin-balance {
+  padding-top: 15px;
+  border-top: 4px solid rgba(136, 69, 245, 0.2);
+}
