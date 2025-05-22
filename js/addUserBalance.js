@@ -1,4 +1,5 @@
 const userBalance = document.querySelector(".main-balance");
+import { telegramId } from "./profile.js";
 const changeBalance = async function () {
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
