@@ -1,4 +1,4 @@
-.modal-overlay {
+.modal-overlay { 
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
@@ -168,7 +168,7 @@
 }
 @media (min-width: 409px) {
 }
-.card {
+.gift-card {
   border-radius: 20px;
   padding: 8px;
   text-align: center;
@@ -206,10 +206,6 @@
   left: 2px;
   width: 16px;
   height: 16px;
-}
-.modal-overlay.is-hidden {
-  opacity: 0;
-  pointer-events: none;
 }
 
 .potion {

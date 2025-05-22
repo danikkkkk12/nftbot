@@ -86,9 +86,8 @@ buyBtn.addEventListener("click", () => {
 // ✨ Модалка
 const modalOverlay = document.getElementById("modalOverlay");
 const openModalBtn = document.querySelectorAll(".inventory-skins-items-added-card");
-const closeModalBtn = document.getElementById("closeModalBtn");
+const closeModalBtn = document.querySelector(".close-btn");
 
-// Відкрити модалку
 openModalBtn.forEach((e) => {
   e.addEventListener("click", () => {
     modalOverlay.classList.remove("is-hidden");
@@ -99,18 +98,3 @@ openModalBtn.forEach((e) => {
 closeModalBtn.addEventListener("click", () => {
   modalOverlay.classList.add("is-hidden");
 });
-
-
-
-
-
-
-
- // card.innerHTML = `
-  //   <div class="card-price">
-  //     ${item.price} <img src="web/images/inventory/ton.svg" class="gem-icon">
-  //   </div>
-  //   <img src="web/images/inventory/${item.image}" alt="${item.name}">
-  //   <div class="card-label">${item.name}</div>
-  //   <div class="card-info">Information</div>
-  // `;
