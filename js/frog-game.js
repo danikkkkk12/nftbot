@@ -23,6 +23,11 @@ if (frogGif) {
   frogGif.style.display = "block";
 }
 
+if (frogGif) {
+  frogGif.style.opacity = "1";
+  frogGif.style.display = "block";
+}
+
 // Анимация появления полосок
 if (bars.length > 0) {
   bars.forEach((bar, index) => {
@@ -108,15 +113,16 @@ function startGame() {
   coefficientDisplay.style.opacity = "1";
 
   if (progressLine) {
-    progressLine.style.backgroundImage = "linear-gradient(135deg, #6a0dad, #b366ff)";
+    progressLine.style.backgroundImage =
+      "linear-gradient(135deg, #6a0dad, #b366ff)";
     progressLine.style.opacity = "1";
     progressLine.style.width = "0%";
     progressLine.style.transform = "rotate(0deg)";
   }
 
   if (frogGif) {
-    frogGif.style.opacity = "0";
-    frogGif.style.left = "0px";
+    frogGif.style.opacity = "1";
+    frogGif.style.left = "0%";
     frogGif.style.transform = "translateX(-50%) scale(0.7)";
   }
 
@@ -152,7 +158,27 @@ function updateGameState(crashAt) {
       progressLine.style.width = "0%";
       frogGif.style.opacity = "0";
     }
+ if (progressLine && frogGif) {
+  const progress = Math.max((currentCoefficient - 1.0) / 0.4, 0);
+
+  if (currentCoefficient >= 1.0 && currentCoefficient <= 1.4) {
+    const position = progress * 100;
+    progressLine.style.width = `${position}%`;
+    frogGif.style.left = `100%`;
+    frogGif.style.opacity = "1";
+  } else if (currentCoefficient > 1.4) {
+    const liftProgress = Math.min((currentCoefficient - 1.4) / 0.25, 1);
+    progressLine.style.width = "100%";
+    progressLine.style.transform = `rotate(-${liftProgress * 15}deg)`;
+    frogGif.style.left = `${100 + liftProgress * 25}%`;
+    frogGif.style.transform = `translateX(-50%) scale(${0.7 - liftProgress * 0.1})`;
+  } else {
+    progressLine.style.width = "0%";
+    frogGif.style.left = "0%";
+    frogGif.style.opacity = "1";
   }
+}
+
 
   if (currentCoefficient >= crashAt) {
     stopGame();
@@ -178,7 +204,6 @@ function stopGame() {
   // Определяем результат игры (выигрыш или проигрыш)
   let isWin = false;
   let totalBet = 0;
-  
   fieldBet.forEach((field) => {
     const bet = parseFloat(field.dataset.bet || "0");
     if (bet > 0) {
@@ -188,6 +213,7 @@ function stopGame() {
   });
 
   // Отправляем событие с результатом
+
 window.dispatchEvent(new CustomEvent('betResult', {
   detail: { 
     isWin: isWin,
@@ -272,5 +298,3 @@ setInterval(() => {
 }, 500);
 
 export { isGameActive, startGame, stopGame, currentCoefficient };
-
-
