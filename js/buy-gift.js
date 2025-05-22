@@ -10,6 +10,16 @@ const addToInventory = async function (userId, itemId, count) {
     const user = users.find((u) => String(u.telegramId) === String(userId));
     if (!user) throw new Error("Пользователь не найден");
 
+    const selectedGift = gifts.find(g => g.id === itemId);
+    if (!selectedGift) throw new Error("Подарок не найден");
+
+    const totalCost = selectedGift.price * count;
+
+    if (user.balance < totalCost) {
+      alert(`Недостаточно средств. У тебя ${user.balance}, а нужно ${totalCost}`);
+      return;
+    }
+
     const updateRes = await fetch(
       `https://nftbotserver.onrender.com/api/users/${user.telegramId}/inventory`,
       {
@@ -34,7 +44,6 @@ const addToInventory = async function (userId, itemId, count) {
   }
 };
 
-// 12 однакових подарунків для прикладу
 const gifts = Array.from({ length: 12 }, (_, i) => ({
   id: `potion-${i + 1}`,
   name: "Potion",
