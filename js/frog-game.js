@@ -19,11 +19,6 @@ const maxHistoryItems = 7;
 coefficientDisplay.style.opacity = "0";
 
 if (frogGif) {
-  frogGif.style.opacity = "0";
-  frogGif.style.display = "block";
-}
-
-if (frogGif) {
   frogGif.style.opacity = "1";
   frogGif.style.display = "block";
 }
@@ -143,42 +138,24 @@ function updateGameState(crashAt) {
   coefficientDisplay.innerText = `x${currentCoefficient.toFixed(2)}`;
 
   if (progressLine && frogGif) {
-    if (currentCoefficient >= 1.2 && currentCoefficient <= 1.4) {
-      const progress = (currentCoefficient - 1.2) / 0.2;
+    if (currentCoefficient >= 1.0 && currentCoefficient <= 1.4) {
+      const progress = (currentCoefficient - 1) / 0.4;
       progressLine.style.width = `${progress * 100}%`;
-      frogGif.style.left = `${progress * 100}%`;
+      frogGif.style.left = `100%`;
       frogGif.style.opacity = "1";
     } else if (currentCoefficient > 1.4) {
       const liftProgress = Math.min((currentCoefficient - 1.4) / 0.25, 1);
       progressLine.style.width = "100%";
       progressLine.style.transform = `rotate(-${liftProgress * 15}deg)`;
       frogGif.style.left = `${100 + liftProgress * 25}%`;
-      frogGif.style.transform = `translateX(-50%) scale(${0.7 - liftProgress * 0.1})`;
+      frogGif.style.transform = `translateX(-50%) scale(${
+        0.7 - liftProgress * 0.1
+      })`;
     } else {
       progressLine.style.width = "0%";
       frogGif.style.opacity = "0";
     }
- if (progressLine && frogGif) {
-  const progress = Math.max((currentCoefficient - 1.0) / 0.4, 0);
-
-  if (currentCoefficient >= 1.0 && currentCoefficient <= 1.4) {
-    const position = progress * 100;
-    progressLine.style.width = `${position}%`;
-    frogGif.style.left = `100%`;
-    frogGif.style.opacity = "1";
-  } else if (currentCoefficient > 1.4) {
-    const liftProgress = Math.min((currentCoefficient - 1.4) / 0.25, 1);
-    progressLine.style.width = "100%";
-    progressLine.style.transform = `rotate(-${liftProgress * 15}deg)`;
-    frogGif.style.left = `${100 + liftProgress * 25}%`;
-    frogGif.style.transform = `translateX(-50%) scale(${0.7 - liftProgress * 0.1})`;
-  } else {
-    progressLine.style.width = "0%";
-    frogGif.style.left = "0%";
-    frogGif.style.opacity = "1";
   }
-}
-
 
   if (currentCoefficient >= crashAt) {
     stopGame();
@@ -193,7 +170,8 @@ function stopGame() {
   coefficientDisplay.classList.add("crash-glow");
   coefficientDisplay.style.color = "#ff0000";
   if (progressLine) {
-    progressLine.style.backgroundImage = "linear-gradient(135deg, #ff0000, #ff6b6b)";
+    progressLine.style.backgroundImage =
+      "linear-gradient(135deg, #ff0000, #ff6b6b)";
   }
 
   addToHistory(currentCoefficient, true);
@@ -212,16 +190,17 @@ function stopGame() {
     }
   });
 
-  // Отправляем событие с результатом
+  // Отправл яем событие с результатом
 
-window.dispatchEvent(new CustomEvent('betResult', {
-  detail: { 
-    isWin: isWin,
-    coefficient: currentCoefficient,
-    totalBet: totalBet.toFixed(2)
-  }
-}));
-
+  window.dispatchEvent(
+    new CustomEvent("betResult", {
+      detail: {
+        isWin: isWin,
+        coefficient: currentCoefficient,
+        totalBet: totalBet.toFixed(2),
+      },
+    })
+  );
 
   setTimeout(() => {
     coefficientDisplay.classList.remove("crash-glow");
@@ -241,7 +220,9 @@ function addToHistory(coef, isCrash) {
 
   historyTrack.insertBefore(div, historyTrack.firstChild);
 
-  const items = historyTrack.querySelectorAll(".main-coefficients__coefficient");
+  const items = historyTrack.querySelectorAll(
+    ".main-coefficients__coefficient"
+  );
 
   items.forEach((item, index) => {
     item.style.transform = `translateX(${index * 100}%)`;
