@@ -2,6 +2,7 @@ const navItems = document.querySelectorAll(".icon-navigation-bar .nav-item");
 const iconNavigationBar = document.querySelector(".icon-navigation-bar");
 const sections = document.querySelectorAll("section");
 
+
 function setActiveItem(clickedItem) {
   navItems.forEach(item => item.classList.remove("active-item"));
   clickedItem.classList.add("active-item");
