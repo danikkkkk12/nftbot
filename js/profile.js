@@ -9,7 +9,6 @@ const startPlayingBtn = document.querySelector(
 );
 const userName = document.querySelector(".user-page-profile__name");
 const userId = document.querySelector(".user-page-profile__id");
-const userAvatar = document.querySelector(".user-page-profile__avatar");
 
 // Элементы для промокодов (если нужны)
 const promoBtnOpens = document.querySelectorAll(".promo-open-btn");
@@ -55,8 +54,8 @@ async function connectProfile(telegramId) {
 
     if (userName) userName.textContent = user.username || "Без имени";
     if (userId) userId.textContent = `User ID: ${user.telegramId}`;
-    if (userAvatar)
-      userAvatar.setAttribute("src", user.avatar || "default-avatar-url.jpg");
+    // if (userAvatar)
+    //   userAvatar.setAttribute("src", user.avatar || "web/images/profile/user-avatar.jpg");
 
     return user;
   } catch (error) {

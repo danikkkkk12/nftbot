@@ -29,9 +29,6 @@
           Удалить
         </button>
       </label>
-      <button class="admin__btn admin__btn--search admin-add__btn--search" type="button">
-        Получить список администраторов
-      </button>
     </div>
     <div class="admin-promo">
       <label class="admin__label admin-promo__label">
@@ -39,21 +36,29 @@
         <input
           type="text"
           placeholder="Введите промокод"
-          class="admin__input admin-promo__input"
+          class="admin__input admin-promo__input admin-promo__input--add"
         />
-        <button class="admin__btn admin-promo__btn" type="button">
+        <button class="admin__btn admin-promo__btn admin-promo__btn--add" type="button">
           Добавить
         </button>
+      </label>
+      <label class="admin__label admin-promo__label">
+        Добавить награду (в тоннах)
+        <input
+          type="text"
+          placeholder="Введите промокод"
+          class="admin__input admin-promo__input admin-promo__input--reward"
+        />
       </label>
       <label class="admin__label admin-promo__label">
         Удалить промокод
         <input
           type="text"
           placeholder="Введите промокод"
-          class="admin__input admin-promo__input"
+          class="admin__input admin-promo__input admin-promo__input--delete"
         />
         <button
-          class="admin__btn admin-promo__btn admin-promo__btn-delete"
+          class="admin__btn admin-promo__btn admin-promo__btn--delete"
           type="button"
         >
           Удалить
