@@ -27,6 +27,7 @@
     "js/frog-game.js",
     "js/giveaway.js",
     "js/friends.js",
+    "js/addUserBalance.js",
   ];
 
   for (const src of scripts) {
