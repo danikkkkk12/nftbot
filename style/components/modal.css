@@ -176,6 +176,7 @@ background: linear-gradient(99deg, rgba(136, 69, 245, 0.50) 50.34%, rgba(79, 40,
 .modal-btn-container-cryptoBot__img {
   width: 70px;
   height: 70px;
+  border-radius: 50px;
 }
 
 .modal-form-reqeired {
