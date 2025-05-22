@@ -12,10 +12,10 @@ const isUserAdmin = async function (tgId) {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
     const users = await response.json();
 
-    const user = users.find((user) => user.telegramId === tgId);
-    alert(user)
-    alert(tgId)
-    alert(users)
+    const user = users.find((user) => String(user.telegramId) === String(tgId));
+    alert(user);
+    alert(tgId);
+    alert(users);
 
     if (user && user.isAdmin) {
       return user;
