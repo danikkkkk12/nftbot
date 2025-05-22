@@ -21,7 +21,7 @@ async function enterPromo(tgId, code) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ tgId, code }),
+        body: JSON.stringify({ telegramId: tgId, code }),
       }
     );
 
