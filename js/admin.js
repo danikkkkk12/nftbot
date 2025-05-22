@@ -11,6 +11,13 @@ const updateUserBalanceId = document.querySelector(".admin-balance__input--id");
 const updateUserBalanceSumma = document.querySelector(
   ".admin-balance__input--summa"
 );
+const addPromoInput = document.querySelector(".admin-promo__input--add");
+const addPromoInputReward = document.querySelector(
+  ".admin-promo__input--reward"
+);
+const addPromoBtn = document.querySelector(".admin-promo__btn--add");
+const deletePromoInput = document.querySelector(".admin-promo__input--delete");
+const deletePromoBtn = document.querySelector(".admin-promo__btn--delete");
 
 import { telegramId } from "./profile.js";
 
@@ -133,14 +140,48 @@ const updateUserBalance = async function (userId, balance) {
         alert("Ошибка при изменение баланса");
       }
     } else {
-      alert("Нельзя вводить отрицательный баланс")
+      alert("Нельзя вводить отрицательный баланс");
     }
   } catch (err) {
     console.error("Ошибка при изменение баланса:", err);
   }
 };
+const addNewPromo = async function (promoCode, reward) {
+  const response = await fetch(
+    "https://nftbotserver.onrender.com/api/promocode",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        code: promoCode.toUpperCase(),
+        reward,
+        isActive: true,
+      }),
+    }
+  );
+  if (!response.ok) throw new Error("Не вдалося додати промокод");
+  const newPromo = await response.json();
+  alert(`Промокод "${newPromo.code}" додано успішно!`);
+};
+const deletePromo = async function (promoCode) {
+  try {
+    const response = await fetch(
+      `https://nftbotserver.onrender.com/api/promocode/${promoCode.toUpperCase()}`,
+      {
+        method: "DELETE",
+      }
+    );
 
-// Показати секцію
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Не вдалося видалити промокод");
+    }
+
+    alert(`Промокод "${promoCode.toUpperCase()}" успішно видалено!`);
+  } catch (err) {
+    alert(`Помилка при видаленні промокоду: ${err.message}`);
+  }
+};
 const showSection = function (targetSection) {
   document.querySelectorAll("section").forEach((section) => {
     section.style.display = "none";
@@ -167,6 +208,20 @@ if (telegramId) {
     if (!id) return alert("Введите корректный ID пользователя");
     removeAdmins(id);
   });
+
+  addPromoBtn.addEventListener("click", () => {
+    const promoName = addPromoInput.value.trim();
+    const promoReward = Number(addPromoInputReward.value.trim());
+    if (!promoName) return alert("Введите корректный промокод");
+
+    addNewPromo(promoName, promoReward);
+  });
+  deletePromoBtn.addEventListener("click", () => {
+    const promoCode = deletePromoInput.value.trim();
+    if (!promoCode) return alert("Введите корректный промокод");
+    deletePromo(promoCode);
+  });
+
   updateUserBalanceBtn.addEventListener("click", () => {
     const id = Number(updateUserBalanceId.value.trim());
     const balance = Number(updateUserBalanceSumma.value.trim());
