@@ -287,7 +287,6 @@
 .inventory-wrap{
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
 }
 .inventory-item{
   width: 132px;
@@ -300,7 +299,7 @@
   width: 80px;
   height: 80px;
   margin-top: 105px;
-  margin-left: -37px;
+  margin-left: -34px;
 }
 .inventory-item__name{
   display: flex;
