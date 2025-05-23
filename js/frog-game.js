@@ -8,7 +8,7 @@ const selectBetBtns = document.querySelectorAll(".select-bet__btn");
 const stopBtns = document.querySelectorAll(".stop-btn");
 const balancePole = document.querySelector(".main-balance");
 const fieldBet = document.querySelectorAll(".select-bet-count__number");
-import { fieldValues, balance } from "./balance.js";
+import { balance } from "./balance.js";
 import { telegramId } from "./profile.js";
 
 const setBalanceToBd = async function (tgId) {
