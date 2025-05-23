@@ -290,7 +290,7 @@ async function renderInventory(userId) {
     <div class="inventory-wrap">
     <div class="inventory-item">
       <div class="inventory-item__wrapper flex">
-        <span class="inventory-item__wrapper-span">${gift.price}</span>
+        <span class="inventory-item__wrapper-span">10</span>
         <img src="web/images/${gift.image}" alt="${gift.name}" class="inventory-item__img" />
       </div>
       <span class="inventory-item__name">${gift.name}</span>

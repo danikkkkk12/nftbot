@@ -300,7 +300,8 @@
 .inventory-item__img{
   width: 80px;
   height: 80px;
-  margin-top: 5px;
+  margin-top: 70px;
+  margin-left: -50px;
 }
 .inventory-item__name{
   display: flex;
