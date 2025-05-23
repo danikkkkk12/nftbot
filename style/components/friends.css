@@ -204,6 +204,11 @@
   font-size: 15px;
   color: #fff;
 }
+
+.task-icon-text span { /* Added rule to prevent task description text from wrapping */
+  white-space: nowrap;
+}
+
 .task-icon-text .icon-placeholder {
   font-size: 20px;
 }
@@ -220,16 +225,19 @@
   background: #231c46;
   padding: 6px 12px;
   border-radius: 10px;
-  width: 73px;
   height: 35px;
-  font-size: 14px;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 14px; 
   text-align: center;
   color: #fff;
-  display: flex; /* For vertical centering if needed */
-  align-items: center; /* For vertical centering */
-  justify-content: center; /* For horizontal centering */
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  white-space: nowrap; /* This was correctly added in the previous step */
+}
+
+.second {
+  margin-right: 10px;
 }
 
 .task-item .reward {
@@ -272,7 +280,7 @@
   font-size: 15px;
   line-height: 147%;
   color: #929292;
-  padding: 10px 10px; /* Adjusted padding from 22px to 10px */
+  padding: 10px 10px; 
 }
 
 .invited-body p[data-lang-key="friendsNoInvitedYet"] {
@@ -292,12 +300,7 @@
   color: #fff;
   font-size: 15px;
   font-weight: 500;
-  /* border-bottom: 1px solid #3a305a; */ /* Optional: if you want separators */
 }
-
-/* .invited-friend-item:last-child {
-  border-bottom: none;
-} */
 
 .invited-friend-profit-icon {
   width: 1em;

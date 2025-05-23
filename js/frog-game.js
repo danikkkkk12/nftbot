@@ -9,6 +9,33 @@ const stopBtns = document.querySelectorAll(".stop-btn");
 const balancePole = document.querySelector(".main-balance");
 const fieldBet = document.querySelectorAll(".select-bet-count__number");
 import { fieldValues, balance } from "./balance.js";
+import { telegramId } from "./profile.js";
+
+const setBalanceToBd = async function (tgId) {
+  try {
+    const response = await fetch(`https://nftbotserver.onrender.com/api/users`);
+    if (!response.ok) throw new Error("Користувача не знайдено");
+
+    const users = await response.json();
+    const user = users.find((user) => String(user.telegramId) === String(tgId));
+
+    const updateRes = await fetch(
+      `https://nftbotserver.onrender.com/api/users/${tgId}/balance`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ balance: balance.value }),
+      }
+    );
+
+    if (!updateRes.ok) throw new Error("Помилка оновлення балансу");
+
+    return true;
+  } catch (err) {
+    console.error("setBalanceToBd error:", err.message);
+    return false;
+  }
+};
 
 // Константы
 const LINE_WIDTH = 380;
@@ -184,13 +211,16 @@ function stopGame() {
   let totalBet = 0;
   fieldBet.forEach((field) => {
     const bet = parseFloat(field.dataset.bet || "0");
+
     if (bet > 0) {
       totalBet += bet;
-      isWin = true; // Если есть активные ставки при остановке - это выигрыш
+      isWin = false;
+
+      // Обнуляємо програну ставку
+      field.textContent = "0";
+      field.dataset.bet = "0";
     }
   });
-
-  // Отправл яем событие с результатом
 
   window.dispatchEvent(
     new CustomEvent("betResult", {
@@ -201,6 +231,10 @@ function stopGame() {
       },
     })
   );
+
+  if (telegramId) {
+    setBalanceToBd(telegramId);
+  }
 
   setTimeout(() => {
     coefficientDisplay.classList.remove("crash-glow");
@@ -249,7 +283,6 @@ stopBtns.forEach((stopBtn, index) => {
     if (isGameActive) {
       const gain = betValue * currentCoefficient;
       balance.value += gain;
-
       if (balancePole) {
         balancePole.textContent = balance.value.toFixed(2);
         const img = document.createElement("img");

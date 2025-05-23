@@ -1,4 +1,4 @@
-.modal-overlay {
+.modal-overlay { 
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
@@ -168,7 +168,7 @@
 }
 @media (min-width: 409px) {
 }
-.card {
+.gift-card {
   border-radius: 20px;
   padding: 8px;
   text-align: center;
@@ -219,6 +219,16 @@
   width: 50px;
   border-radius: 20px;
 }
+
+.card-choosen {
+  border: 2px solid #231C46;
+}
+
+.gift-card.selected {
+  outline: 3px solid #00ffcc;
+  border-radius: 10px;
+}
+
 
 .card-label {
   font-size: 14px;

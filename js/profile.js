@@ -1,24 +1,11 @@
-// Получаем элементы DOM
-const lockIcon = document.querySelector(".user-page-inv__icon--lock");
-const iconInv = document.querySelector(".user-page-inv__icon--inv");
-const userInv = document.querySelector(".user-page-inv");
 const inventoryBtn = document.querySelector(".user-page-inv__btn--inv");
-const inventorySection = document.querySelector(".user-page-inventory");
-const startPlayingBtn = document.querySelector(
-  ".user-page-inventory__empty-btn"
-);
+// const inventorySection = document.querySelector(".user-page-inventory");
+// const startPlayingBtn = document.querySelector(
+//   ".user-page-inventory__empty-btn"
+// );
 const userName = document.querySelector(".user-page-profile__name");
 const userId = document.querySelector(".user-page-profile__id");
-const userAvatar = document.querySelector(".user-page-profile__avatar");
 
-// Элементы для промокодов (если нужны)
-const promoBtnOpens = document.querySelectorAll(".promo-open-btn");
-const promobackdrop = document.querySelector(".promo-backdrop");
-const promoBtnClose = document.querySelector(".promo-modal__btn-close");
-const promoInput = document.querySelector(".promo-modal__input");
-const promoBtnSearchPromocode = document.getElementById(
-  "promoModalSearchPromocode"
-);
 
 // Функция получения Telegram ID
 function getTelegramId() {
@@ -55,8 +42,8 @@ async function connectProfile(telegramId) {
 
     if (userName) userName.textContent = user.username || "Без имени";
     if (userId) userId.textContent = `User ID: ${user.telegramId}`;
-    if (userAvatar)
-      userAvatar.setAttribute("src", user.avatar || "default-avatar-url.jpg");
+    // if (userAvatar)
+    //   userAvatar.setAttribute("src", user.avatar || "web/images/profile/user-avatar.jpg");
 
     return user;
   } catch (error) {
@@ -65,16 +52,7 @@ async function connectProfile(telegramId) {
   }
 }
 
-
-
 // Обработчик иконки замка
-if (lockIcon && inventorySection) {
-  lockIcon.addEventListener("click", (e) => {
-    e.preventDefault();
-    userInv.classList.add("open");
-    inventorySection.classList.add("open");
-  });
-}
 
 // Инициализация Swiper для истории игр
 if (document.querySelector(".user-page-game-history__swiper")) {
@@ -83,41 +61,6 @@ if (document.querySelector(".user-page-game-history__swiper")) {
     slidesPerView: "auto",
     freeMode: true,
     mousewheel: true,
-  });
-}
-
-// Промокоды (если нужны)
-const promocodes = {
-  lelelele52: "Вы получили 2 кг мефедрону",
-  ez100ton: "Вы получили 100 ton на баланс",
-  idiNaxui: "Идите нахуй",
-};
-
-if (promoBtnOpens) {
-  promoBtnOpens.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      if (promobackdrop) promobackdrop.classList.remove("is-hidden");
-    });
-  });
-}
-
-if (promoBtnClose && promobackdrop) {
-  promoBtnClose.addEventListener("click", () => {
-    promobackdrop.classList.add("is-hidden");
-  });
-}
-
-if (promoBtnSearchPromocode && promoInput) {
-  promoBtnSearchPromocode.addEventListener("click", () => {
-    const inputValue = promoInput.value.trim();
-
-    if (promocodes[inputValue]) {
-      alert(promocodes[inputValue]);
-    } else {
-      alert("Промокод не действителен");
-    }
-
-    promoInput.value = "";
   });
 }
 
@@ -139,10 +82,10 @@ export { telegramId };
 const userBetHistoryContainer = document.querySelector(
   ".user-page-game-history__swiper"
 );
-const noHistoryMessage = document.querySelector(
-  ".user-page-game-history__untitle"
-);
-const startGameButton = document.querySelector(".user-page-game-history__btn");
+// const noHistoryMessage = document.querySelector(
+//   ".user-page-game-history__untitle"
+// );
+// const startGameButton = document.querySelector(".user-page-game-history__btn");
 
 // Инициализация истории ставок
 function initBetHistory() {
@@ -153,8 +96,8 @@ function initBetHistory() {
   const history = JSON.parse(localStorage.getItem("betHistory"));
 
   if (history.length > 0) {
-    noHistoryMessage.style.display = "none";
-    startGameButton.style.display = "none";
+    // noHistoryMessage.style.display = "none";
+    // startGameButton.style.display = "none";
 
     userBetHistoryContainer.innerHTML = `
       <div class="swiper-wrapper user-page-game-history__swiper-wrapper">
@@ -325,6 +268,10 @@ inventoryBtn.addEventListener("click", async () => {
   const inventorySection = document.querySelector(".user-page-inventory");
   const isOpen = inventorySection.classList.contains("openInvSection");
 
+  const emptyMessage = inventorySection.querySelector(
+    ".user-page-inventory__empty"
+  );
+
   if (isOpen) {
     inventorySection.classList.remove("openInvSection");
     if (gameHistorySection) gameHistorySection.style.display = "block";
@@ -337,3 +284,8 @@ inventoryBtn.addEventListener("click", async () => {
   }
 });
 
+
+
+function checkInventoryItems() {
+  return false;
+}

@@ -6,10 +6,43 @@ const fieldBet = document.querySelectorAll(".select-bet-count__number");
 const selectBetBtns = document.querySelectorAll(".select-bet__btn");
 const balancePole = document.querySelector(".main-balance");
 const stopBtns = document.querySelectorAll(".stop-btn");
+import { telegramId } from "./profile.js";
+
+const getBalance = async function (tgId) {
+  try {
+    const response = await fetch(`https://nftbotserver.onrender.com/api/users`);
+    if (!response.ok) throw new Error("Користувача не знайдено");
+
+    const users = await response.json();
+    const user = users.find((user) => String(user.telegramId) === String(tgId));
+
+    if (user && user.balance !== undefined) {
+      return user.balance;
+    } else {
+      console.log("Користувач не має балансу");
+      return null;
+    }
+  } catch (err) {
+    console.log("getBalance error:", err.message);
+    return null;
+  }
+};
 
 let balance = {
   value: parseFloat(balancePole.textContent),
 };
+getBalance(telegramId).then((bal) => {
+  balance.value = bal || 0;
+  // balancePole.textContent = balance.value.toFixed(2);
+  balancePole.innerHTML = `
+  ${balance.value.toFixed(2)} +
+      <img
+        src="web/images/main/ton-icon.svg"
+        alt="Token"
+        class="main-balance__token"
+      />
+  `;
+});
 let bet;
 
 function updateButtonsState() {
@@ -44,13 +77,13 @@ function changeBet(field, fixedBtns, changeBtns, selectBtn) {
     });
   });
 
-  // Обработка кнопки "Сделать ставку"
   selectBtn.addEventListener("click", () => {
     if (getIsGameActive()) return;
 
     if (currentValue === 0) {
       alert("Сделайте ставку");
       field.textContent = "0";
+      bet = 0;
     } else if (currentValue <= balance.value) {
       bet = currentValue;
       balance.value -= bet;
@@ -66,8 +99,7 @@ function changeBet(field, fixedBtns, changeBtns, selectBtn) {
       field.dataset.bet = bet;
       field.textContent = "0";
       currentValue = 0;
-
-      // Сигналим о новой ставке
+      bet = 0;
       window.dispatchEvent(
         new CustomEvent("newBet", { detail: { amount: bet } })
       );
@@ -75,6 +107,7 @@ function changeBet(field, fixedBtns, changeBtns, selectBtn) {
       alert("Недостаточно средств на балансе");
       field.textContent = "0";
       currentValue = 0;
+      bet = 0;
     }
   });
 

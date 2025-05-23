@@ -15,6 +15,8 @@
     "js/translation.js",
     "js/profile.js",
     "js/admin.js",
+    "js/addUserBalance.js",
+    "js/promocodes.js",
     "js/main.js",
     "js/ton.js",
     "js/balance.js",

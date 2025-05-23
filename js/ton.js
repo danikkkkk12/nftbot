@@ -119,8 +119,8 @@ btnCryptoBot.addEventListener('click', () => {
       <label class="label" for="sumPayCryptoBot">Choose sum pay</label>
       <input type="number" name="sumPay" id="sumPayCryptoBot" min="0.00" required />
       <div class="modal-form-reqeired">
-        <span>Min: 0.1 TON</span>
-        <span>Max: 1000 TON</span> 
+        <span>Min: 0.1 crypto</span>
+        <span>Max: 1000 crypto</span> 
       </div>
       <button class="btn" type="submit">Deposit with Crypto Bot</button>
     </form>`;

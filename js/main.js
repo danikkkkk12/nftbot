@@ -92,6 +92,3 @@ socket.addEventListener("close", () => {
   console.log("WebSocket соединение закрыто");
 });
 
-
-resetProgressBar();
-
