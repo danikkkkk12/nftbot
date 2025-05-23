@@ -188,6 +188,7 @@ const gameHistoryWrapper = document.querySelector(
 );
 
 function createHistoryCard({ isWin, coefficient, totalBet, date }) {
+  if (totalBet === 0) return;
   const card = document.createElement("div");
   card.className = "user-page-game-history__card swiper-slide";
 
@@ -242,7 +243,9 @@ window.addEventListener("betResult", (event) => {
   const card = createHistoryCard(entry);
   gameHistoryWrapper.prepend(card);
 
-  saveHistoryEntry(entry);
+  if (entry.totalBet > 0) {
+    saveHistoryEntry(entry);
+  }
 });
 
 // Початкове завантаження

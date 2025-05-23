@@ -1,4 +1,4 @@
-.modal-overlay { 
+.modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
@@ -18,7 +18,7 @@
   font-family: "Montserrat", sans-serif;
   background: #2d0057;
   color: white;
-  padding: 70px 25px;
+  padding: 70px 22px;
   border-radius: 30px;
   width: 100%;
   max-width: 440px;
@@ -158,13 +158,9 @@
   color: white;
 }
 .grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  gap: 12px;
   margin-top: 16px;
+  height: 550px;
+  overflow: hidden;
 }
 @media (min-width: 409px) {
 }
@@ -201,9 +197,6 @@
   background: #7e21de;
 }
 .gem-icon {
-  position: relative;
-  top: 1.5px;
-  left: 2px;
   width: 16px;
   height: 16px;
 }
@@ -213,22 +206,26 @@
 }
 
 .card-price {
+  padding: 4px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
   font-size: 14px;
   margin-right: 40px;
   background: linear-gradient(#383838, #585858);
-  width: 54 px;
+  width: 54px;
   border-radius: 20px;
+  gap: 4px;
 }
 
 .card-choosen {
-  border: 2px solid #231C46;
+  border: 2px solid #231c46;
 }
 
 .gift-card.selected {
   outline: 3px solid #00ffcc;
   border-radius: 10px;
 }
-
 
 .card-label {
   font-size: 14px;
@@ -272,13 +269,80 @@
     width: 100%;
   }
 }
-.grid {
-  height: 550px;
-}
 
 .grid__wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 5px;
   flex-wrap: wrap;
+}
+.card-price-icon-gift {
+  width: 50px;
+  height: 50px;
+}
+.gift-card {
+  max-height: 120px;
+  max-width: 128px;
+}
+.inventory-wrap{
+  display: flex;
+  flex-wrap: wrap;
+}
+.inventory-item{
+  width: 132px;
+  height: 162px;
+  background: linear-gradient(213.72deg, rgba(97, 0, 255, 0.5) 20.44%, rgba(179, 132, 255, 0.5) 96.63%);
+  border-radius: 20px;
+  flex-wrap: wrap;
+}
+.inventory-item__img{
+  width: 80px;
+  height: 80px;
+  margin-top: 105px;
+  margin-left: -34px;
+}
+.inventory-item__name{
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  margin-top: 80px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  color: #FFFFFF;
+}
+.inventory-item__wrapper{
+  background: linear-gradient(180deg, #383838 0%, #585858 100%);
+  width: 49px;
+  height: 24px;
+  margin-left: 8px;
+  border-radius: 20px;
+  gap: 5px;
+   font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 100%;
+  color: #FFFFFF;
+  padding-top: 3px;
+}
+.inventory-item__marketplace{
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: -35px;
+  gap: 5px;
+}
+.inventory-item__sell{
+  width: 27px;
+  height: 27px;
+  background-color: red;
+  border-radius: 5px;
+}
+.inventory-item__cashout{
+  width: 27px;
+  height: 27px;
+  background-color: green;
+  border-radius: 5px;
 }
