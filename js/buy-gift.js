@@ -103,9 +103,6 @@ const addToInventory = async function (userId, itemId, count) {
 // Отображение инвентаря
 async function renderInventory(userId) {
   const inventorySection = document.querySelector(".user-page-inventory");
-  const emptyMessage = inventorySection.querySelector(
-    ".user-page-inventory__empty"
-  );
 
   try {
     const response = await fetch(
@@ -115,43 +112,34 @@ async function renderInventory(userId) {
 
     const inventory = await response.json();
 
-    if (inventory && inventory.length > 0) {
-      emptyMessage.style.display = "none";
+    // Знаходимо або створюємо контейнер для предметів
+    let itemsContainer = inventorySection.querySelector(
+      ".inventory-items-container"
+    );
+    if (!itemsContainer) {
+      itemsContainer = document.createElement("div");
+      itemsContainer.className = "inventory-items-container";
+      inventorySection.appendChild(itemsContainer);
+    }
 
-      let itemsContainer = inventorySection.querySelector(
-        ".inventory-items-container"
-      );
-      if (!itemsContainer) {
-        itemsContainer = document.createElement("div");
-        itemsContainer.className = "inventory-items-container";
-        inventorySection.appendChild(itemsContainer);
-      }
+    itemsContainer.innerHTML = "";
 
-      itemsContainer.innerHTML = "";
-      inventory.forEach((item) => {
-        const gift = gifts.find((g) => g.id === item.itemId) || {
-          name: item.itemId,
-          image: "default-item.svg",
-        };
+    inventory.forEach((item) => {
+      const gift = gifts.find((g) => g.id === item.itemId) || {
+        name: item.itemId,
+        image: "default-item.svg",
+      };
 
-        const itemElement = document.createElement("div");
-        itemElement.className = "inventory-item";
-        itemElement.innerHTML = `
+      const itemElement = document.createElement("div");
+      itemElement.className = "inventory-item";
+      itemElement.innerHTML = `
           <img src="web/images/inventory/${gift.image}" alt="${gift.name}">
           <span>${gift.name} x${item.count}</span>
         `;
-        itemsContainer.appendChild(itemElement);
-      });
-    } else {
-      emptyMessage.style.display = "block";
-      const itemsContainer = inventorySection.querySelector(
-        ".inventory-items-container"
-      );
-      if (itemsContainer) itemsContainer.remove();
-    }
+      itemsContainer.appendChild(itemElement);
+    });
   } catch (err) {
     console.error("Ошибка при загрузке инвентаря:", err);
-    emptyMessage.style.display = "block";
   }
 }
 export { renderInventory };
