@@ -288,7 +288,7 @@ async function renderInventory(userId) {
     itemsContainer.innerHTML = "";
 
     inventory.forEach((item) => {
-      const gift = gifts.find((g) => g.id === item.itemId) || {
+      const gift = gifts.find((g) => g.name === item.itemId) || {
         name: item.itemId,
         image: "default-item.svg",
       };
@@ -300,7 +300,6 @@ async function renderInventory(userId) {
           <img src="web/images/${gift.image}" alt="${gift.name}" class="inventory-item__img">
           <span class="inventory-item__name">${gift.name} x${item.count}</span>
       `;
-
       itemsContainer.appendChild(itemElement);
     });
   } catch (err) {
