@@ -12,6 +12,7 @@ const closeModalBtn = document.querySelector(".close-btn");
 let maxPrice = parseInt(
   document.querySelector(".price-options .active")?.dataset.price || "25"
 );
+import { telegramId } from "./profile.js";
 let selectedItem = null;
 
 const gifts = Array.from({ length: 12 }, (_, i) => ({
