@@ -310,6 +310,7 @@ setInterval(() => {
     }
   });
 }, 500);
+import { getUserName } from "./balance.js";
 
 const addBetToHistory = async function (betAmount) {
   try {
