@@ -1,4 +1,4 @@
-.modal-overlay { 
+.modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
@@ -18,7 +18,7 @@
   font-family: "Montserrat", sans-serif;
   background: #2d0057;
   color: white;
-  padding: 70px 25px;
+  padding: 70px 22px;
   border-radius: 30px;
   width: 100%;
   max-width: 440px;
@@ -158,13 +158,9 @@
   color: white;
 }
 .grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  gap: 12px;
   margin-top: 16px;
+  height: 550px;
+  overflow: hidden;
 }
 @media (min-width: 409px) {
 }
@@ -222,14 +218,13 @@
 }
 
 .card-choosen {
-  border: 2px solid #231C46;
+  border: 2px solid #231c46;
 }
 
 .gift-card.selected {
   outline: 3px solid #00ffcc;
   border-radius: 10px;
 }
-
 
 .card-label {
   font-size: 14px;
@@ -273,21 +268,19 @@
     width: 100%;
   }
 }
-.grid {
-  height: 550px;
-}
 
 .grid__wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 5px;
   flex-wrap: wrap;
 }
-.card-price-icon-gift{
+.card-price-icon-gift {
   width: 50px;
   height: 50px;
 }
-.gift-card{
+.gift-card {
   max-height: 120px;
   max-width: 128px;
 }

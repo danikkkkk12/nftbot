@@ -1,5 +1,5 @@
 const closeBtn = document.getElementById("closeGiftModalBtn");
-const gridContainer = document.getElementById("gridContainer");
+const gridContainer = document.querySelector(".grid__wrapper");
 const searchInput = document.getElementById("searchInput");
 const buyBtn = document.getElementById("buyBtn");
 // const optionsPrice = document.querySelector('.price-options')
@@ -153,6 +153,7 @@ function renderGifts(maxPrice = Infinity) {
     .forEach((gift) => {
       const card = document.createElement("div");
       card.classList.add("gift-card");
+      card.classList.add("swiper-slide");
       card.dataset.name = gift.name;
       card.dataset.price = gift.price;
       card.dataset.id = gift.id;
@@ -339,3 +340,32 @@ modalOverlay.addEventListener("click", (e) => {
 });
 
 export { renderInventory };
+
+new Swiper(".grid", {
+  direction: "vertical",
+  slidesPerView: 3,
+  slidesPerGroup: 3,
+  spaceBetween: 5,
+  mousewheel: true,
+  grid: {
+    rows: 10,
+    fill: "row",
+  },
+  breakpoints: {
+    0: {
+      slidesPerView: 2, // 1 строка
+      slidesPerGroup: 2,
+      grid: {
+        rows: 6, // но сохраняем 3 элемента в строке
+      },
+    },
+    430: {
+      slidesPerView: 3,
+      slidesPerGroup: 3,
+      spaceBetween: 5,
+      grid: {
+        rows: 10,
+      },
+    },
+  },
+});
