@@ -3,7 +3,10 @@ const gridContainer = document.querySelector(".grid__wrapper");
 const searchInput = document.getElementById("searchInput");
 const buyBtn = document.getElementById("buyBtn");
 // const optionsPrice = document.querySelector('.price-options')
-const priceButtons = document.querySelectorAll("button[data-price]");
+
+const priceButtons = document.querySelectorAll('.price-options button');
+const priceButtonOver = document.querySelector('price-options__btn')
+
 
 const openModalBtns = document.querySelectorAll(
   ".inventory-skins-items-added-card"
@@ -145,11 +148,11 @@ const gifts = [
 ];
 
 // Отрисовка подарков
-function renderGifts(maxPrice = Infinity) {
+function renderGifts(minPrice = 0, maxPrice = Infinity) {
   gridContainer.innerHTML = "";
 
   gifts
-    .filter((gift) => gift.price <= maxPrice)
+    .filter((gift) => gift.price >= minPrice && gift.price <= maxPrice)
     .forEach((gift) => {
       const card = document.createElement("div");
       card.classList.add("gift-card");
@@ -160,7 +163,7 @@ function renderGifts(maxPrice = Infinity) {
 
       card.innerHTML = `
         <div class="card-price">${gift.price} <img src="web/images/inventory/ton.svg" class="gem-icon"></div>
-        <img class="card-price-icon-gift" src="web/images/${gift.image}" alt="${gift.name}">
+        <img class="card-price-icon-gift" src="web/images/${gift.image}" alt="${gift.name}" class="card-img">
         <div class="card-label">${gift.name}</div>
       `;
 
@@ -176,15 +179,36 @@ function renderGifts(maxPrice = Infinity) {
     });
 }
 
-renderGifts();
+renderGifts(0, Infinity);
 
-priceButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    priceButtons.forEach((btn) => btn.classList.remove("active"));
-    button.classList.add("active");
-    const selectedPrice = parseFloat(button.dataset.price);
-    renderGifts(selectedPrice);
-  });
+
+new Swiper(".grid", {
+  direction: "vertical",      // Прокрутка вертикальная
+  slidesPerView: 3,           // 3 карточки по горизонтали в строке
+  grid: {
+    rows: 1,                  // 2 строки на одну "страницу"
+    fill: 'row'               // Заполнение по строкам
+  },
+  spaceBetween: 10,
+  mousewheel: true,           // Прокрутка мышью
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  breakpoints: {
+    0: {
+      slidesPerView: 2,
+      grid: {
+        rows: 3,
+      },
+    },
+    430: {
+      slidesPerView: 3,
+      grid: {
+        rows: 2,
+      },
+    },
+  },
 });
 
 priceButtons.forEach((button) => {
@@ -193,8 +217,10 @@ priceButtons.forEach((button) => {
     priceButtons.forEach((btn) => btn.classList.remove("active"));
     button.classList.add("active");
 
-    const selectedPrice = parseFloat(button.dataset.price);
-    renderGifts(selectedPrice);
+    const min = parseFloat(button.dataset.min);
+    const max = parseFloat(button.dataset.max);
+
+    renderGifts(min, max);
   });
 });
 
@@ -344,6 +370,77 @@ modalOverlay.addEventListener("click", (e) => {
 });
 
 export { renderInventory };
+// const inventorySkinsItems = document.querySelector(".inventory-skins-items");
+
+// function renderGiftsMain(minPrice = 0, maxPrice = Infinity) {
+//   inventorySkinsItems.innerHTML = "";
+
+//   gifts
+//     .filter((gift) => gift.price >= minPrice && gift.price <= maxPrice)
+//     .forEach((gift) => {
+//       const card = document.createElement("div");
+//       card.classList.add("inventory-skins-items-card");
+//       card.dataset.name = gift.name;
+//       card.dataset.price = gift.price;
+//       card.dataset.id = gift.id;
+
+//       card.innerHTML = `
+//         <div class="inventory-skins-items-card">
+//           <div class="current">
+//             <span class="inventory-skins-items-card__current">${gift.price}</span>
+//             <img src="web/images/inventory/ton.svg" alt="ton" />
+//           </div>
+//           <img
+//             src="web/images/${gift.image}"
+//             alt="bottle"
+//             class="inventory-skins-items-card__img"
+//           />
+//           <div class="inventory-item__cashout">
+//             <img src="web/images/inventory/download.svg" alt="download" />
+//           </div>
+//           <h3 class="inventory-skins-items-card__title">${gift.name}</h3>
+//         </div>
+//       `;
+
+//       const cashoutBtn = card.querySelector(".inventory-item__cashout");
+//       cashoutBtn.addEventListener("click", (e) => {
+//         e.stopPropagation();
+
+//         if (getIsGameActive()) {
+//           alert("Зачекайте завершення поточної гри!");
+//           return;
+//         }
+
+//         const betValue = gift.price;
+
+//         if (betValue > balance.value) {
+//           alert("Недостатньо коштів на балансі!");
+//           return;
+//         }
+
+//         balance.value -= betValue;
+//         balancePole.innerHTML = `
+//           ${balance.value.toFixed(2)} 
+//           <img
+//             src="web/images/main/ton-icon.svg"
+//             alt="Token"
+//             class="main-balance__token"
+//           />
+//         `;
+
+//         addBetToHistory(betValue);
+
+//         fieldBet[0].textContent = betValue;
+//         fieldBet[0].dataset.bet = betValue;
+
+//         alert(`Ставка ${betValue} TON прийнята!`);
+//       });
+
+//       inventorySkinsItems.appendChild(card);
+//     });
+// }
+
+// renderGiftsMain(0, Infinity);
 
 new Swiper(".grid", {
   direction: "vertical",

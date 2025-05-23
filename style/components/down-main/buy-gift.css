@@ -201,7 +201,7 @@
   height: 16px;
 }
 
-.potion {
+.card-img {
   width: 80px;
 }
 
@@ -213,6 +213,7 @@
   font-size: 14px;
   margin-right: 40px;
   background: linear-gradient(#383838, #585858);
+  width: 54px;
   border-radius: 20px;
   gap: 4px;
 }
@@ -345,5 +346,30 @@
   height: 27px;
   background-color: green;
   border-radius: 5px;
+<<<<<<< HEAD
   cursor: pointer;
+=======
+}
+
+
+.swiper-wrapper {
+  display: flex;
+  flex-direction: column; /* для вертикального Swiper */
+  flex-wrap: wrap;
+}
+
+.grid {
+  height: 400px; /* Задай фиксированную высоту */
+  overflow: hidden;
+}
+
+.grid__wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+
+Ч#swiper-wrapper-261f1fc10af8311035 {
+  margin-top:50px;
+>>>>>>> e77e390f1ee75edcf75a27d0d91cb925a9c4753f
 }

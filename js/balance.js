@@ -7,7 +7,24 @@ const selectBetBtns = document.querySelectorAll(".select-bet__btn");
 const balancePole = document.querySelector(".main-balance");
 const stopBtns = document.querySelectorAll(".stop-btn");
 import { telegramId } from "./profile.js";
+// import { addBetToHistory } from "./frog-game.js";
 
+// const getUserName = async function (userId) {
+//   try {
+//     const response = await fetch("https://nftbotserver.onrender.com/api/users");
+//     if (!response.ok) throw new Error("Ошибка сети");
+
+//     const users = await response.json();
+//     const user = users.find((user) => user.telegramId == userId);
+
+//     if (user) {
+//       return user.username;
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+// export { getUserName };
 const getBalance = async function (tgId) {
   try {
     const response = await fetch(`https://nftbotserver.onrender.com/api/users`);
@@ -53,10 +70,8 @@ function updateButtonsState() {
   selectBetBtns.forEach((btn) => (btn.disabled = disabled));
 }
 
-// Обновляем состояние кнопок каждую 0.1 секунду
 setInterval(updateButtonsState, 100);
 
-// Обработчик кнопок стоп — сбрасывает ставки, если игра не активна
 stopBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     if (getIsGameActive()) return;
@@ -87,14 +102,15 @@ function changeBet(field, fixedBtns, changeBtns, selectBtn) {
     } else if (currentValue <= balance.value) {
       bet = currentValue;
       balance.value -= bet;
+      // addBetToHistory(bet);
       balancePole.innerHTML = `
-        ${balance.value.toFixed(2)} 
-        <img
-          src="web/images/main/ton-icon.svg"
-          alt="Token"
-          class="main-balance__token"
-        />
-      `;
+      ${balance.value.toFixed(2)} 
+      <img
+        src="web/images/main/ton-icon.svg"
+        alt="Token"
+        class="main-balance__token"
+      />
+    `;
       alert("Ставка сделана");
       field.dataset.bet = bet;
       field.textContent = "0";
