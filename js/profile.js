@@ -33,7 +33,9 @@ async function connectProfile(telegramId) {
     if (!response.ok) throw new Error("Ошибка сети");
 
     const users = await response.json();
-    const user = users.find((user) => user.telegramId == telegramId);
+    const user = users.find(
+      (user) => String(user.telegramId) === String(telegramId)
+    );
 
     if (!user) {
       console.log("Пользователь с таким Telegram ID не найден");
@@ -247,10 +249,6 @@ window.addEventListener("betResult", (event) => {
     saveHistoryEntry(entry);
   }
 });
-
-
-
-
 
 // Початкове завантаження
 loadHistoryFromStorage();
