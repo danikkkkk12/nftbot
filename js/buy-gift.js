@@ -408,6 +408,7 @@ function renderGiftsMain(minPrice = 0, maxPrice = Infinity) {
 }
 
 renderGiftsMain(0, Infinity);
+
 new Swiper(".grid", {
   direction: "vertical",
   slidesPerView: 3,
