@@ -103,6 +103,7 @@ const addToInventory = async function (userId, itemId, count) {
 // Отображение инвентаря
 async function renderInventory(userId) {
   const inventorySection = document.querySelector(".user-page-inventory");
+  if (!inventorySection) return;
 
   try {
     const response = await fetch(
@@ -111,7 +112,24 @@ async function renderInventory(userId) {
     if (!response.ok) throw new Error("Не удалось получить инвентарь");
 
     const inventory = await response.json();
-    alert(inventory)
+
+    // Якщо інвентар порожній — показати повідомлення і вийти
+    if (!inventory.length) {
+      inventorySection.querySelector(
+        ".user-page-inventory__empty"
+      ).style.display = "block";
+      inventorySection.querySelector(
+        ".inventory-items-container"
+      ).style.display = "none";
+      return;
+    } else {
+      inventorySection.querySelector(
+        ".user-page-inventory__empty"
+      ).style.display = "none";
+      inventorySection.querySelector(
+        ".inventory-items-container"
+      ).style.display = "flex";
+    }
 
     let itemsContainer = inventorySection.querySelector(
       ".inventory-items-container"
@@ -132,10 +150,12 @@ async function renderInventory(userId) {
 
       const itemElement = document.createElement("div");
       itemElement.className = "inventory-item";
+
       itemElement.innerHTML = `
-          <img src="web/images/inventory/${gift.image}" alt="${gift.name}">
-          <span>${gift.name} x${item.count}</span>
-        `;
+          <img src="web/images/inventory/${gift.image}" alt="${gift.name}" class="inventory-item__img">
+          <span class="inventory-item__name">${gift.name} x${item.count}</span>
+      `;
+
       itemsContainer.appendChild(itemElement);
     });
   } catch (err) {
