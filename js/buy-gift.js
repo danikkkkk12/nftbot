@@ -298,8 +298,9 @@ async function renderInventory(userId) {
 
       itemElement.innerHTML = `
           <img src="web/images/${gift.image}" alt="${gift.name}" class="inventory-item__img">
-          <span class="inventory-item__name">${gift.name} x${item.count}</span>
+          <span class="inventory-item__name">${gift.name}</span>
       `;
+      // <span class="inventory-item__name">${gift.name} x${item.count}</span>
       itemsContainer.appendChild(itemElement);
     });
   } catch (err) {
