@@ -300,7 +300,7 @@
   width: 80px;
   height: 80px;
   margin-top: 105px;
-  margin-left: -20px;
+  margin-left: -37px;
 }
 .inventory-item__name{
   display: flex;
@@ -331,18 +331,18 @@
   margin-top: 15px;
   display: flex;
   justify-content: flex-end;
-  margin-left: -30px;
-  gap: 3px;
+  margin-left: -35px;
+  gap: 5px;
 }
 .inventory-item__sell{
-  width: 20px;
-  height: 20px;
+  width: 27px;
+  height: 27px;
   background-color: red;
   border-radius: 5px;
 }
 .inventory-item__cashout{
-  width: 20px;
-  height: 20px;
+  width: 27px;
+  height: 27px;
   background-color: green;
   border-radius: 5px;
 }
