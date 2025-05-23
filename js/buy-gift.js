@@ -175,7 +175,6 @@ function renderGifts(maxPrice = Infinity) {
     });
 }
 
-
 renderGifts();
 
 priceButtons.forEach((button) => {
@@ -186,7 +185,6 @@ priceButtons.forEach((button) => {
     renderGifts(selectedPrice);
   });
 });
-
 
 priceButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -219,7 +217,7 @@ const addToInventory = async function (userId, itemId, count) {
 
     if (user.balance < totalCost) {
       alert(
-        `Недостаточно средств. У тебя ${user.balance}, а нужно ${totalCost}`
+        `Недостаточно средств. У вас ${user.balance}, а необходимо ${totalCost}`
       );
       return;
     }
@@ -315,7 +313,7 @@ buyBtn.addEventListener("click", () => {
     alert("Сначала выбери подарок!");
     return;
   }
-  addToInventory(telegramId, selectedItem.id, 1);
+  addToInventory(telegramId, selectedItem.name, 1);
 });
 
 // Открытие/закрытие модалки
