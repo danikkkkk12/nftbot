@@ -65,7 +65,7 @@ function renderGifts(maxPrice = Infinity) {
 
   gifts
     .filter(gift => gift.price <= maxPrice)
-    .forEach((gift) => {
+    .forEach(gift => {
       const card = document.createElement("div");
       card.classList.add("gift-card");
       card.dataset.name = gift.name;
@@ -73,14 +73,12 @@ function renderGifts(maxPrice = Infinity) {
 
       card.innerHTML = `
         <div class="card-price">${gift.price} <img src="web/images/inventory/ton.svg" class="gem-icon"></div>
-        <img src="web/images/inventory/${gift.image}" alt="${gift.name}">
+        <img src="${gift.image}" alt="${gift.name}">
         <div class="card-label">${gift.name}</div>
       `;
 
       card.addEventListener("click", () => {
-        document
-          .querySelectorAll(".gift-card")
-          .forEach((c) => c.classList.remove("selected"));
+        document.querySelectorAll(".gift-card").forEach(c => c.classList.remove("selected"));
         card.classList.add("selected");
         selectedItem = gift;
       });
@@ -88,6 +86,7 @@ function renderGifts(maxPrice = Infinity) {
       gridContainer.appendChild(card);
     });
 }
+
 
 
 renderGifts();
