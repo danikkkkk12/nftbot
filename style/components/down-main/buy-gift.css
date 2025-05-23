@@ -338,10 +338,12 @@
   height: 27px;
   background-color: red;
   border-radius: 5px;
+  cursor: pointer;
 }
 .inventory-item__cashout{
   width: 27px;
   height: 27px;
   background-color: green;
   border-radius: 5px;
+  cursor: pointer;
 }
