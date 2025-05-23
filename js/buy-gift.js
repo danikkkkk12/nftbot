@@ -34,7 +34,7 @@ function renderGifts() {
 
     card.innerHTML = `
       <div class="card-price">${gift.price} <img src="web/images/inventory/ton.svg" class="gem-icon"></div>
-      <img src="web/images/inventory/${gift.image}" alt="${gift.name}" width="100" height="100">
+      <img src="web/images/inventory/${gift.image}" alt="${gift.name}" width="300" height="300">
       <div class="card-label">${gift.name}</div>
     `;
 
