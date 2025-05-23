@@ -2,7 +2,7 @@ const closeBtn = document.getElementById("closeGiftModalBtn");
 const gridContainer = document.getElementById("gridContainer");
 const searchInput = document.getElementById("searchInput");
 const buyBtn = document.getElementById("buyBtn");
-const optionsPrice = document.querySelector('.price-options')
+// const optionsPrice = document.querySelector('.price-options')
 const priceButtons = document.querySelectorAll('button[data-price]');
 
 const openModalBtns = document.querySelectorAll(
@@ -11,6 +11,11 @@ const openModalBtns = document.querySelectorAll(
 const modalOverlay = document.getElementById("modalOverlay");
 const closeModalBtn = document.querySelector(".close-btn");
 
+
+let maxPrice = parseInt(
+  document.querySelector(".price-options .active")?.dataset.price || "25"
+);
+import { telegramId } from "./profile.js";
 
 let selectedItem = null;
 
@@ -154,9 +159,7 @@ const addToInventory = async function (userId, itemId, count) {
 // Отображение инвентаря
 async function renderInventory(userId) {
   const inventorySection = document.querySelector(".user-page-inventory");
-  const emptyMessage = inventorySection.querySelector(
-    ".user-page-inventory__empty"
-  );
+  if (!inventorySection) return;
 
   try {
     const response = await fetch(
@@ -166,43 +169,53 @@ async function renderInventory(userId) {
 
     const inventory = await response.json();
 
-    if (inventory && inventory.length > 0) {
-      emptyMessage.style.display = "none";
-
-      let itemsContainer = inventorySection.querySelector(
+    // Якщо інвентар порожній — показати повідомлення і вийти
+    if (!inventory.length) {
+      inventorySection.querySelector(
+        ".user-page-inventory__empty"
+      ).style.display = "block";
+      inventorySection.querySelector(
         ".inventory-items-container"
-      );
-      if (!itemsContainer) {
-        itemsContainer = document.createElement("div");
-        itemsContainer.className = "inventory-items-container";
-        inventorySection.appendChild(itemsContainer);
-      }
-
-      itemsContainer.innerHTML = "";
-      inventory.forEach((item) => {
-        const gift = gifts.find((g) => g.id === item.itemId) || {
-          name: item.itemId,
-          image: "default-item.svg",
-        };
-
-        const itemElement = document.createElement("div");
-        itemElement.className = "inventory-item";
-        itemElement.innerHTML = `
-          <img src="web/images/inventory/${gift.image}" alt="${gift.name}">
-          <span>${gift.name} x${item.count}</span>
-        `;
-        itemsContainer.appendChild(itemElement);
-      });
+      ).style.display = "none";
+      return;
     } else {
-      emptyMessage.style.display = "block";
-      const itemsContainer = inventorySection.querySelector(
+      inventorySection.querySelector(
+        ".user-page-inventory__empty"
+      ).style.display = "none";
+      inventorySection.querySelector(
         ".inventory-items-container"
-      );
-      if (itemsContainer) itemsContainer.remove();
+      ).style.display = "flex";
     }
+
+    let itemsContainer = inventorySection.querySelector(
+      ".inventory-items-container"
+    );
+    if (!itemsContainer) {
+      itemsContainer = document.createElement("div");
+      itemsContainer.className = "inventory-items-container";
+      inventorySection.appendChild(itemsContainer);
+    }
+
+    itemsContainer.innerHTML = "";
+
+    inventory.forEach((item) => {
+      const gift = gifts.find((g) => g.id === item.itemId) || {
+        name: item.itemId,
+        image: "default-item.svg",
+      };
+
+      const itemElement = document.createElement("div");
+      itemElement.className = "inventory-item";
+
+      itemElement.innerHTML = `
+          <img src="web/images/inventory/${gift.image}" alt="${gift.name}" class="inventory-item__img">
+          <span class="inventory-item__name">${gift.name} x${item.count}</span>
+      `;
+
+      itemsContainer.appendChild(itemElement);
+    });
   } catch (err) {
     console.error("Ошибка при загрузке инвентаря:", err);
-    emptyMessage.style.display = "block";
   }
 }
 export { renderInventory };
