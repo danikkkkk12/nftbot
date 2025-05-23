@@ -265,3 +265,6 @@
   line-height: 180%;
   color: #fff;
 }
+.inventory-items-container{
+  display: none;
+}

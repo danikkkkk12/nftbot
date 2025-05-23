@@ -262,10 +262,12 @@ if (telegramId) {
 }
 
 // ... остальной существующий код ...
-inventoryBtn.addEventListener("click", () => {
+// Замените весь код обработчика inventoryBtn на этот:
+inventoryBtn.addEventListener("click", async () => {
   const gameHistorySection = document.querySelector(".user-page-game-history");
   const inventorySection = document.querySelector(".user-page-inventory");
   const isOpen = inventorySection.classList.contains("openInvSection");
+
   const emptyMessage = inventorySection.querySelector(
     ".user-page-inventory__empty"
   );
@@ -273,22 +275,16 @@ inventoryBtn.addEventListener("click", () => {
   if (isOpen) {
     inventorySection.classList.remove("openInvSection");
     if (gameHistorySection) gameHistorySection.style.display = "block";
-    if (emptyMessage) emptyMessage.style.display = "none"; // Скрываем при закрытии
   } else {
     if (gameHistorySection) gameHistorySection.style.display = "none";
     inventorySection.classList.add("openInvSection");
-
-    const hasItems = checkInventoryItems();
-
-    console.log("emptyMessage:", emptyMessage);
-    console.log("hasItems:", hasItems);
-
-    if (emptyMessage) {
-      emptyMessage.style.display = hasItems ? "none" : "block";
-      console.log("emptyMessage style after:", emptyMessage.style.display);
-    }
+    
+    // Загружаем и отображаем инвентарь
+    await renderInventory(telegramId);
   }
 });
+
+
 
 function checkInventoryItems() {
   return false;
