@@ -211,13 +211,16 @@ function stopGame() {
   let totalBet = 0;
   fieldBet.forEach((field) => {
     const bet = parseFloat(field.dataset.bet || "0");
+
     if (bet > 0) {
       totalBet += bet;
-      isWin = true; // Если есть активные ставки при остановке - это выигрыш
+      isWin = false;
+
+      // Обнуляємо програну ставку
+      field.textContent = "0";
+      field.dataset.bet = "0";
     }
   });
-
-  // Отправл яем событие с результатом
 
   window.dispatchEvent(
     new CustomEvent("betResult", {
