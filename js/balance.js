@@ -33,8 +33,15 @@ let balance = {
 };
 getBalance(telegramId).then((bal) => {
   balance.value = bal || 0;
-  balancePole.textContent = balance.value.toFixed(2);
-  alert(balance.value);
+  // balancePole.textContent = balance.value.toFixed(2);
+  balancePole.innerHTML = `
+  ${balance.value.toFixed(2)} +
+      <img
+        src="web/images/main/ton-icon.svg"
+        alt="Token"
+        class="main-balance__token"
+      />
+  `;
 });
 let bet;
 
