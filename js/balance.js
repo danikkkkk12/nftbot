@@ -77,13 +77,13 @@ function changeBet(field, fixedBtns, changeBtns, selectBtn) {
     });
   });
 
-  // Обработка кнопки "Сделать ставку"
   selectBtn.addEventListener("click", () => {
     if (getIsGameActive()) return;
 
     if (currentValue === 0) {
       alert("Сделайте ставку");
       field.textContent = "0";
+      bet = 0;
     } else if (currentValue <= balance.value) {
       bet = currentValue;
       balance.value -= bet;
@@ -99,8 +99,7 @@ function changeBet(field, fixedBtns, changeBtns, selectBtn) {
       field.dataset.bet = bet;
       field.textContent = "0";
       currentValue = 0;
-
-      // Сигналим о новой ставке
+      bet = 0;
       window.dispatchEvent(
         new CustomEvent("newBet", { detail: { amount: bet } })
       );
@@ -108,6 +107,7 @@ function changeBet(field, fixedBtns, changeBtns, selectBtn) {
       alert("Недостаточно средств на балансе");
       field.textContent = "0";
       currentValue = 0;
+      bet = 0;
     }
   });
 
