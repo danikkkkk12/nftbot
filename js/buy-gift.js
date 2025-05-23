@@ -4,7 +4,7 @@ const searchInput = document.getElementById("searchInput");
 const buyBtn = document.getElementById("buyBtn");
 // const optionsPrice = document.querySelector('.price-options')
 const priceButtons = document.querySelectorAll('.price-options button');
-
+const priceButtonOver = document.querySelector('price-options__btn')
 
 const openModalBtns = document.querySelectorAll(
   ".inventory-skins-items-added-card"
@@ -180,6 +180,36 @@ function renderGifts(minPrice = 0, maxPrice = Infinity) {
 
 
 renderGifts(0, Infinity);
+
+new Swiper(".grid", {
+  direction: "vertical",      // Прокрутка вертикальная
+  slidesPerView: 3,           // 3 карточки по горизонтали в строке
+  grid: {
+    rows: 1,                  // 2 строки на одну "страницу"
+    fill: 'row'               // Заполнение по строкам
+  },
+  spaceBetween: 10,
+  mousewheel: true,           // Прокрутка мышью
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  breakpoints: {
+    0: {
+      slidesPerView: 2,
+      grid: {
+        rows: 3,
+      },
+    },
+    430: {
+      slidesPerView: 3,
+      grid: {
+        rows: 2,
+      },
+    },
+  },
+});
+
 
 
 

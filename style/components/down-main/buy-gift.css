@@ -346,3 +346,25 @@
   background-color: green;
   border-radius: 5px;
 }
+
+
+.swiper-wrapper {
+  display: flex;
+  flex-direction: column; /* для вертикального Swiper */
+  flex-wrap: wrap;
+}
+
+.grid {
+  height: 400px; /* Задай фиксированную высоту */
+  overflow: hidden;
+}
+
+.grid__wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+
+Ч#swiper-wrapper-261f1fc10af8311035 {
+  margin-top:50px;
+}
