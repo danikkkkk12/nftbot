@@ -330,7 +330,7 @@
 .inventory-item__marketplace{
   margin-top: 100px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   margin-left: -30px;
   gap: 3px;
 }
