@@ -279,11 +279,11 @@ inventoryBtn.addEventListener("click", async () => {
     if (gameHistorySection) gameHistorySection.style.display = "none";
     inventorySection.classList.add("openInvSection");
 
-    const hasInventory = await checkInventoryItems(telegramId);
+    const hasInventory = checkInventoryItems(telegramId);
 
     if (hasInventory) {
       if (emptyMessage) emptyMessage.style.display = "none";
-      await renderInventory(telegramId);
+      renderInventory(telegramId);
     } else {
       if (emptyMessage) emptyMessage.style.display = "block";
     }
@@ -303,10 +303,8 @@ async function checkInventoryItems(tgId) {
     }
 
     if (user.inventory && user.inventory.length > 0) {
-      alert(true);
       return true;
     } else {
-      alert(false);
       return false;
     }
   } catch (err) {

@@ -112,7 +112,6 @@ async function renderInventory(userId) {
 
     const inventory = await response.json();
 
-    // Знаходимо або створюємо контейнер для предметів
     let itemsContainer = inventorySection.querySelector(
       ".inventory-items-container"
     );
