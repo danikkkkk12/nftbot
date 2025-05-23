@@ -201,9 +201,6 @@
   background: #7e21de;
 }
 .gem-icon {
-  position: relative;
-  top: 1.5px;
-  left: 2px;
   width: 16px;
   height: 16px;
 }
@@ -213,11 +210,15 @@
 }
 
 .card-price {
+  padding: 4px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
   font-size: 14px;
   margin-right: 40px;
   background: linear-gradient(#383838, #585858);
-  width: 50px;
   border-radius: 20px;
+  gap: 4px;
 }
 
 .card-choosen {
@@ -281,4 +282,12 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+}
+.card-price-icon-gift{
+  width: 50px;
+  height: 50px;
+}
+.gift-card{
+  max-height: 120px;
+  max-width: 128px;
 }
