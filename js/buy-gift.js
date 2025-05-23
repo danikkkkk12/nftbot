@@ -1,22 +1,25 @@
-import { telegramId } from './profile.js';
+import { telegramId } from "./profile.js";
 
 // Додавання подарунку в інвентар користувача
 const addToInventory = async function (userId, itemId, count) {
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
-    if (!response.ok) throw new Error("Не удалось получить список пользователей");
+    if (!response.ok)
+      throw new Error("Не удалось получить список пользователей");
 
     const users = await response.json();
     const user = users.find((u) => String(u.telegramId) === String(userId));
     if (!user) throw new Error("Пользователь не найден");
 
-    const selectedGift = gifts.find(g => g.id === itemId);
+    const selectedGift = gifts.find((g) => g.id === itemId);
     if (!selectedGift) throw new Error("Подарок не найден");
 
     const totalCost = selectedGift.price * count;
 
     if (user.balance < totalCost) {
-      alert(`Недостаточно средств. У тебя ${user.balance}, а нужно ${totalCost}`);
+      alert(
+        `Недостаточно средств. У тебя ${user.balance}, а нужно ${totalCost}`
+      );
       return;
     }
 
@@ -28,6 +31,7 @@ const addToInventory = async function (userId, itemId, count) {
         body: JSON.stringify({
           itemId: itemId,
           count: count,
+          price: selectedGift.price,
         }),
       }
     );
@@ -37,7 +41,6 @@ const addToInventory = async function (userId, itemId, count) {
     const updatedUser = await updateRes.json();
     console.log("Инвентарь успешно обновлен:", updatedUser.inventory);
     alert("Подарок успешно куплен!");
-
   } catch (err) {
     console.error("Ошибка:", err.message);
     alert("Ошибка при покупке: " + err.message);
@@ -58,7 +61,7 @@ let selectedItem = null;
 
 function renderGifts() {
   gridContainer.innerHTML = "";
-  gifts.forEach(gift => {
+  gifts.forEach((gift) => {
     const card = document.createElement("div");
     card.classList.add("gift-card");
     card.dataset.id = gift.id;
@@ -71,9 +74,11 @@ function renderGifts() {
       <div class="card-label">${gift.name}</div>
     `;
 
-    card.addEventListener('click', () => {
-      document.querySelectorAll('.gift-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
+    card.addEventListener("click", () => {
+      document
+        .querySelectorAll(".gift-card")
+        .forEach((c) => c.classList.remove("selected"));
+      card.classList.add("selected");
       selectedItem = gift;
     });
 
@@ -94,9 +99,10 @@ buyBtn.addEventListener("click", () => {
 
 // ✨ Модалка
 const modalOverlay = document.getElementById("modalOverlay");
-const openModalBtn = document.querySelectorAll(".inventory-skins-items-added-card");
+const openModalBtn = document.querySelectorAll(
+  ".inventory-skins-items-added-card"
+);
 const closeModalBtn = document.querySelector(".close-btn");
-
 
 openModalBtn.forEach((e) => {
   e.addEventListener("click", () => {
