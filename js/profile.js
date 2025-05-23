@@ -248,6 +248,10 @@ window.addEventListener("betResult", (event) => {
   }
 });
 
+
+
+
+
 // Початкове завантаження
 loadHistoryFromStorage();
 
