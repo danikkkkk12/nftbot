@@ -199,43 +199,32 @@ priceButtons.forEach((button) => {
 });
 
 // Покупка подарка
-const addToInventory = async function (userId, itemId, count) {
+const addToInventory = async function (userId, itemId, count, price) {
   if (!selectedItem) {
     alert("Пожалуйста, выберите подарок!");
     return;
   }
 
   try {
-    const response = await fetch("https://nftbotserver.onrender.com/api/users");
-    if (!response.ok)
-      throw new Error("Не удалось получить список пользователей");
-
-    const users = await response.json();
-    const user = users.find((u) => String(u.telegramId) === String(userId));
-    if (!user) throw new Error("Пользователь не найден");
-
-    const totalCost = selectedItem.price * count;
-
-    if (user.balance < totalCost) {
-      alert(
-        `Недостаточно средств. У вас ${user.balance}, а необходимо ${totalCost}`
-      );
-      return;
-    }
-
     const updateRes = await fetch(
-      `https://nftbotserver.onrender.com/api/users/${user.telegramId}/inventory`,
+      `https://nftbotserver.onrender.com/api/users/${userId}/inventory`,
       {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           itemId: itemId,
           count: count,
+          price: price,
         }),
       }
     );
 
-    if (!updateRes.ok) throw new Error("Не удалось обновить инвентарь");
+    if (!updateRes.ok) {
+      const errorData = await updateRes.json();
+      throw new Error(errorData.error || "Не удалось обновить инвентарь");
+    }
+
+    const data = await updateRes.json();
 
     alert("Подарок успешно куплен!");
     modalOverlay.classList.add("is-hidden");
@@ -314,7 +303,7 @@ buyBtn.addEventListener("click", () => {
     alert("Сначала выбери подарок!");
     return;
   }
-  addToInventory(telegramId, selectedItem.name, 1);
+  addToInventory(telegramId, selectedItem.name, 1, selectedItem.price);
 });
 
 // Открытие/закрытие модалки
