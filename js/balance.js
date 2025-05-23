@@ -7,24 +7,24 @@ const selectBetBtns = document.querySelectorAll(".select-bet__btn");
 const balancePole = document.querySelector(".main-balance");
 const stopBtns = document.querySelectorAll(".stop-btn");
 import { telegramId } from "./profile.js";
-import { addBetToHistory } from "./frog-game.js";
+// import { addBetToHistory } from "./frog-game.js";
 
-const getUserName = async function (userId) {
-  try {
-    const response = await fetch("https://nftbotserver.onrender.com/api/users");
-    if (!response.ok) throw new Error("Ошибка сети");
+// const getUserName = async function (userId) {
+//   try {
+//     const response = await fetch("https://nftbotserver.onrender.com/api/users");
+//     if (!response.ok) throw new Error("Ошибка сети");
 
-    const users = await response.json();
-    const user = users.find((user) => user.telegramId == userId);
+//     const users = await response.json();
+//     const user = users.find((user) => user.telegramId == userId);
 
-    if (user) {
-      return user.username;
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
-export { getUserName };
+//     if (user) {
+//       return user.username;
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+// export { getUserName };
 const getBalance = async function (tgId) {
   try {
     const response = await fetch(`https://nftbotserver.onrender.com/api/users`);
@@ -102,7 +102,7 @@ function changeBet(field, fixedBtns, changeBtns, selectBtn) {
     } else if (currentValue <= balance.value) {
       bet = currentValue;
       balance.value -= bet;
-      addBetToHistory(bet);
+      // addBetToHistory(bet);
       balancePole.innerHTML = `
       ${balance.value.toFixed(2)} 
       <img
