@@ -299,14 +299,14 @@
 .inventory-item__img{
   width: 80px;
   height: 80px;
-  margin-top: 135px;
+  margin-top: 130px;
   margin-left: -5px;
 }
 .inventory-item__name{
   display: flex;
   justify-content: center;
   align-self: center;
-  margin-top: 60px;
+  margin-top: 70px;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 14px;
