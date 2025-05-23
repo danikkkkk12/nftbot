@@ -1,5 +1,3 @@
-import { getIsGameActive } from "./frog-game.js";
-
 const fixedBetBtns = document.querySelectorAll(".select-bet-change__btn");
 const changeBetBtns = document.querySelectorAll(".select-bet-count__btn");
 const fieldBet = document.querySelectorAll(".select-bet-count__number");
@@ -7,7 +5,7 @@ const selectBetBtns = document.querySelectorAll(".select-bet__btn");
 const balancePole = document.querySelector(".main-balance");
 const stopBtns = document.querySelectorAll(".stop-btn");
 import { telegramId } from "./profile.js";
-import { addBetToHistory } from "./frog-game.js";
+import { getIsGameActive, addBetToHistory } from "./frog-game.js";
 
 const getUserName = async function (userId) {
   try {
