@@ -306,7 +306,7 @@
   display: flex;
   justify-content: center;
   align-self: center;
-  margin-top: 70px;
+  margin-top: 90px;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 14px;
@@ -328,7 +328,7 @@
   padding-left: 5px;
 }
 .inventory-item__marketplace{
-  margin-top: 150px;
+  margin-top: 100px;
   display: flex;
   justify-content: end;
   margin-left: -30px;
