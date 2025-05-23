@@ -3,8 +3,7 @@ const gridContainer = document.querySelector(".grid__wrapper");
 const searchInput = document.getElementById("searchInput");
 const buyBtn = document.getElementById("buyBtn");
 // const optionsPrice = document.querySelector('.price-options')
-const priceButtons = document.querySelectorAll('.price-options button');
-
+const priceButtons = document.querySelectorAll(".price-options button");
 
 const openModalBtns = document.querySelectorAll(
   ".inventory-skins-items-added-card"
@@ -150,8 +149,8 @@ function renderGifts(minPrice = 0, maxPrice = Infinity) {
   gridContainer.innerHTML = "";
 
   gifts
-    .filter(gift => gift.price >= minPrice && gift.price <= maxPrice)
-    .forEach(gift => {
+    .filter((gift) => gift.price >= minPrice && gift.price <= maxPrice)
+    .forEach((gift) => {
       const card = document.createElement("div");
       card.classList.add("gift-card");
       card.classList.add("swiper-slide");
@@ -177,11 +176,7 @@ function renderGifts(minPrice = 0, maxPrice = Infinity) {
     });
 }
 
-
-
 renderGifts(0, Infinity);
-
-
 
 priceButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -195,7 +190,6 @@ priceButtons.forEach((button) => {
     renderGifts(min, max);
   });
 });
-
 
 // Покупка подарка
 const addToInventory = async function (userId, itemId, count, price) {
@@ -343,7 +337,77 @@ modalOverlay.addEventListener("click", (e) => {
 });
 
 export { renderInventory };
+const inventorySkinsItems = document.querySelector(".inventory-skins-items");
 
+function renderGiftsMain(minPrice = 0, maxPrice = Infinity) {
+  inventorySkinsItems.innerHTML = "";
+
+  gifts
+    .filter((gift) => gift.price >= minPrice && gift.price <= maxPrice)
+    .forEach((gift) => {
+      const card = document.createElement("div");
+      card.classList.add("inventory-skins-items-card");
+      card.dataset.name = gift.name;
+      card.dataset.price = gift.price;
+      card.dataset.id = gift.id;
+
+      card.innerHTML = `
+        <div class="inventory-skins-items-card">
+          <div class="current">
+            <span class="inventory-skins-items-card__current">${gift.price}</span>
+            <img src="web/images/inventory/ton.svg" alt="ton" />
+          </div>
+          <img
+            src="web/images/${gift.image}"
+            alt="bottle"
+            class="inventory-skins-items-card__img"
+          />
+          <div class="inventory-item__cashout">
+            <img src="web/images/inventory/download.svg" alt="download" />
+          </div>
+          <h3 class="inventory-skins-items-card__title">${gift.name}</h3>
+        </div>
+      `;
+
+      const cashoutBtn = card.querySelector(".inventory-item__cashout");
+      cashoutBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        if (getIsGameActive()) {
+          alert("Зачекайте завершення поточної гри!");
+          return;
+        }
+
+        const betValue = gift.price;
+
+        if (betValue > balance.value) {
+          alert("Недостатньо коштів на балансі!");
+          return;
+        }
+
+        balance.value -= betValue;
+        balancePole.innerHTML = `
+          ${balance.value.toFixed(2)} 
+          <img
+            src="web/images/main/ton-icon.svg"
+            alt="Token"
+            class="main-balance__token"
+          />
+        `;
+
+        addBetToHistory(betValue);
+
+        fieldBet[0].textContent = betValue;
+        fieldBet[0].dataset.bet = betValue;
+
+        alert(`Ставка ${betValue} TON прийнята!`);
+      });
+
+      inventorySkinsItems.appendChild(card);
+    });
+}
+
+renderGiftsMain(0, Infinity);
 new Swiper(".grid", {
   direction: "vertical",
   slidesPerView: 3,
