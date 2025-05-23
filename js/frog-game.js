@@ -280,7 +280,6 @@ stopBtns.forEach((stopBtn, index) => {
     if (isGameActive) {
       const gain = betValue * currentCoefficient;
       balance.value += gain;
-      alert(balance.value)
       if (balancePole) {
         balancePole.textContent = balance.value.toFixed(2);
         const img = document.createElement("img");
