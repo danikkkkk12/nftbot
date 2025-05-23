@@ -10,7 +10,6 @@ const balancePole = document.querySelector(".main-balance");
 const fieldBet = document.querySelectorAll(".select-bet-count__number");
 import { fieldValues, balance } from "./balance.js";
 import { telegramId } from "./profile.js";
-import { getUserName } from "./balance.js";
 
 const setBalanceToBd = async function (tgId) {
   try {
@@ -311,6 +310,7 @@ setInterval(() => {
     }
   });
 }, 500);
+import { getUserName } from "./balance.js";
 
 const addBetToHistory = async function (betAmount) {
   try {
