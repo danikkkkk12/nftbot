@@ -111,6 +111,7 @@ async function renderInventory(userId) {
     if (!response.ok) throw new Error("Не удалось получить инвентарь");
 
     const inventory = await response.json();
+    alert(inventory)
 
     let itemsContainer = inventorySection.querySelector(
       ".inventory-items-container"
