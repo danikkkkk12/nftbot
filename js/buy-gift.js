@@ -3,7 +3,9 @@ const gridContainer = document.getElementById("gridContainer");
 const searchInput = document.getElementById("searchInput");
 const buyBtn = document.getElementById("buyBtn");
 const priceButtons = document.querySelectorAll(".price-options button");
-const openModalBtns = document.querySelectorAll(".inventory-skins-items-added-card");
+const openModalBtns = document.querySelectorAll(
+  ".inventory-skins-items-added-card"
+);
 const modalOverlay = document.getElementById("modalOverlay");
 const closeModalBtn = document.querySelector(".close-btn");
 
@@ -22,7 +24,7 @@ const gifts = Array.from({ length: 12 }, (_, i) => ({
 // Отрисовка подарков
 function renderGifts() {
   gridContainer.innerHTML = "";
-  gifts.forEach(gift => {
+  gifts.forEach((gift) => {
     const card = document.createElement("div");
     card.classList.add("gift-card");
     card.dataset.id = gift.id;
@@ -35,9 +37,11 @@ function renderGifts() {
       <div class="card-label">${gift.name}</div>
     `;
 
-    card.addEventListener('click', () => {
-      document.querySelectorAll('.gift-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
+    card.addEventListener("click", () => {
+      document
+        .querySelectorAll(".gift-card")
+        .forEach((c) => c.classList.remove("selected"));
+      card.classList.add("selected");
       selectedItem = gift;
     });
 
@@ -51,19 +55,22 @@ renderGifts();
 const addToInventory = async function (userId, itemId, count) {
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
-    if (!response.ok) throw new Error("Не удалось получить список пользователей");
+    if (!response.ok)
+      throw new Error("Не удалось получить список пользователей");
 
     const users = await response.json();
     const user = users.find((u) => String(u.telegramId) === String(userId));
     if (!user) throw new Error("Пользователь не найден");
 
-    const selectedGift = gifts.find(g => g.id === itemId);
+    const selectedGift = gifts.find((g) => g.id === itemId);
     if (!selectedGift) throw new Error("Подарок не найден");
 
     const totalCost = selectedGift.price * count;
 
     if (user.balance < totalCost) {
-      alert(`Недостаточно средств. У тебя ${user.balance}, а нужно ${totalCost}`);
+      alert(
+        `Недостаточно средств. У тебя ${user.balance}, а нужно ${totalCost}`
+      );
       return;
     }
 
@@ -86,7 +93,6 @@ const addToInventory = async function (userId, itemId, count) {
     alert("Подарок успешно куплен!");
 
     await renderInventory(userId);
-
   } catch (err) {
     console.error("Ошибка:", err.message);
     alert("Ошибка при покупке: " + err.message);
@@ -96,10 +102,14 @@ const addToInventory = async function (userId, itemId, count) {
 // Отображение инвентаря
 async function renderInventory(userId) {
   const inventorySection = document.querySelector(".user-page-inventory");
-  const emptyMessage = inventorySection.querySelector(".user-page-inventory__empty");
+  const emptyMessage = inventorySection.querySelector(
+    ".user-page-inventory__empty"
+  );
 
   try {
-    const response = await fetch(`https://nftbotserver.onrender.com/api/users/${userId}/inventory`);
+    const response = await fetch(
+      `https://nftbotserver.onrender.com/api/users/${userId}/inventory`
+    );
     if (!response.ok) throw new Error("Не удалось получить инвентарь");
 
     const inventory = await response.json();
@@ -107,7 +117,9 @@ async function renderInventory(userId) {
     if (inventory && inventory.length > 0) {
       emptyMessage.style.display = "none";
 
-      let itemsContainer = inventorySection.querySelector(".inventory-items-container");
+      let itemsContainer = inventorySection.querySelector(
+        ".inventory-items-container"
+      );
       if (!itemsContainer) {
         itemsContainer = document.createElement("div");
         itemsContainer.className = "inventory-items-container";
@@ -115,10 +127,10 @@ async function renderInventory(userId) {
       }
 
       itemsContainer.innerHTML = "";
-      inventory.forEach(item => {
-        const gift = gifts.find(g => g.id === item.itemId) || {
+      inventory.forEach((item) => {
+        const gift = gifts.find((g) => g.id === item.itemId) || {
           name: item.itemId,
-          image: "default-item.svg"
+          image: "default-item.svg",
         };
 
         const itemElement = document.createElement("div");
@@ -131,7 +143,9 @@ async function renderInventory(userId) {
       });
     } else {
       emptyMessage.style.display = "block";
-      const itemsContainer = inventorySection.querySelector(".inventory-items-container");
+      const itemsContainer = inventorySection.querySelector(
+        ".inventory-items-container"
+      );
       if (itemsContainer) itemsContainer.remove();
     }
   } catch (err) {
@@ -139,6 +153,7 @@ async function renderInventory(userId) {
     emptyMessage.style.display = "block";
   }
 }
+export { renderInventory };
 
 // Кнопка покупки
 buyBtn.addEventListener("click", () => {
