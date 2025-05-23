@@ -291,16 +291,66 @@
   max-height: 120px;
   max-width: 128px;
 }
+.inventory-wrap{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-left: -33px;
+}
 .inventory-item{
   width: 132px;
   height: 162px;
   background: linear-gradient(213.72deg, rgba(97, 0, 255, 0.5) 20.44%, rgba(179, 132, 255, 0.5) 96.63%);
   border-radius: 20px;
+  flex-wrap: wrap;
 }
 .inventory-item__img{
   width: 80px;
   height: 80px;
-  margin-top: 10px;
-  margin-left: 20px;
+  margin-top: 5px;
+  margin-left: 30px;
   margin-bottom: 62px;
+}
+.inventory-item__name{
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  margin-top: -60px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  color: #FFFFFF;
+}
+.inventory-item__wrapper{
+  background: linear-gradient(180deg, #383838 0%, #585858 100%);
+  width: 49px;
+  height: 24px;
+  margin-left: 8px;
+  border-radius: 20px;
+  gap: 5px;
+   font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 100%;
+  color: #FFFFFF;
+  padding-left: 5px;
+}
+.inventory-item__marketplace{
+  display: flex;
+  justify-content: end;
+  margin-left: -30px;
+  gap: 3px;
+}
+.inventory-item__sell{
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  border-radius: 5px;
+}
+.inventory-item__cashout{
+  width: 20px;
+  height: 20px;
+  background-color: green;
+  border-radius: 5px;
 }

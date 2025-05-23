@@ -297,8 +297,23 @@ async function renderInventory(userId) {
       itemElement.className = "inventory-item";
 
       itemElement.innerHTML = `
-          <img src="web/images/${gift.image}" alt="${gift.name}" class="inventory-item__img">
-          <span class="inventory-item__name">${gift.name}</span>
+    <div class="inventory-wrap">
+    <div class="inventory-item">
+      <div class="inventory-item__wrapper flex">
+        <span class="inventory-item__wrapper-span">${gift.name}</span>
+        <img src="web/images/${gift.image}" alt="${gift.name}" class="inventory-item__img" />
+      </div>
+      <span class="inventory-item__name">${gift.name}</span>
+      <div class="inventory-item__marketplace">
+        <div class="inventory-item__cashout">
+          <img src="web/images/inventory/download.svg" alt="download">
+        </div>
+        <div class="inventory-item__sell">
+          <img src="web/images/inventory/basket.svg" alt="basket">
+        </div>
+      </div>
+    </div>
+  </div>
       `;
       // <span class="inventory-item__name">${gift.name} x${item.count}</span>
       itemsContainer.appendChild(itemElement);
