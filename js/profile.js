@@ -266,9 +266,7 @@ export { telegramId };
 // Замените весь код обработчика inventoryBtn на этот:
 inventoryBtn.addEventListener("click", async () => {
   const gameHistorySection = document.querySelector(".user-page-game-history");
-  const inventorySection = document.querySelector(
-    ".user-page-inventory__empty"
-  );
+  const inventorySection = document.querySelector(".user-page-inventory");
   const isOpen = inventorySection.classList.contains("openInvSection");
   const emptyMessage = inventorySection.querySelector(
     ".user-page-inventory__empty"
@@ -287,15 +285,7 @@ inventoryBtn.addEventListener("click", async () => {
       if (emptyMessage) emptyMessage.style.display = "none";
       await renderInventory(telegramId);
     } else {
-      inventorySection.innerHTML = `
-        <div class="user-page-inventory__empty">
-          <div class="user-page-inventory__empty-title">Инвентарь пуст</div>
-          <div class="user-page-inventory__empty-desc">
-            Получай предметы за участие в играх
-          </div>
-          <a href="/game.html" class="user-page-inventory__empty-btn">Играть</a>
-        </div>
-      `;
+      if (emptyMessage) emptyMessage.style.display = "block";
     }
   }
 });
@@ -304,7 +294,6 @@ async function checkInventoryItems(tgId) {
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
     if (!response.ok) throw new Error("Не удалось получить пользователей");
-
     const users = await response.json();
     const user = users.find((user) => String(user.telegramId) === String(tgId));
 
@@ -314,8 +303,10 @@ async function checkInventoryItems(tgId) {
     }
 
     if (user.inventory && user.inventory.length > 0) {
+      alert(true);
       return true;
     } else {
+      alert(false);
       return false;
     }
   } catch (err) {
