@@ -301,7 +301,7 @@ async function renderInventory(userId) {
     <div class="inventory-wrap">
     <div class="inventory-item">
       <div class="inventory-item__wrapper flex">
-        <span class="inventory-item__wrapper-span">${gift.name}</span>
+        <span class="inventory-item__wrapper-span">${gift.price}</span>
         <img src="web/images/${gift.image}" alt="${gift.name}" class="inventory-item__img" />
       </div>
       <span class="inventory-item__name">${gift.name}</span>
@@ -316,7 +316,6 @@ async function renderInventory(userId) {
     </div>
   </div>
       `;
-      // <span class="inventory-item__name">${gift.name} x${item.count}</span>
       itemsContainer.appendChild(itemElement);
     });
   } catch (err) {
