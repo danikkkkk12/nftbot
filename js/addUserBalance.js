@@ -32,4 +32,4 @@ const changeBalance = async function (userId) {
   }
 };
 export { changeBalance };
-changeBalance(telegramId);
+changeBalance();
