@@ -297,7 +297,7 @@ async function renderInventory(userId) {
       itemElement.className = "inventory-item";
 
       itemElement.innerHTML = `
-          <img src="web/images/inventory/${gift.image}" alt="${gift.name}" class="inventory-item__img">
+          <img src="web/images/${gift.image}" alt="${gift.name}" class="inventory-item__img">
           <span class="inventory-item__name">${gift.name} x${item.count}</span>
       `;
 
