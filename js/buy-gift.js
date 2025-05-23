@@ -3,7 +3,7 @@ const gridContainer = document.getElementById("gridContainer");
 const searchInput = document.getElementById("searchInput");
 const buyBtn = document.getElementById("buyBtn");
 // const optionsPrice = document.querySelector('.price-options')
-const priceButtons = document.querySelectorAll('button[data-price]');
+const priceButtons = document.querySelectorAll('.price-options button');
 
 const openModalBtns = document.querySelectorAll(
   ".inventory-skins-items-added-card"
@@ -60,11 +60,11 @@ const gifts = [
 
 
 // Отрисовка подарков
-function renderGifts(maxPrice = Infinity) {
+function renderGifts(minPrice = 0, maxPrice = Infinity) {
   gridContainer.innerHTML = "";
 
   gifts
-    .filter(gift => gift.price <= maxPrice)
+    .filter(gift => gift.price >= minPrice && gift.price <= maxPrice)
     .forEach(gift => {
       const card = document.createElement("div");
       card.classList.add("gift-card");
@@ -73,7 +73,7 @@ function renderGifts(maxPrice = Infinity) {
 
       card.innerHTML = `
         <div class="card-price">${gift.price} <img src="web/images/inventory/ton.svg" class="gem-icon"></div>
-        <img src="${gift.image}" alt="${gift.name}">
+        <img src="${gift.image}" alt="${gift.name}" class="card-img">
         <div class="card-label">${gift.name}</div>
       `;
 
@@ -89,18 +89,21 @@ function renderGifts(maxPrice = Infinity) {
 
 
 
-renderGifts();
+
+renderGifts(0, Infinity);
 
 priceButtons.forEach(button => {
   button.addEventListener('click', () => {
-    // Удаляем активный класс со всех кнопок
     priceButtons.forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
 
-    const selectedPrice = parseFloat(button.dataset.price);
-    renderGifts(selectedPrice);
+    const min = parseFloat(button.dataset.min);
+    const max = parseFloat(button.dataset.max);
+
+    renderGifts(min, max);
   });
 });
+
 
 
 
