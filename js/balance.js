@@ -24,6 +24,7 @@ const getUserName = async function (userId) {
     console.log(err);
   }
 };
+export { getUserName };
 const getBalance = async function (tgId) {
   try {
     const response = await fetch(`https://nftbotserver.onrender.com/api/users`);
