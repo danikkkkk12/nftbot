@@ -15,7 +15,7 @@ let maxPrice = parseInt(
   document.querySelector(".price-options .active")?.dataset.price || "25"
 );
 import { telegramId } from "./profile.js";
-
+import { changeBalance } from "./addUserBalance.js";
 let selectedItem = null;
 
 const gifts = [
@@ -227,6 +227,7 @@ const addToInventory = async function (userId, itemId, count, price) {
     const data = await updateRes.json();
 
     alert("Подарок успешно куплен!");
+    changeBalance(telegramId);
     modalOverlay.classList.add("is-hidden");
     renderInventory(userId);
   } catch (err) {
