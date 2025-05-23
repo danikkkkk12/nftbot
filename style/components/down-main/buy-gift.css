@@ -284,3 +284,16 @@
   max-height: 120px;
   max-width: 128px;
 }
+.inventory-item{
+  width: 132px;
+  height: 162px;
+  background: linear-gradient(213.72deg, rgba(97, 0, 255, 0.5) 20.44%, rgba(179, 132, 255, 0.5) 96.63%);
+  border-radius: 20px;
+}
+.inventory-item__img{
+  width: 80px;
+  height: 80px;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-bottom: 62px;
+}
