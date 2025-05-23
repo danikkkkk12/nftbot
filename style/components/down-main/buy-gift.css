@@ -300,8 +300,8 @@
 .inventory-item__img{
   width: 80px;
   height: 80px;
-  margin-top: 100px;
-  margin-left: -25px;
+  margin-top: 150px;
+  margin-left: -20px;
 }
 .inventory-item__name{
   display: flex;
@@ -329,6 +329,7 @@
   padding-left: 5px;
 }
 .inventory-item__marketplace{
+  margin-top: 100px;
   display: flex;
   justify-content: end;
   margin-left: -30px;
