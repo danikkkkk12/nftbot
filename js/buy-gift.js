@@ -3,14 +3,13 @@ const gridContainer = document.getElementById("gridContainer");
 const searchInput = document.getElementById("searchInput");
 const buyBtn = document.getElementById("buyBtn");
 // const optionsPrice = document.querySelector('.price-options')
-const priceButtons = document.querySelectorAll('button[data-price]');
+const priceButtons = document.querySelectorAll("button[data-price]");
 
 const openModalBtns = document.querySelectorAll(
   ".inventory-skins-items-added-card"
 );
 const modalOverlay = document.getElementById("modalOverlay");
 const closeModalBtn = document.querySelector(".close-btn");
-
 
 let maxPrice = parseInt(
   document.querySelector(".price-options .active")?.dataset.price || "25"
@@ -145,49 +144,29 @@ const gifts = [
   },
 ];
 
-
-
 // Отрисовка подарков
 function renderGifts(maxPrice = Infinity) {
   gridContainer.innerHTML = "";
-  gifts.forEach((gift) => {
-    const card = document.createElement("div");
-    card.classList.add("gift-card");
-    card.dataset.id = gift.id;
-    card.dataset.name = gift.name;
-    card.dataset.price = gift.price;
-
-    card.innerHTML = `
-      <div class="card-price">${gift.price} <img src="web/images/inventory/ton.svg" class="gem-icon"></div>
-      <img src="web/images/inventory/${gift.image}" alt="${gift.name}" width="50" height="50">
-      <div class="card-label">${gift.name}</div>
-    `;
-
-    card.addEventListener("click", () => {
-      document
-        .querySelectorAll(".gift-card")
-        .forEach((c) => c.classList.remove("selected"));
-      card.classList.add("selected");
-      selectedItem = gift;
-    });
-})
 
   gifts
-    .filter(gift => gift.price <= maxPrice)
-    .forEach(gift => {
+    .filter((gift) => gift.price <= maxPrice)
+    .forEach((gift) => {
       const card = document.createElement("div");
       card.classList.add("gift-card");
       card.dataset.name = gift.name;
       card.dataset.price = gift.price;
+      card.dataset.id = gift.id;
 
       card.innerHTML = `
         <div class="card-price">${gift.price} <img src="web/images/inventory/ton.svg" class="gem-icon"></div>
-        <img class="card-price-icon-gift" src="${gift.image}" alt="${gift.name}">
+        <img class="card-price-icon-gift" src="web/images/${gift.image}" alt="${gift.name}">
         <div class="card-label">${gift.name}</div>
       `;
 
       card.addEventListener("click", () => {
-        document.querySelectorAll(".gift-card").forEach(c => c.classList.remove("selected"));
+        document
+          .querySelectorAll(".gift-card")
+          .forEach((c) => c.classList.remove("selected"));
         card.classList.add("selected");
         selectedItem = gift;
       });
@@ -197,25 +176,36 @@ function renderGifts(maxPrice = Infinity) {
 }
 
 
+renderGifts();
 
-priceButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    // Удаляем активный класс со всех кнопок
-    priceButtons.forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-
+priceButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    priceButtons.forEach((btn) => btn.classList.remove("active"));
+    button.classList.add("active");
     const selectedPrice = parseFloat(button.dataset.price);
     renderGifts(selectedPrice);
   });
 });
 
 
+priceButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    // Удаляем активный класс со всех кнопок
+    priceButtons.forEach((btn) => btn.classList.remove("active"));
+    button.classList.add("active");
 
-
-
+    const selectedPrice = parseFloat(button.dataset.price);
+    renderGifts(selectedPrice);
+  });
+});
 
 // Покупка подарка
 const addToInventory = async function (userId, itemId, count) {
+  if (!selectedItem) {
+    alert("Пожалуйста, выберите подарок!");
+    return;
+  }
+
   try {
     const response = await fetch("https://nftbotserver.onrender.com/api/users");
     if (!response.ok)
@@ -225,10 +215,7 @@ const addToInventory = async function (userId, itemId, count) {
     const user = users.find((u) => String(u.telegramId) === String(userId));
     if (!user) throw new Error("Пользователь не найден");
 
-    const selectedGift = gifts.find((g) => g.id === itemId);
-    if (!selectedGift) throw new Error("Подарок не найден");
-
-    const totalCost = selectedGift.price * count;
+    const totalCost = selectedItem.price * count;
 
     if (user.balance < totalCost) {
       alert(
@@ -251,11 +238,9 @@ const addToInventory = async function (userId, itemId, count) {
 
     if (!updateRes.ok) throw new Error("Не удалось обновить инвентарь");
 
-    const updatedUser = await updateRes.json();
-    console.log("Инвентарь успешно обновлен:", updatedUser.inventory);
     alert("Подарок успешно куплен!");
-
-    await renderInventory(userId);
+    modalOverlay.classList.add("is-hidden");
+    renderInventory(userId);
   } catch (err) {
     console.error("Ошибка:", err.message);
     alert("Ошибка при покупке: " + err.message);
@@ -324,27 +309,35 @@ async function renderInventory(userId) {
     console.error("Ошибка при загрузке инвентаря:", err);
   }
 }
-export { renderInventory };
 
-// Кнопка покупки
 buyBtn.addEventListener("click", () => {
   if (!selectedItem) {
     alert("Сначала выбери подарок!");
     return;
   }
-
   addToInventory(telegramId, selectedItem.id, 1);
 });
 
-// Открытие модалки
+// Открытие/закрытие модалки
 openModalBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     modalOverlay.classList.remove("is-hidden");
+    renderGifts(maxPrice);
   });
 });
 
-// Закрытие модалки
 closeModalBtn.addEventListener("click", () => {
   modalOverlay.classList.add("is-hidden");
-  document.body.style.overflow = "";
 });
+
+closeBtn.addEventListener("click", () => {
+  modalOverlay.classList.add("is-hidden");
+});
+
+modalOverlay.addEventListener("click", (e) => {
+  if (e.target === modalOverlay) {
+    modalOverlay.classList.add("is-hidden");
+  }
+});
+
+export { renderInventory };
