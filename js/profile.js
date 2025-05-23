@@ -266,7 +266,9 @@ export { telegramId };
 // Замените весь код обработчика inventoryBtn на этот:
 inventoryBtn.addEventListener("click", async () => {
   const gameHistorySection = document.querySelector(".user-page-game-history");
-  const inventorySection = document.querySelector(".user-page-inventory");
+  const inventorySection = document.querySelector(
+    ".user-page-inventory__empty"
+  );
   const isOpen = inventorySection.classList.contains("openInvSection");
   const emptyMessage = inventorySection.querySelector(
     ".user-page-inventory__empty"
